@@ -1,0 +1,213 @@
+ 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+  
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+      <div class="col-lg-9 col-md-9 col-xs-12">
+                <div class="box  box-success">
+            <div class="box-header">
+              <i class="fa fa-download"></i>
+
+              <h3 class="box-title">État client wifi</h3>
+             </div>
+             
+            <div class="box-body chat" id="chat-box">
+            
+                <div class="row">
+                
+                
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-wifi"></i></span>
+
+                    <div class="info-box-content">
+                    <span ><center><h4>Connecté au réseau wifi</h4></center></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-globe"></i></span>
+
+                    <div class="info-box-content">
+                    <span><center><h4>Connecté à Internet</h4></center></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                    </div>                
+                    </div>
+                    
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                <div class="info-box bg-aqua">
+                <span class="info-box-icon">IP</span>
+
+                <div class="info-box-content">
+                <div class="inner">
+                <span ><center><h4><b>~tpl_ip_wlan</b></h4></center></span>
+                </div>                    
+                </div>  
+                <!-- /.info-box-content -->
+                </div>  
+                </div>
+                <!-- end row -->
+                </div>
+                   
+                
+             </div>   
+             
+        </div>
+      </div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <div class="box  box-success">
+            <div class="box-header">
+              <i class="fa fa-upload"></i>
+
+              <h3 class="box-title">État wifi émis</h3>
+             </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="info-box bg-green">
+                <span class="info-box-icon"><i class="fa fa-wifi"></i></span>
+
+                <div class="info-box-content">
+                <span ><center><h4>En cours d'émission.</h4></center></span>
+                </div>
+                <!-- /.info-box-content -->
+                </div>
+             </div>   
+          
+          
+             </div>
+      </div>
+      
+          </div>
+          
+      <div class="row">
+
+      
+        <div class="col-lg-6 col-md-6 col-xs-12">
+  
+  
+
+   <!-- Wifi connection -->
+          <div class="box box-success">
+            <div class="box-header">
+              <i class="fa fa-download"></i>
+
+              <h3 class="box-title">Paramètres client wifi</h3>
+            <div class="box-body chat" id="chat-box">
+		  <form  action="recup-wifi.cgi" method="get" class="form-horizontal" >
+		  
+        <div class="form-group">           	
+         <div class="col-sm-offset-1 col-sm-11">
+		  <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="active_wifi_client" ~tpl_check_active_client> Activer le client Wifi </br>
+                      </label>
+          </div> </div> </div>
+        
+		  <div class="form-group">
+		    <label for="ssid" class="col-sm-4 control-label">SSID</label><div class="col-sm-8"><input type="text" name="ssid" value="~tpl_client_ssid" class="form-control"></div>
+          </div>
+          
+          
+            <div class="form-group">
+		    <label for="enctype" class="col-sm-4 control-label">Chiffrement</label><div class="col-sm-8">
+		    <select id="enctype" name="enctype" class="form-control">
+												<option value="none" ~tpl_selected_none >
+													Aucun Chiffrement
+												</option></br>
+												<option value="WPA" ~tpl_selected_WPA >
+													WPA/WPA2
+												</option></br>
+												<option value="WEPpass" ~tpl_selected_WEP >
+													WEP Passphrase
+												</option>
+												<option value="WEPhex" ~tpl_selected_WEP >
+													WEP hex
+												</option>												
+            </select>
+		    </div>
+          </div>
+          
+		  <div class="form-group">
+		    <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8"><input type="text" name="pass" value="~tpl_client_key" class="form-control"></div>
+          </div>          
+  
+         <div class="form-group">           	
+         <div class="col-sm-offset-4 col-sm-8">
+         <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="hidden"> Réseau caché </br>
+                      </label>
+          </div>  </div> </div>
+          
+          </div>
+          <div class="box-footer">
+                  <div class="input-group-btn"><a href class="btn btn-info"><i class="fa fa-search"></i> Scanner</a></div>
+                          
+                <div class="input-group-btn">
+                  <input  type="submit" value="Valider" class="btn btn-success">Valider</button>
+                
+                </div> 
+           </div>     
+                </form>
+            
+          </div>
+          </div>
+          <!-- Wifi connection  -->
+          
+          </div>
+          
+        <div class="col-lg-6 col-md-6 col-xs-12">
+  
+
+   <!-- Wifi connection -->
+          <div class="box  box-success">
+            <div class="box-header">
+              <i class="fa fa-upload"></i>
+
+              <h3 class="box-title">Paramètres wifi émis</h3>
+            <div class="box-body chat" id="chat-box">
+		  <form  action="recup-wifi.cgi" method="get" class="form-horizontal">
+		  
+		          <div class="form-group">           	
+         <div class="col-sm-offset-1 col-sm-11">
+            <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="active_wifi_ap" ~tpl_check_active_ap> Activer l'émission du réseau Wifi </br>
+                      </label>
+          </div> </div> </div>
+          
+		  <div class="form-group">
+		    <label for="ssid" class="col-sm-4 control-label">SSID</label><div class="col-sm-8"><input type="text" name="ssid" value="~tpl_ap_ssid" class="form-control"></div>
+          </div>
+          
+          
+		  <div class="form-group">
+		    <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8"><input type="text" name="pass" value="~tpl_ap_key" class="form-control"></div>
+          </div>
+          
+                <center>
+                <div class="input-group-btn">
+                  <input  type="submit" value="Valider" class="btn btn-success">Valider</button>
+                </div> 
+                </center>
+                </form>
+            </div>
+          </div>
+          </div>
+          <!-- Wifi connection  -->
+          
+          </div>
+          </div>          
+          
+          </section>
+  
+  </div>  
