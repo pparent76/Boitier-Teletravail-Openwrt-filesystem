@@ -6,24 +6,49 @@ echo ""
 cgi_getvars BOTH ALL
 
 tpl_result="success"
-tpl_title="Mise à jour Configuration"
-tpl_text="Les paramètres du réseau wifi émis ont été mis à jour. Le wifi va redémarrer!"
+tpl_title="Mise à jour de la configuration"
+tpl_text="Les paramètres du réseau wifi émis ont été mis à jour. <b>Le wifi va redémarrer!</b>"
 tpl_url_refresh="/cgi/wifi.cgi"
 tpl_time_refresh="3"
 
-#Todo vérifier la longueur du SSID et de la clef
+ok=1
 
-sudo /sbin/uci set bridgebox.wifi_ap.ssid=$ssid
-sudo /sbin/uci set bridgebox.wifi_ap.key=$pass
-
-if [ -z "$active_wifi_ap" ]; then
-    sudo /sbin/uci set bridgebox.wifi_ap.enabled="0"
-else
-    sudo /sbin/uci set bridgebox.wifi_ap.enabled="1"
+if [ "$ssid" = "" ]; then 
+    tpl_result="error"
+    tpl_text="Erreur ssid vide!"
+    ok=0;
 fi
 
-sudo /sbin/uci  commit
-    
+if [ ${#ssid} -gt 32 ]; then 
+    tpl_result="error"
+    tpl_text="Erreur ssid trop long!"
+    ok=0;
+fi
+
+if [ ${#pass} -gt 63 ]; then 
+    tpl_result="error"
+    tpl_text="Clef WPA trop longue"
+    ok=0;
+fi
+
+if  [ ${#pass} -lt 8 ]; then 
+    tpl_result="error"
+    tpl_text="Clef WPA trop courte"
+    ok=0;
+fi
+
+if [ "$ok" -eq "1" ]; then
+    sudo /sbin/uci set bridgebox.wifi_ap.ssid="$ssid"
+    sudo /sbin/uci set bridgebox.wifi_ap.key="$pass"
+
+    if [ -z "$active_wifi_ap" ]; then
+        sudo /sbin/uci set bridgebox.wifi_ap.enabled="0"
+    else
+        sudo /sbin/uci set bridgebox.wifi_ap.enabled="1"
+    fi
+
+    sudo /sbin/uci  commit
+fi
 #####################################################################
 #
 #               Generation du html   
@@ -37,6 +62,11 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( inject_var "$page" ~tpl_active_acceuil "")
+page=$( inject_var "$page" ~tpl_active_code "")
+page=$( inject_var "$page" ~tpl_active_wifi "active")
+page=$( inject_var "$page" ~tpl_active_portail "")
+page=$( inject_var "$page" ~tpl_active_avance "")
 echo $page;
 
 ########################################################
@@ -56,3 +86,11 @@ echo $page;
 ########################################################
 page=$(cat /site/template/footer.html)
 echo $page;
+
+exec >&-
+exec 2>&-
+
+if [ "$ok" -eq "1" ]; then
+    (sleep 2; sudo /scripts_bb/wifi.sh >/dev/null 2>&1) &
+fi
+exit 0

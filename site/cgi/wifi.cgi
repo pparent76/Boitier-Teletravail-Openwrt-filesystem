@@ -7,9 +7,11 @@ echo ""
 #               Calcul des variables  
 #
 #####################################################################
+tpl_ip_color="aqua"
 tpl_ip_wlan=$(ifconfig wlan0| grep "inet addr"  | awk -F" " '{print $2}' | sed -e 's/addr://g')
 if [ "$tpl_ip_wlan" = "" ]; then
-    tpl_ip_wlan="Pas d'IP";
+    tpl_ip_wlan="(Pas d'IP)";
+    tpl_ip_color="grey"
 fi
 
 tpl_client_ssid=$(uci get bridgebox.wifi_sta.ssid)
@@ -52,6 +54,34 @@ enctype_sta=$(uci get bridgebox.wifi_sta.enctype)
         ;;    
     esac
     
+sudo /usr/sbin/wpa_cli status | grep wpa_state | grep COMPLETED >/dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+    tpl_wifi_client_connected_color="green"
+    tpl_wifi_client_connected_text="Connecté au réseau wifi"
+else
+    tpl_wifi_client_connected_color="red"
+    tpl_wifi_client_connected_text="Déconnecté du réseau wifi"    
+fi
+
+pidof hostapd  >/dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+    tpl_wifi_ap_state_color="green"
+    tpl_wifi_ap_state_text="En cours d'émission."    
+else
+    tpl_wifi_ap_state_color="red"
+    tpl_wifi_ap_state_text="Pas d'émission wifi."     
+fi
+
+sudo /scripts_bb/test_wlan0_connectivity.sh
+if [ "$?" -eq "0" ]; then
+    tpl_wifi_client_internet_color="green"
+    tpl_wifi_client_internet_text="Connecté à Internet."    
+else
+    tpl_wifi_client_internet_color="red"
+    tpl_wifi_client_internet_text="Pas de connection à Internet."     
+fi
+
+
 #####################################################################
 #
 #               Generation du html   
@@ -65,6 +95,11 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( inject_var "$page" ~tpl_active_acceuil "")
+page=$( inject_var "$page" ~tpl_active_code "")
+page=$( inject_var "$page" ~tpl_active_wifi "active")
+page=$( inject_var "$page" ~tpl_active_portail "")
+page=$( inject_var "$page" ~tpl_active_avance "")
 echo $page;
 
 ########################################################
@@ -83,6 +118,15 @@ page=$( inject_var "$page" ~tpl_selected_none "$tpl_selected_none")
 page=$( inject_var "$page" ~tpl_selected_WPA "$tpl_selected_WPA")
 page=$( inject_var "$page" ~tpl_selected_WEPpass "$tpl_selected_WEPpass")
 page=$( inject_var "$page" ~tpl_selected_WEPhex "$tpl_selected_WEPhex")
+page=$( inject_var "$page" ~tpl_wifi_client_connected_color "$tpl_wifi_client_connected_color")
+page=$( inject_var "$page" ~tpl_wifi_client_connected_text "$tpl_wifi_client_connected_text")
+page=$( inject_var "$page" ~tpl_wifi_ap_state_color "$tpl_wifi_ap_state_color")
+page=$( inject_var "$page" ~tpl_wifi_ap_state_text "$tpl_wifi_ap_state_text")
+page=$( inject_var "$page" ~tpl_wifi_client_internet_color "$tpl_wifi_client_internet_color")
+page=$( inject_var "$page" ~tpl_wifi_client_internet_text "$tpl_wifi_client_internet_text")
+page=$( inject_var "$page" ~tpl_ip_color "$tpl_ip_color")
+
+
 
 echo $page;
 

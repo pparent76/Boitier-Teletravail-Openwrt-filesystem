@@ -6,30 +6,92 @@ echo ""
 cgi_getvars BOTH ALL
 
 tpl_result="success"
-tpl_title="Mise à jour Configuration"
-tpl_text="Les paramètres du client wifi ont été mis à jour. Le wifi va redémarrer!"
+tpl_title="Mise à jour de la configuration"
+tpl_text="Les paramètres du client wifi ont été mis à jour. <b>Le wifi va redémarrer!</b>"
 tpl_url_refresh="/cgi/wifi.cgi"
 tpl_time_refresh="3"
 
-#Todo vérifier la longueur du SSID et de la clef
+ok=1
 
-sudo /sbin/uci set bridgebox.wifi_sta.ssid=$ssid
-sudo /sbin/uci set bridgebox.wifi_sta.key=$pass
-
-if [ -z "$active_wifi_client" ]; then
-    sudo /sbin/uci set bridgebox.wifi_sta.enabled="0"
-else
-    sudo /sbin/uci set bridgebox.wifi_sta.enabled="1"
+if [ "$ssid" = "" ]; then 
+    tpl_result="error"
+    tpl_text="Erreur ssid vide!"
+    ok=0;
 fi
 
-if [ -z "$hidden" ]; then
-    sudo /sbin/uci set bridgebox.wifi_sta.hidden="0"
-else
-    sudo /sbin/uci set bridgebox.wifi_sta.hidden="1"
+if [ ${#ssid} -gt 32 ]; then 
+    tpl_result="error"
+    tpl_text="Erreur ssid trop long!"
+    ok=0;
 fi
 
-sudo /sbin/uci  commit
+if [ "$enctype" = "WPA" ] && [ ${#pass} -gt 63 ]; then 
+    tpl_result="error"
+    tpl_text="Clef WPA trop longue"
+    ok=0;
+fi
+
+if [ "$enctype" = "WPA" ] && [ ${#pass} -lt 8 ]; then 
+    tpl_result="error"
+    tpl_text="Clef WPA trop courte"
+    ok=0;
+fi
+
+if [ "$enctype" = "WEPhex" ] && [ ${#pass} -ne 10 ] && [ ${#pass} -ne 32 ]; then 
+    tpl_result="error"
+    tpl_text="Mauvaise taille de clef WEP hexadecimale."
+    ok=0;
+fi
+
+if [ "$enctype" = "WEPpass" ] && [ ${#pass} -lt 5 ]; then 
+    tpl_result="error"
+    tpl_text="Clef wep trop courte"
+    ok=0;
+fi
+
+if [ "$enctype" = "WEPpass" ] && [ ${#pass} -gt 29 ]; then 
+    tpl_result="error"
+    tpl_text="Clef wep trop longue"
+    ok=0;
+fi
+
+if [ "$ok" -eq "1" ];  then
+    #Todo vérifier la longueur du SSID et de la clef
+
+    sudo /sbin/uci set bridgebox.wifi_sta.ssid="$ssid"
+    sudo /sbin/uci set bridgebox.wifi_sta.key="$pass"
+
+    if [ -z "$active_wifi_client" ]; then
+        sudo /sbin/uci set bridgebox.wifi_sta.enabled="0"
+    else
+        sudo /sbin/uci set bridgebox.wifi_sta.enabled="1"
+    fi
+
+    if [ -z "$hidden" ]; then
+        sudo /sbin/uci set bridgebox.wifi_sta.hidden="0"
+    else
+        sudo /sbin/uci set bridgebox.wifi_sta.hidden="1"
+    fi
+
+    case $enctype in
+        "none")
+            sudo /sbin/uci set bridgebox.wifi_sta.enctype="open"
+        ;;
+        "WEPpass")
+           sudo /sbin/uci set bridgebox.wifi_sta.enctype="wep-passphrase"           
+        ;;
+        "WEPhex")
+           sudo /sbin/uci set bridgebox.wifi_sta.enctype="wep-hex"     
+        ;;        
+        "WPA")
+            sudo /sbin/uci set bridgebox.wifi_sta.enctype="wpa"
+        ;;    
+    esac
     
+    $enctype
+    sudo /sbin/uci  commit
+fi
+
 #####################################################################
 #
 #               Generation du html   
@@ -43,6 +105,11 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( inject_var "$page" ~tpl_active_acceuil "")
+page=$( inject_var "$page" ~tpl_active_code "")
+page=$( inject_var "$page" ~tpl_active_wifi "active")
+page=$( inject_var "$page" ~tpl_active_portail "")
+page=$( inject_var "$page" ~tpl_active_avance "")
 echo $page;
 
 ########################################################
@@ -62,3 +129,11 @@ echo $page;
 ########################################################
 page=$(cat /site/template/footer.html)
 echo $page;
+
+exec >&-
+exec 2>&-
+
+if [ "$ok" -eq "1" ];  then
+    (sleep 2; sudo /scripts_bb/wifi.sh >/dev/null 2>&1) &
+fi
+exit 0

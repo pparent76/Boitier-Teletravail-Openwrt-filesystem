@@ -1,29 +1,40 @@
 #!/bin/sh
 
 #Deinit previous settings.
-killall hotapd
+killall hostapd
 killall wpa_supplicant
-iw dev wlan0 del
-iw dev wlan1 del
+ip addr flush dev wlan0
+ifconfig wlan0 down
+ifconfig wlan1 down
 
-#Add two virtual wifi interfaces
-iw phy phy0 interface add wlan1 type __ap
-iw phy phy0 interface add wlan0 type station
+if [ ! -f "/tmp/wifi-interfaces-configured" ]; then
+    iw dev wlan0 del
+    iw dev wlan1 del
 
-#Todo: we need to change mac adresses
-#get mac address of wlan0
-mac=$(ifconfig -a wlan0 | awk '/HWaddr/ {print $5}')
-#Add 0x10 to this mac address
-machex=$( echo "$mac" | tr -d ':' ) # to remove colons
-macdec=$( printf "%d\n" 0x$machex ) # to convert to decimal
-macdec1=$( expr $macdec - 1 ) # to subtract one 
-machex1=$( printf "%x\n" $macdec1 ) # to convert to hex again 
-macfinal=$(echo $machex1 | sed 's/\(..\)/\1:/g;s/:$//' )
+    #Add two virtual wifi interfaces
+    iw phy phy0 interface add wlan1 type __ap
+    iw phy phy0 interface add wlan0 type station
 
-#set it to wlan1
-ip link set wlan1 address $macfinal
+    sleep 1
 
-sleep 2
+    #Todo: we need to change mac adresses
+    #get mac address of wlan0
+    mac=$(ifconfig -a wlan0 | awk '/HWaddr/ {print $5}')
+    #Add 0x10 to this mac address
+    machex=$( echo "$mac" | tr -d ':' ) # to remove colons
+    macdec=$( printf "%d\n" 0x$machex ) # to convert to decimal
+    macdec1=$( expr $macdec - 1 ) # to subtract one 
+    machex1=$( printf "%x\n" $macdec1 ) # to convert to hex again 
+    macfinal=$(echo $machex1 | sed 's/\(..\)/\1:/g;s/:$//' )
+
+    #set it to wlan1
+    ifconfig wlan1 down
+    ip link set wlan1 address $macfinal
+
+    sleep 1
+fi
+
+touch /tmp/wifi-interfaces-configured
 
 ################################################
 #           Station (client) part
@@ -37,7 +48,9 @@ channel_sta=""
 
 if [ "$enabled_sta" = "1" ]; then
     rm /etc/wpasupplicant.conf
-    echo "network={">/etc/wpasupplicant.conf
+    echo "update_config=1" >>/etc/wpasupplicant.conf
+    echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=root" >>/etc/wpasupplicant.conf
+    echo "network={">>/etc/wpasupplicant.conf
     echo "ssid=\"$ssid_sta\"">>/etc/wpasupplicant.conf
     if [ "$hidden_sta" = "1" ]; then
         echo "scan_ssid=1">>/etc/wpasupplicant.conf
@@ -52,6 +65,11 @@ if [ "$enabled_sta" = "1" ]; then
             echo "wep_key0=\"$key_sta\"">>/etc/wpasupplicant.conf   
             echo "wep_tx_keyidx=0">>/etc/wpasupplicant.conf              
         ;;
+        "wep-hex")
+            echo "key_mgmt=NONE">>/etc/wpasupplicant.conf
+            echo "wep_key0=0x$key_sta">>/etc/wpasupplicant.conf   
+            echo "wep_tx_keyidx=0">>/etc/wpasupplicant.conf              
+        ;;        
         "wpa")
             echo "psk=\"$key_sta\"">>/etc/wpasupplicant.conf
         ;;    
@@ -78,6 +96,9 @@ if [ "$enabled_sta" = "1" ]; then
     fi    
 fi
 
+if [ "$channel_sta" = "" ]; then
+    channel_sta=6
+fi
 
 ################################################
 #            Ap part
