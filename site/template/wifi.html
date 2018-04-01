@@ -101,7 +101,7 @@
                 <i class="fa fa-download"></i>
 
                 <h3 class="box-title">Paramètres client wifi</h3>
-                <form  action="recup-wifi.cgi" method="get" class="form-horizontal" >
+                <form  action="/recup/wifi-sta.cgi" method="post" class="form-horizontal" >
                 <div class="box-body chat" id="chat-box">
 
             
@@ -127,10 +127,10 @@
                                                     <option value="WPA" ~tpl_selected_WPA >
                                                         WPA/WPA2
                                                     </option></br>
-                                                    <option value="WEPpass" ~tpl_selected_WEP >
+                                                    <option value="WEPpass" ~tpl_selected_WEPpass >
                                                         WEP Passphrase
                                                     </option>
-                                                    <option value="WEPhex" ~tpl_selected_WEP >
+                                                    <option value="WEPhex" ~tpl_selected_WEPhex >
                                                         WEP hex
                                                     </option>												
                 </select>
@@ -145,7 +145,7 @@
             <div class="col-sm-offset-4 col-sm-8">
             <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="hidden"> Réseau caché </br>
+                            <input type="checkbox" name="hidden" ~tpl_checked_hidden> Réseau caché </br>
                         </label>
             </div>  </div> </div>
             
@@ -173,7 +173,7 @@
 
                 <h3 class="box-title">Paramètres wifi émis</h3>
                 <div class="box-body chat" id="chat-box">
-            <form  action="recup-wifi.cgi" method="get" class="form-horizontal">
+            <form  action="/recup/wifi-ap.cgi" method="post" class="form-horizontal">
             
                     <div class="form-group">           	
             <div class="col-sm-offset-1 col-sm-11">
