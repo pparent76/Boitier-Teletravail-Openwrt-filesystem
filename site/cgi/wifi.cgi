@@ -29,6 +29,29 @@ else
     tpl_check_active_client=""
 fi
 
+if [ "$(uci get bridgebox.wifi_sta.hidden)" = "1" ]; then
+    tpl_checked_hidden="checked"
+else
+    tpl_checked_hidden=""
+fi
+
+enctype_sta=$(uci get bridgebox.wifi_sta.enctype)
+
+    case $enctype_sta in
+        "open")
+            tpl_selected_none="selected "
+        ;;
+        "wep-passphrase")
+           tpl_selected_WEPpass="selected "           
+        ;;
+        "wep-hex")
+           tpl_selected_WEPhex="selected "           
+        ;;        
+        "wpa")
+            tpl_selected_WPA="selected"
+        ;;    
+    esac
+    
 #####################################################################
 #
 #               Generation du html   
@@ -55,6 +78,11 @@ page=$( inject_var "$page" ~tpl_ap_ssid "$tpl_ap_ssid")
 page=$( inject_var "$page" ~tpl_ap_key "$tpl_ap_key")
 page=$( inject_var "$page" ~tpl_check_active_ap "$tpl_check_active_ap")
 page=$( inject_var "$page" ~tpl_check_active_client "$tpl_check_active_client")
+page=$( inject_var "$page" ~tpl_checked_hidden "$tpl_checked_hidden")
+page=$( inject_var "$page" ~tpl_selected_none "$tpl_selected_none")
+page=$( inject_var "$page" ~tpl_selected_WPA "$tpl_selected_WPA")
+page=$( inject_var "$page" ~tpl_selected_WEPpass "$tpl_selected_WEPpass")
+page=$( inject_var "$page" ~tpl_selected_WEPhex "$tpl_selected_WEPhex")
 
 echo $page;
 
