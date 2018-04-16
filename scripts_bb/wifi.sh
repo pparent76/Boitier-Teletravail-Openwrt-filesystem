@@ -25,11 +25,16 @@ if [ ! -f "/tmp/wifi-interfaces-configured" ]; then
     macdec=$( printf "%d\n" 0x$machex ) # to convert to decimal
     macdec1=$( expr $macdec - 1 ) # to subtract one 
     machex1=$( printf "%x\n" $macdec1 ) # to convert to hex again 
-    macfinal=$(echo $machex1 | sed 's/\(..\)/\1:/g;s/:$//' )
+    macfinal1=$(echo $machex1 | sed 's/\(..\)/\1:/g;s/:$//' )
+    macdec1=$( expr $macdec1 - 1 ) # to subtract one 
+    machex1=$( printf "%x\n" $macdec1 ) # to convert to hex again 
+    macfinal2=$(echo $machex1 | sed 's/\(..\)/\1:/g;s/:$//' )
 
-    #set it to wlan1
-    ifconfig wlan1 down
-    ip link set wlan1 address $macfinal
+    #set it to wlan0
+    ifconfig wlan0 down
+    ifconfig wlan1 down    
+    ip link set wlan1 address $macfinal1
+    ip link set wlan0 address $macfinal2    
 
     sleep 1
 fi
@@ -97,6 +102,7 @@ if [ "$enabled_sta" = "1" ]; then
 fi
 
 if [ "$channel_sta" = "" ]; then
+    killall wpa_supplicant
     channel_sta=6
 fi
 
