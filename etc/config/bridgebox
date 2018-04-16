@@ -1,0 +1,18 @@
+config entry 'general'
+        option mode 'client'
+
+config entry 'wifi_sta'
+	option hidden '0'
+	option ssid 'Pierre'
+	option enabled '1'
+	option enctype 'wpa'
+	option key 'nasthedandro5strialt'
+
+config entry 'wifi_ap'
+	option key 'pierreparent'
+	option ssid 'BridgeBox'
+	option enabled '0'
+
+config entry 'advanced'
+        option server_port '123'
+

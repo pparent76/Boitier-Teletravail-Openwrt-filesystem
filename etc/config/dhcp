@@ -4,7 +4,7 @@ config dnsmasq
 	option boguspriv '1'
 	option filterwin2k '0'
 	option localise_queries '1'
-	option rebind_protection '1'
+	option rebind_protection '0'
 	option rebind_localhost '1'
 	option expandhosts '1'
 	option nonegcache '0'
@@ -21,7 +21,7 @@ config dhcp 'lan'
 	option leasetime '1m'
 	option ra 'server'
 	option ra_management '1'
-    option dhcpv6      'none'   
+	option dhcpv6      'none'   
 
 
 config dhcp 'wan'
