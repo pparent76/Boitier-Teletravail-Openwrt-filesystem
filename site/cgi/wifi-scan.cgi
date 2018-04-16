@@ -46,6 +46,8 @@ while IFS='' read -r ssid || [[ -n "$ssid" ]]; do
         ligne=$( inject_var "$ligne" ~tpl_end_url "\&enctype=wep-hex")
     fi        
     
+    ligne=$( inject_var "$ligne" ~tpl_end_url "\&enctype=unknown")
+    
     tpl_tab_rows="$tpl_tab_rows $ligne" ;
 done < /tmp/wifi-scan
 
