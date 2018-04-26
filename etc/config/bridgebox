@@ -1,5 +1,9 @@
 config entry 'general'
         option mode 'client'
+        
+config entry 'client'
+        option server_id 'jeeqxoqvar34ggfw'
+        option password 'Pierre'        
 
 config entry 'wifi_sta'
 	option hidden '0'
@@ -11,8 +15,9 @@ config entry 'wifi_sta'
 config entry 'wifi_ap'
 	option key 'pierreparent'
 	option ssid 'BridgeBox'
-	option enabled '0'
+	option enabled '1'
 
 config entry 'advanced'
-        option server_port '123'
+        option server_port '443'
+        option server_port_backup '993'
 
