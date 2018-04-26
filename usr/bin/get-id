@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cat /tor/omb_hidden_service/hostname | tr '.' ' ' | awk '{print $1;}'

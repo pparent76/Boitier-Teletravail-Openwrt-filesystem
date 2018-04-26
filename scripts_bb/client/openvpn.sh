@@ -1,12 +1,24 @@
 #!/bin/sh
 
+logfile=/var/log/openvpn-client
+  
+log() {
+  thedate=$(date);
+  echo "[$thedate]- $*" >> $logfile
+}
+
+
 /etc/init.d/openvpn stop
 killall openvpn
 
-ip="86.71.154.196"
-port="443"
-proto="tcp"
-password="Pierre"
+##############################################
+#       Get advertisement info
+##############################################
+. /scripts_bb/client/get-advertised.sh
+logfile=/var/log/openvpn-client
+
+password=$(uci get bridgebox.client.password )
+log "Attempting to connect to $ip:$port via $proto with password $password"
 
 sed -i "s/remote .*/remote $ip $port/g" /etc/openvpn/client.conf
 sed -i "s/proto .*/proto $proto/g" /etc/openvpn/client.conf
