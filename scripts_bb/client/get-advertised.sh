@@ -5,6 +5,9 @@ logfile=/var/log/get-advertised
 log() {
   thedate=$(date);
   echo "[$thedate]- $*" >> $logfile
+  if [ -f "/tmp/verbose" ]; then
+    printf "$*"
+  fi
 }
 
 
@@ -13,6 +16,7 @@ handle_advertised() {
    var=$(echo $var |  sed 's/ENDADVERTISE.*//' )
    export port=$(echo $var | awk '{print $3}') 
    export ip=$(echo $var | awk '{print $2}')    
+   export localip=$(echo $var | awk '{print $4}')       
    export mode=$(echo $var | awk '{print $1}') 
    if [ "$mode" = "direct" ]; then
     export proto="tcp"
@@ -25,7 +29,7 @@ serverid=$(uci get bridgebox.client.server_id )
 
 for i in $(seq 1 10); do
 
-    torsocks wget $serverid.onion --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-res > /dev/null 2&>1
+    torsocks wget $serverid.onion --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-res  > /dev/null 2&>1 
     cat /tmp/advertised-res | grep BEGINADVERTISE | grep ENDADVERTISE
     if  [ "$?" -eq "0" ]; then
         log "Could get advertise info with torsocks for $serverid"

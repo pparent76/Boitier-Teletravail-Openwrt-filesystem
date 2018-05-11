@@ -10,6 +10,7 @@ mkdir -p /tmp/bb/server/
 sleep 7;
 
 /scripts_bb/server/upnp.sh
+/scripts_bb/server/stun.sh
 /scripts_bb/server/advertise.sh
 
 

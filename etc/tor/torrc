@@ -35,6 +35,7 @@ DataDirectory /var/lib/tor/
 
 HiddenServiceDir /tor/omb_hidden_service/
 HiddenServicePort 80 127.0.0.1:6565
+HiddenServicePort 1194 127.0.0.1:1194
 
 ################ This section is just for relays #####################
 #

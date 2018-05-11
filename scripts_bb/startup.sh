@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo 990 > /proc/sys/vm/min_free_kbytes
 mode=$(uci get bridgebox.general.mode)
 
 /scripts_bb/setup-tor.sh

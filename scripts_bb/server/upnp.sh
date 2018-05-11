@@ -24,12 +24,10 @@ for port in $port1 $port2; do
     # Try to redirect port
     #############################################
     if [ "$ipeth0" != "" ]; then
-        upnpc -d $port tcp -e > /dev/null 2>&1
-        sleep 5;
+        #upnpc -d $port tcp -e "bridgebox" > /dev/null 2>&1
+        sleep 1;
         # 31536000
-        upnpc -a $ipeth0 1194 $port tcp -e > /tmp/resupnp 2>&1    
-        
-        ipport=$(cat /tmp/resupnp | tail -n 1 | grep redirected | grep $ipeth0 |  awk '{print $2}')
+        upnpc -a $ipeth0 1194 $port tcp -e "bridgebox" > /tmp/resupnp 2>&1    
         
         upnpc -l | grep "$ipeth0:1194" | grep "$port"
 

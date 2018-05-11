@@ -22,6 +22,8 @@ http ALL=(ALL) NOPASSWD: /scripts_bb/wifi.sh
 http ALL=(ALL) NOPASSWD: /usr/sbin/wpa_cli
 http ALL=(ALL) NOPASSWD:  /scripts_bb/test_wlan0_connectivity.sh
 http ALL=(ALL) NOPASSWD:  /usr/bin/iwinfo
+http ALL=(ALL) NOPASSWD:  /usr/bin/dummyudp
+http ALL=(ALL) NOPASSWD:  /usr/sbin/conntrack
                                                                                      
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      
