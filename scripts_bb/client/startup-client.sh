@@ -3,6 +3,8 @@
 mkdir -p /tmp/bb/client
 /scripts_bb/client/get-offline.sh 
 
+chown http /etc/client-code-history
+
 echo "Pierre"
 iptables -I INPUT -p tcp --dport 80 -i wlan0 -j DROP
 iptables -I INPUT -p tcp --dport 443 -i wlan0 -j DROP

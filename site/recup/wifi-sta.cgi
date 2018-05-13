@@ -92,6 +92,14 @@ if [ "$ok" -eq "1" ];  then
     sudo /sbin/uci  commit
 fi
 
+#Variable Client/serveur    
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "clientservermode" = "server" ]; then
+    tpl_clientserver_mode="Serveur"
+else
+    tpl_clientserver_mode="Client"
+fi
+
 #####################################################################
 #
 #               Generation du html   
@@ -110,6 +118,7 @@ page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "active")
 page=$( inject_var "$page" ~tpl_active_portail "")
 page=$( inject_var "$page" ~tpl_active_avance "")
+page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
 echo $page;
 
 ########################################################

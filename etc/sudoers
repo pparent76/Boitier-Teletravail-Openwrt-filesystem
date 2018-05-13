@@ -24,7 +24,11 @@ http ALL=(ALL) NOPASSWD:  /scripts_bb/test_wlan0_connectivity.sh
 http ALL=(ALL) NOPASSWD:  /usr/bin/iwinfo
 http ALL=(ALL) NOPASSWD:  /usr/bin/dummyudp
 http ALL=(ALL) NOPASSWD:  /usr/sbin/conntrack
-                                                                                     
+http ALL=(ALL) NOPASSWD:  /scripts_bb/client/get-offline.sh
+http ALL=(ALL) NOPASSWD:  /scripts_bb/client/openvpn.sh
+http ALL=(ALL) NOPASSWD:  /scripts_bb/client/captive-portail.sh
+http ALL=(ALL) NOPASSWD:  /bin/sed
+
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      
 #includedir /etc/sudoers.d                                                           

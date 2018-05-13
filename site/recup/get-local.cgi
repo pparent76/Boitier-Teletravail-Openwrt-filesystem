@@ -2,31 +2,14 @@
 echo "Content-type: text/html"
 echo ""
 
-#####################################################################
-#
-#               Calcul des variables  
-#
-#####################################################################
-
-. ../recup/post.sh
+. ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_client_ssid=$ssid
-
-    case $enctype in
-        "open")
-            tpl_selected_none="selected "
-        ;;
-        "wep-passphrase")
-           tpl_selected_WEPpass="selected "           
-        ;;
-        "wep-hex")
-           tpl_selected_WEPhex="selected "           
-        ;;        
-        "wpa")
-            tpl_selected_WPA="selected"
-        ;;    
-    esac
+tpl_result="success"
+tpl_title="Changement de mode de fonctionnement"
+tpl_text="Passage en mode réseau local."
+tpl_url_refresh="/cgi/home.cgi"
+tpl_time_refresh="3"
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
@@ -49,9 +32,9 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
-page=$( inject_var "$page" ~tpl_active_acceuil "")
+page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
-page=$( inject_var "$page" ~tpl_active_wifi "active")
+page=$( inject_var "$page" ~tpl_active_wifi "")
 page=$( inject_var "$page" ~tpl_active_portail "")
 page=$( inject_var "$page" ~tpl_active_avance "")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
@@ -60,13 +43,12 @@ echo $page;
 ########################################################
 #			page
 ########################################################
-page=$(cat /site/template/wifi-config-one-network.html)
-
-page=$( inject_var "$page" ~tpl_client_ssid "$tpl_client_ssid")
-page=$( inject_var "$page" ~tpl_selected_none "$tpl_selected_none")
-page=$( inject_var "$page" ~tpl_selected_WPA "$tpl_selected_WPA")
-page=$( inject_var "$page" ~tpl_selected_WEPpass "$tpl_selected_WEPpass")
-page=$( inject_var "$page" ~tpl_selected_WEPhex "$tpl_selected_WEPhex")
+page=$(cat /site/template/recup.html)
+page=$( inject_var "$page" ~tpl_result "$tpl_result")
+page=$( inject_var "$page" ~tpl_title "$tpl_title")
+page=$( inject_var "$page" ~tpl_text "$tpl_text")
+page=$( inject_var "$page" ~tpl_url_refresh "$tpl_url_refresh")
+page=$( inject_var "$page" ~tpl_time_refresh "$tpl_time_refresh")
 echo $page;
 
 ########################################################
@@ -74,3 +56,7 @@ echo $page;
 ########################################################
 page=$(cat /site/template/footer.html)
 echo $page;
+
+sudo /scripts_bb/client/captive-portail.sh >/dev/null 2>&1
+
+exit 0

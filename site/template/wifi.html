@@ -1,4 +1,23 @@
-    
+<script>
+function togglePassword1() {
+    var x = document.getElementById("passclient");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+function togglePassword2() {
+    var x = document.getElementById("passap");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+</script>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
     
@@ -136,7 +155,13 @@
             </div>
             
             <div class="form-group">
-                <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8"><input type="text" name="pass" value="~tpl_client_key" class="form-control"></div>
+                <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8">
+                
+                    <div class="row">
+                    <div class="col-sm-10"><input type="password" id="passclient" name="pass" value="~tpl_client_key" class="form-control"></div>
+                    <div class="col-sm-2"><button type="button" onclick="togglePassword1()"><i class="fa  fa-eye" ></i></button></div>
+                </div>
+                </div>
             </div>          
     
             <div class="form-group">           	
@@ -187,7 +212,13 @@
             
             
             <div class="form-group">
-                <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8"><input type="text" name="pass" value="~tpl_ap_key" class="form-control"></div>
+                <label for="pass" class="col-sm-4 control-label">Clef de Chiffrement</label><div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-10"><input type="password" id="passap" name="pass" value="~tpl_ap_key" class="form-control"></div>
+                        <div class="col-sm-2"><button type="button" onclick="togglePassword2()"><i class="fa  fa-eye" ></i></button></div>
+                    </div>
+                </div>
+                </div>
             </div>
             
                     <center>

@@ -3,7 +3,8 @@ config entry 'general'
         
 config entry 'client'
         option server_id 'jeeqxoqvar34ggfw'
-        option password 'Pierre'        
+        option password 'Pierre'      
+        option comment 'Le réseau chez Pierre'           
 
 config entry 'wifi_sta'
 	option hidden '0'

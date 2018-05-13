@@ -2,31 +2,16 @@
 echo "Content-type: text/html"
 echo ""
 
-#####################################################################
-#
-#               Calcul des variables  
-#
-#####################################################################
-
-. ../recup/post.sh
+. ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_client_ssid=$ssid
+tpl_result="success"
+tpl_title="Mise à jour de la configuration"
+tpl_text="Les codes d'accès ont été modifiés"
+tpl_url_refresh="/cgi/code.cgi"
+tpl_time_refresh="3"
 
-    case $enctype in
-        "open")
-            tpl_selected_none="selected "
-        ;;
-        "wep-passphrase")
-           tpl_selected_WEPpass="selected "           
-        ;;
-        "wep-hex")
-           tpl_selected_WEPhex="selected "           
-        ;;        
-        "wpa")
-            tpl_selected_WPA="selected"
-        ;;    
-    esac
+sudo /bin/sed  -i "${numero}d"  /etc/client-code-history 
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
@@ -60,13 +45,13 @@ echo $page;
 ########################################################
 #			page
 ########################################################
-page=$(cat /site/template/wifi-config-one-network.html)
+page=$(cat /site/template/recup.html)
+page=$( inject_var "$page" ~tpl_result "$tpl_result")
+page=$( inject_var "$page" ~tpl_title "$tpl_title")
+page=$( inject_var "$page" ~tpl_text "$tpl_text")
+page=$( inject_var "$page" ~tpl_url_refresh "$tpl_url_refresh")
+page=$( inject_var "$page" ~tpl_time_refresh "$tpl_time_refresh")
 
-page=$( inject_var "$page" ~tpl_client_ssid "$tpl_client_ssid")
-page=$( inject_var "$page" ~tpl_selected_none "$tpl_selected_none")
-page=$( inject_var "$page" ~tpl_selected_WPA "$tpl_selected_WPA")
-page=$( inject_var "$page" ~tpl_selected_WEPpass "$tpl_selected_WEPpass")
-page=$( inject_var "$page" ~tpl_selected_WEPhex "$tpl_selected_WEPhex")
 echo $page;
 
 ########################################################
@@ -74,3 +59,7 @@ echo $page;
 ########################################################
 page=$(cat /site/template/footer.html)
 echo $page;
+
+
+exit 0
+ 
