@@ -5,20 +5,24 @@ echo ""
 . ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_result="info"
-tpl_title="Changement de mode de fonctionnement"
-tpl_text="Passage en mode réseau local."
-tpl_url_refresh="/recup/check-change-mode.cgi"
-tpl_time_refresh="0"
-tpl_icon="fa-rotate-right fa-spin"
+tpl_result="success"
+tpl_title="Mise à jour de la configuration"
+tpl_text="Les paramètres avancés du serveur ont été mis à jour!"
+tpl_url_refresh="/cgi/avance.cgi"
+tpl_time_refresh="3"
+tpl_icon="fa-check"
 
-#Variable Client/serveur    
-clientservermode=$(uci get bridgebox.general.mode)
-if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
-else
-    tpl_clientserver_mode="Client"
-fi
+ok=1
+
+    sudo /sbin/uci  set bridgebox.advanced.stun1=$stun1
+    sudo /sbin/uci  set bridgebox.advanced.stun2=$stun2
+    sudo /sbin/uci  set bridgebox.advanced.stun3=$stun3   
+    
+    sudo /sbin/uci  set bridgebox.advanced.stunport1=$stun_port1
+    sudo /sbin/uci  set bridgebox.advanced.stunport2=$stun_port2
+    sudo /sbin/uci  set bridgebox.advanced.stunport3=$stun_port3       
+    sudo /sbin/uci  commit
+
 
 #####################################################################
 #
@@ -33,11 +37,11 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
-page=$( inject_var "$page" ~tpl_active_acceuil "active")
+page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")
 page=$( inject_var "$page" ~tpl_active_portail "")
-page=$( inject_var "$page" ~tpl_active_avance "")
+page=$( inject_var "$page" ~tpl_active_avance "active")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
 echo $page;
 
@@ -59,8 +63,10 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-cp /tmp/web-requested-mode /tmp/web-previous-mode
-sudo /scripts_bb/client/captive-portail.sh >/dev/null 2>&1 &
-echo "local">/tmp/web-requested-mode
+exec >&-
+exec 2>&-
 
+if [ "$ok" -eq "1" ];  then
+    (sleep 2; sudo /scripts_bb/wifi.sh >/dev/null 2>&1) &
+fi
 exit 0

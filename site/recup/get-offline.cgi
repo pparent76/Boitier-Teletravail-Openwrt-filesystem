@@ -5,15 +5,16 @@ echo ""
 . ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_result="success"
+tpl_result="info"
 tpl_title="Changement de mode de fonctionnement"
 tpl_text="Passage en mode réseau local."
-tpl_url_refresh="/cgi/home.cgi"
-tpl_time_refresh="3"
+tpl_url_refresh="/recup/check-change-mode.cgi"
+tpl_time_refresh="0"
+tpl_icon="fa-rotate-right fa-spin"
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
-if [ "clientservermode" = "server" ]; then
+if [ "$clientservermode" = "server" ]; then
     tpl_clientserver_mode="Serveur"
 else
     tpl_clientserver_mode="Client"
@@ -49,6 +50,7 @@ page=$( inject_var "$page" ~tpl_title "$tpl_title")
 page=$( inject_var "$page" ~tpl_text "$tpl_text")
 page=$( inject_var "$page" ~tpl_url_refresh "$tpl_url_refresh")
 page=$( inject_var "$page" ~tpl_time_refresh "$tpl_time_refresh")
+page=$( inject_var "$page" ~tpl_icon "$tpl_icon")
 echo $page;
 
 ########################################################
@@ -57,6 +59,8 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-sudo /scripts_bb/client/get-offline.sh >/dev/null 2>&1
+cp /tmp/web-requested-mode /tmp/web-previous-mode
+sudo /scripts_bb/client/get-offline.sh >/dev/null 2>&1 &
+echo "offline">/tmp/web-requested-mode
 
 exit 0

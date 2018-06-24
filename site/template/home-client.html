@@ -33,16 +33,17 @@
                     </div>
                     
                     <div class="col-lg-6 col-md-6 col-xs-12">
-                        <div class="info-box bg-~tpl_wifi_client_internet_color">
+                        <div class="info-box bg-~tpl_internet_color">
                         <span class="info-box-icon"><i class="fa fa-globe"></i></span>
 
                         <div class="info-box-content">
-                        <span class="align-middle"  ><center>~tpl_internet_text (plus d'info)</center></span>
+                        <span class="align-middle"  ><center><b>Internet ( <a href="/cgi/check-internet.cgi"><font color="white"><u>détails</u></font> </a> )</b><h3><b>~tpl_internet_text</b></h3></center></span>
                         </div>
                         <!-- /.info-box-content -->
                         </div>                
                         </div>
                 </div></div>
+                                    <div style="height:25px"></div>
                     <!-- /.info-box-content -->
             </div></div>
         
@@ -57,24 +58,38 @@
                 </div>
                 
                 <div class="box-body chat" id="chat-box">
+     
                 <p>Cliquez sur les boutons ci-dessous pour changer le mode </p>
-                <a class="btn btn-app btn-info" href="/recup/get-offline.cgi">
+                <center>
+                <a  style="display:~tpl_display_offline" class="btn btn-app btn-info" href="/recup/get-offline.cgi">
                 <i class="fa fa-pause"></i> Mode hors-ligne
                 </a>
-                <a class="btn btn-app btn-info" href="/recup/get-local.cgi">
+                <a style="display:~tpl_display_local" class="btn btn-app btn-info" href="/recup/get-local.cgi">
                 <i class="fa fa-map-marker"></i> Mode réseau local
                 </a>                
-                <a class="btn btn-app btn-info" href="/recup/get-entreprise.cgi">
+                <a style="display:~tpl_display_entreprise" class="btn btn-app btn-info" href="/recup/get-entreprise.cgi">
                 <i class="fa fa-users"></i> Mode Entreprise
-                </a>                
+                </a>  
+                </center>
                 </div>  
+                             
+
+<div class="tooltipp pull-right"><i class="fa fa-support" aria-hidden="true"></i> Aide
+  <span class="tooltiptextp"><p style="display:~tpl_display_offline"><b>Le mode hors-ligne</b> redirige automatiquement le navigateur vers cette interface d'administration, et ne permet d'accéder à rien d'autre.<br></p><p style="display:~tpl_display_local"><b>Le mode réseau local</b> permet d'accéder au réseau local sur lequel est branché le boîtier,ce qui est principalement utile lorsqu'un réseau public requière une identification via un portail captif pour accéder à Internet.<br></p> <p style="display:~tpl_display_entreprise"> <b>Le mode entreprise </b> permet de se connecter sur le réseau de l'entreprise distante, correspondant au code de connexion configuré.<p> </span>
+</div>
+<br><div style="height:10px"></div>
+           
                     <!-- /.info-box-content -->
             </div>
             
             
             
         </div>
-            
+        </div>
+        
+        
+        
+         
             </section>
     
     </div>  

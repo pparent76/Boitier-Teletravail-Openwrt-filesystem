@@ -1,0 +1,144 @@
+    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        </section>
+        
+        <section class="content">
+        <!-- Small boxes (Stat box) -->
+        
+   
+              
+              
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                       <div class="box  box-success">
+                <div class="box-header">
+                <i class="fa fa-info"></i>
+
+                <h3 class="box-title">État du boîtier</h3>
+                </div>
+                
+                <div class="box-body chat" id="chat-box">
+                     <div class="row">
+                    
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="info-box bg-~tpl_internet_color">
+                        <span class="info-box-icon"><i class="fa fa-globe"></i></span>
+
+                        <div class="info-box-content">
+                        <span class="align-middle"  ><center><b>Internet ( <a href="/cgi/check-internet.cgi"><font color="white"><u>détails</u></font> </a> )</b><h3><b>~tpl_internet_text</b></h3></center></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>  
+                     </div>   
+                        
+                        
+                        <div class="col-lg-4 col-md-4 col-xs-12">                        
+                        <div class="info-box bg-~tpl_server_color">
+                        <span class="info-box-icon"><i class="fa fa-server"></i></span>
+
+                        <div class="info-box-content">
+                        <span class="align-middle"  ><center><b>Etat du serveur ( <a href="/cgi/details-advertise.cgi"><font color="white"><u>détails</u></font> </a> )</b> <h3><b>~tpl_server_state</b></h3></center></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>
+                     </div>                           
+                        
+                    <div class="col-lg-4 col-md-4 col-xs-12">                        
+                        <div class="info-box bg-blue">
+                        <span class="info-box-icon"><i class="fa fa-clock-o"></i></span>
+
+                        <div class="info-box-content">
+                        <span class="align-middle"  ><center><b>Temps d'activité</b> <h3>~tpl_uptime</h3></center></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>  
+                     </div>                          
+                        
+                        
+                </div></div>
+                
+                </div></div>
+                </div>
+            
+            
+           <div class="row">
+           
+           
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                       <div class="box  box-success">
+                <div class="box-header">
+                <i class="fa fa-qrcode"></i>
+
+                <h3 class="box-title">Identifiant du boîtier</h3>
+                </div>
+                
+                <div class="box-body chat" id="chat-box">
+                     <div class="row">
+                    
+                    
+                    
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="info-box bg-blue">
+                        <span class="info-box-icon"><i class="fa fa-barcode"></i></span>
+
+                        <div class="info-box-content">
+                        <span class="align-middle"  ><center><h4><b>~tpl_box_id</b></h4> </center></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                        </div>                
+                        </div>
+                </div></div>
+                    <!-- /.info-box-content -->
+            </div></div>
+            
+            
+           
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                       <div class="box  box-success">
+                <div class="box-header">
+                <i class="fa fa-update"></i>
+
+                <h3 class="box-title">Changement de mode</h3>
+                </div>
+                
+                <div class="box-body chat" id="chat-box">
+                     <div class="row">
+                    
+                    
+                    
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div style="height:15px"></div>
+                    <center>
+                                              <a class="btn btn-app btn-info" href="/recup/change-serverclient.cgi">
+                <i class="fa fa-user"></i> Passage en mode client
+                </a>
+                </center>
+                <div style="height:20px"></div>
+                </div>
+                            
+                                <!-- /.info-box-content -->
+            </div></div>
+            
+
+        
+            </div></div></div>
+            
+                    <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12" style="display:~tpl_display_warning_server" >        
+                <div class="alert alert-warning alert-dismissible">
+                    <h4><i class="icon fa fa-warning"></i> Attention </h4>
+                        Pour un fonctionnement optimal merci d’activer le <b>service UpNp</b> dans votre routeur internet, ou de <b>rediriger un des ports</b> TCP (~tpl_port1 ou ~tpl_port2 ou ~tpl_port3 ou ~tpl_port4) de l'addresse ip publique ~tpl_ippublique vers le port 1194 de ce boitier ( <u>Ip:</u> ~tpl_iplocale , <u>mac:</u>  ~tpl_maclocale ). Voir le manuel d'utilisation.
+                </div>
+            </div>
+        </div>   
+            
+            
+            
+            </section>
+    
+    </div>  
+ 

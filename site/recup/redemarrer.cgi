@@ -1,32 +1,21 @@
 #!/bin/sh
 echo "Content-type: text/html"
 echo ""
+echo "<!--"
 
-. ./post.sh
-cgi_getvars BOTH ALL
-
-tpl_result="info"
-tpl_title="Changement de mode de fonctionnement"
-tpl_text="Passage en mode réseau local."
-tpl_url_refresh="/recup/check-change-mode.cgi"
-tpl_time_refresh="0"
+tpl_result="success"
+tpl_title="Veuillez patienter"
+tpl_text="<b>Redémarrage du Boitier. (Environ 2 minutes)"
+tpl_url_refresh="/cgi/home.cgi"
+tpl_time_refresh="120"
 tpl_icon="fa-rotate-right fa-spin"
 
-#Variable Client/serveur    
-clientservermode=$(uci get bridgebox.general.mode)
-if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
-else
-    tpl_clientserver_mode="Client"
-fi
 
-#####################################################################
-#
-#               Generation du html   
-#
-#####################################################################
+
+echo "-->"
+
 inject_var() {
-	echo $1 | sed -e "s#$2#$3#g"
+  echo $1 | sed -e "s#$2#$3#g"
 }
 
 ########################################################
@@ -59,8 +48,8 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-cp /tmp/web-requested-mode /tmp/web-previous-mode
-sudo /scripts_bb/client/captive-portail.sh >/dev/null 2>&1 &
-echo "local">/tmp/web-requested-mode
 
-exit 0
+
+(sleep 3 ;sudo /sbin/reboot )  >/dev/null 2>&1 & 
+exec >&-
+exec 2>&-

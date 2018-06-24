@@ -30,7 +30,7 @@ tpl_client_ssid=$ssid
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
-if [ "clientservermode" = "server" ]; then
+if [ "$clientservermode" = "server" ]; then
     tpl_clientserver_mode="Serveur"
 else
     tpl_clientserver_mode="Client"

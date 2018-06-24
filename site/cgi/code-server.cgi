@@ -13,6 +13,9 @@ function nstars {
     done
 }
 
+. ../recup/post.sh
+cgi_getvars BOTH ALL
+
 
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
@@ -31,21 +34,33 @@ tpl_history_rows="~tpl_history_row"
 
 j=1;
 
+if [ "$displaycodes" != "1" ]; then
+  tpl_displaycode_visible="block"
+  tpl_hidecode_visible="none"  
+else
+  tpl_displaycode_visible="none"
+  tpl_hidecode_visible="block"  
+fi
+
 while IFS='' read -r line || [[ -n "$line" ]]; do
  if [ "$line" != "" ]; then 
-    hostl=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ')
-    codel=$(echo "$line" | tr '#' '\n' | head -n 2| tail -n 1 | tr '\n' ' ')  
-    codel=$(nstars ${#codel})
-    commentairel=$(echo "$line" | tr '#' '\n' | tail -n 2 | tr '\n' ' ')     
-    tpl_history_row=$(cat /site/template/tab_line/code-client.html | tr '\n' ' ' )
+    hostl=$(sudo /usr/bin/get-id)
+    codel=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ' | sed "s/ //g")  
+    codedecrypt=$codel;
+    if [ "$displaycodes" != "1" ]; then
+        codel=$(nstars ${#codel})
+    fi
+    commentairel=$(echo "$line" | tr '#' '\n' | tail -n 1 | tr '\n' ' ')     
+    tpl_history_row=$(cat /site/template/tab_line/code-server.html | tr '\n' ' ' )
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_host "$hostl") 
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_code "$codel") 
+    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_decryptcode "$codedecrypt")    
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_commentaire "$commentairel")    
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_count_index "$j")     
     tpl_history_rows=$( inject_var "$tpl_history_rows" ~tpl_history_row "~tpl_history_row $tpl_history_row") 
     j=$(( j+1 ))
   fi
-done < /etc/client-code-history
+done < /etc/server-codes
 
 tpl_history_rows=$( inject_var "$tpl_history_rows" ~tpl_history_row "")
 #####################################################################
@@ -70,11 +85,15 @@ echo $page;
 ########################################################
 #			page
 ########################################################
-page=$(cat /site/template/code-client.html)
+page=$(cat /site/template/code-server.html)
 page=$( inject_var "$page" ~tpl_code "$tpl_code")
 page=$( inject_var "$page" ~tpl_hote "$tpl_hote")
 page=$( inject_var "$page" ~tpl_commentaire "$tpl_commentaire")
 page=$( inject_var "$page" ~tpl_history_rows "$tpl_history_rows")  
+page=$( inject_var "$page" ~tpl_displaycode_visible "$tpl_displaycode_visible") 
+page=$( inject_var "$page" ~tpl_hidecode_visible "$tpl_hidecode_visible") 
+page=$( inject_var "$page" ~tpl_newline "\%0A") 
+page=$( inject_var "$page" ~tpl_etbody "\&body") 
 echo $page;
 
 ########################################################

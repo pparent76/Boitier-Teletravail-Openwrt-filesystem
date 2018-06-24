@@ -62,7 +62,7 @@
             </li>
             
            <li class="dropdown messages-menu">
-            <a href="#"   class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background-color:orange">
+            <a href="/cgi/redemarrer.cgi"    style="background-color:orange">
                 <i class="fa fa-refresh"></i> Redémarrer
             </a>
             </li>
@@ -80,46 +80,43 @@
   
   
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+  <aside class="main-sidebar" id="mysidebar"  style="position:absolute">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-   
+   <section style="height: auto;" class="sidebar">
+   <section  class="sidebar">   
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">ADMINISTRATION</li>
          <li class="~tpl_active_acceuil" >
-          <a href="home.cgi">
+          <a href="/cgi/home.cgi">
             <i class="fa fa-home"></i> <span>Accueil</span>
-            <span class="pull-right-container">
-            </span>
           </a>
         </li>
         
-        <li class="~tpl_active_code" >
-          <a href="code.cgi">
-            <i class="fa fa-unlock-alt"></i> <span>Code de connexion</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
         
         <li class="~tpl_active_wifi" >
           <a href="/cgi/wifi.cgi">
             <i class="fa fa-wifi"></i> <span>Wifi</span>
-            <span class="pull-right-container">
-            </span>
           </a>
-        </li>      
+        </li>    
         
-        <li class="~tpl_active_avancé">
-          <a href="mails.cgi ">
-            <i class="fa fa-gear"></i> <span>Avancé</span>
-            <span class="pull-right-container">
-            </span>
+        <li class="~tpl_active_code" >
+          <a href="/cgi/code.cgi">
+            <i class="fa fa-unlock-alt"></i> <span>Code de connexion</span>
           </a>
         </li>
+        
+        
+        <li class="~tpl_active_avance">
+          <a href="/cgi/avance.cgi ">
+            <i class="fa fa-gear"></i> <span>Avancé</span>
+          </a>
+        </li>
+       </ul> 
        
     </section>
+    </section>    
     <!-- /.sidebar -->
   </aside>
+  

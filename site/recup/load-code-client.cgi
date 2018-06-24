@@ -10,6 +10,7 @@ tpl_title="Mise à jour de la configuration"
 tpl_text="Les codes d'accès ont été modifiés"
 tpl_url_refresh="/cgi/code.cgi"
 tpl_time_refresh="3"
+tpl_icon="fa-check"
 
 line=$(sed "${numero}q;d" /etc/client-code-history )
 
@@ -24,7 +25,7 @@ sudo /sbin/uci commit;
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
-if [ "clientservermode" = "server" ]; then
+if [ "$clientservermode" = "server" ]; then
     tpl_clientserver_mode="Serveur"
 else
     tpl_clientserver_mode="Client"
@@ -60,7 +61,7 @@ page=$( inject_var "$page" ~tpl_title "$tpl_title")
 page=$( inject_var "$page" ~tpl_text "$tpl_text")
 page=$( inject_var "$page" ~tpl_url_refresh "$tpl_url_refresh")
 page=$( inject_var "$page" ~tpl_time_refresh "$tpl_time_refresh")
-
+page=$( inject_var "$page" ~tpl_icon "$tpl_icon")
 echo $page;
 
 ########################################################

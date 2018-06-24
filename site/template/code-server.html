@@ -1,0 +1,69 @@
+<script>
+function togglePassword() {
+    var x = document.getElementById("code");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+</script>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        </section>
+        
+        <section class="content">
+
+            
+           
+  
+    <!-- Wifi connection -->
+            <div class="box  box-success">
+                <div class="box-header">
+                <i class="fa fa-unlock-alt"></i>
+
+                <h3 class="box-title">Codes d'accès.</h3>
+                <br><br>
+                <p> Chacun des code d'accès ci-dessous permet à un employé de se connecter au réseau<p>
+                
+                <div class="row">
+                <div class="col-lg-2 col-md-4 col-xs-12"  style="display:~tpl_displaycode_visible" ><a href="/cgi/code.cgi?displaycodes=1" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Afficher les codes</a>  </div>
+                
+               <div class="col-lg-2 col-md-4 col-xs-12" style="display:~tpl_hidecode_visible">             
+                <a href="/cgi/code.cgi" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Cacher les codes</a></div>
+                <div>
+                <div class="box-body chat" id="chat-box">
+                <br><br>
+                <table  class="table table-condensed">
+                  <tr>
+                    <th>Hôte</th>
+                    <th>Code</th>
+                    <th>Commentaire</th>  
+                    <th></th>
+                    <th></th>                    
+                    </tr>
+                  ~tpl_history_rows  
+                </table>
+                
+                <form method="POST" action="/recup/add-code-server.cgi">
+									<div class="form-group">
+										<div class="input-group input-group-sm" style="margin-bottom: 2px; width:100%">
+                                            <label for="code">Code:</label>
+											<input type="password" name="code" id="code">
+											<button type="button" onclick="togglePassword()"><i class="fa  fa-eye" ></i></button>
+                                            <label for="code">Commentaire:</label>											
+											<input type="text" name="commentaire" id="commentaire">
+                                            <input value="Ajouter" name="action" class="btn btn-success" type="submit">
+										</div>
+									</div>
+                </form>
+                </div>
+            </div>
+            </div>
+            <!-- Wifi connection  -->  
+</div>
+</div>

@@ -5,12 +5,14 @@ echo ""
 . ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_result="info"
-tpl_title="Changement de mode de fonctionnement"
-tpl_text="Passage en mode réseau local."
-tpl_url_refresh="/recup/check-change-mode.cgi"
-tpl_time_refresh="0"
-tpl_icon="fa-rotate-right fa-spin"
+tpl_result="success"
+tpl_title="Mise à jour de la configuration"
+tpl_text="Les codes d'accès ont été modifiés"
+tpl_url_refresh="/cgi/code.cgi"
+tpl_time_refresh="3"
+tpl_icon="fa-times"
+
+sudo /bin/sed  -i "${numero}d"  /etc/server-codes
 
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
@@ -33,9 +35,9 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
-page=$( inject_var "$page" ~tpl_active_acceuil "active")
+page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
-page=$( inject_var "$page" ~tpl_active_wifi "")
+page=$( inject_var "$page" ~tpl_active_wifi "active")
 page=$( inject_var "$page" ~tpl_active_portail "")
 page=$( inject_var "$page" ~tpl_active_avance "")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
@@ -59,8 +61,6 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-cp /tmp/web-requested-mode /tmp/web-previous-mode
-sudo /scripts_bb/client/captive-portail.sh >/dev/null 2>&1 &
-echo "local">/tmp/web-requested-mode
 
 exit 0
+ 
