@@ -14,6 +14,8 @@ log() {
 /etc/init.d/openvpn stop
 killall openvpn
 
+echo "">/etc/dnsmasq.conf
+/etc/init.d/dnsmasq restart
 
 sed -i "s/lport .*//g" /etc/openvpn/client.conf
 ##############################################
@@ -85,8 +87,10 @@ if [ "$?" -eq "0" ]; then
     iptables -I FORWARD -i br-lan -o wlan0 -j DROP    
     iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 443 -j REDIRECT --to-ports 443
     iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 80 -j REDIRECT --to-ports 80
+    iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 22 -j REDIRECT --to-ports 22    
     
     echo "entreprise">/tmp/bb/client/mode
+    echo "1" > /sys/class/leds/gl-ar150\:wan/brightness
     log "\033[32;1m Openvpn successfully started \033[0m"
     return 0;
 else
