@@ -18,4 +18,4 @@ echo "">/etc/dnsmasq.conf
 echo  "nameserver 127.0.0.1" > /etc/resolv.conf
 
 echo "local">/tmp/bb/client/mode
-echo "1" > /sys/class/leds/gl-ar150\:wan/brightness
+echo "0" > /sys/class/leds/gl-ar150\:wan/brightness
