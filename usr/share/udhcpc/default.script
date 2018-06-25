@@ -24,6 +24,8 @@ setup_interface() {
             echo "nameserver $word" >> /etc/resolv.dnsmasq
         done
         /etc/init.d/dnsmasq restart
+    else
+        echo  "nameserver 8.8.8.8" > /etc/resolv.dnsmasq
     fi
 	echo "udhcpc: ifconfig $interface $ip netmask ${subnet:-255.255.255.0} broadcast ${broadcast:-+}"
 	ifconfig $interface $ip netmask ${subnet:-255.255.255.0} broadcast ${broadcast:-+}
