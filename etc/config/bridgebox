@@ -14,7 +14,7 @@ config entry 'wifi_sta'
 	option key ''
 
 config entry 'wifi_ap'
-	option key 'pierreparent'
+	option key 'defaultpassword'
 	option ssid 'BridgeBox'
 	option enabled '1'
 
