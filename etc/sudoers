@@ -28,6 +28,8 @@ http ALL=(ALL) NOPASSWD:  /scripts_bb/client/get-offline.sh
 http ALL=(ALL) NOPASSWD:  /scripts_bb/client/openvpn.sh
 http ALL=(ALL) NOPASSWD:  /scripts_bb/client/captive-portail.sh
 http ALL=(ALL) NOPASSWD:  /bin/sed
+http ALL=(ALL) NOPASSWD:  /usr/bin/get-id
+http ALL=(ALL) NOPASSWD:  /sbin/reboot
 
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      
