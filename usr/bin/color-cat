@@ -1,0 +1,5 @@
+#!/bin/sh
+
+
+text=$(cat $1)
+printf "$text"
