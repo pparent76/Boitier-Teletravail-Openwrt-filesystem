@@ -24,6 +24,7 @@ if [ "$mode" = "entreprise" ]; then
     return 1;
 fi
 
+killall openvpn.sh
 /scripts_bb/check_internet/check-internet.sh
 internet=$(cat /tmp/bb/internet/internet)
 

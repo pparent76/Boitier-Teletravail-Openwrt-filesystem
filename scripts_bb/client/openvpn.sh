@@ -12,6 +12,7 @@ log() {
 
 
 /etc/init.d/openvpn stop
+/etc/init.d/openvpn disable
 killall openvpn
 
 echo "">/etc/dnsmasq.conf
