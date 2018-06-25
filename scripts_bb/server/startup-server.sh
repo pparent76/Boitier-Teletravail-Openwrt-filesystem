@@ -1,18 +1,34 @@
 #!/bin/sh
 
-#Accepte le ssh sur le réseau hot
+#Accepte le ssh sur le réseau hote.
 iptables -I INPUT -j ACCEPT
 
+#Lancement de dnsmasq en mode normal
+echo "">/etc/dnsmasq.conf
+/etc/init.d/dnsmasq restart
+
+#Lancement de lighttpd pour l'advertisement
 lighttpd -f /etc/lighttpd/advertise.conf 
 
+#Manipulation de répertoires de droits.
 mkdir -p /tmp/bb/server/
+chown http /etc/server-codes
 
-sleep 7;
+#cron
+cp /etc/crontab-server /etc/crontabs/root
+/etc/init.d/cron restart
 
-/scripts_bb/server/upnp.sh
-/scripts_bb/server/stun.sh
-/scripts_bb/server/advertise.sh
+sleep 2;
 
-
+#Start openvpn
 /scripts_bb/server/openvpn.sh
+
+sleep 5;
+
+#Handle port forwarding
+/scripts_bb/server/handle-port-forwarding.sh
+
+#get initial state of internet
+/scripts_bb/check_internet/check-internet.sh
+
 

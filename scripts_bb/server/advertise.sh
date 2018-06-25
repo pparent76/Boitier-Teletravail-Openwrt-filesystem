@@ -1,5 +1,17 @@
 #!/bin/sh
 
+logfile=/var/log/handle-port-forwarding
+  
+log() {
+  thedate=$(date);
+  echo "[$thedate]-[ADVERTISE]- $*" >> $logfile
+  if [ -f "/tmp/verbose" ]; then
+    printf "[ADVERTISE]-$*\n"
+  fi
+}
+
+log "Updating advertisement"
+
 is_port_configured=$(cat /tmp/bb/server/port-configured)
 ip=$(cat /tmp/bb/server/ip)
 port=$(cat /tmp/bb/server/port)
@@ -11,3 +23,4 @@ if [ "$is_port_configured" = "1" ]; then
 else
     echo "BEGINADVERTISE none ENDADVERTISE" > /advertise/index.html
 fi
+
