@@ -10,6 +10,6 @@ rm /etc/easy-rsa/keys/client.key
 . /etc/easy-rsa/vars
 
 pkitool --server myserver
-pkitool --build-client-full client
+pkitool  client
 rm -r /etc/openvpn/keys/
 cp -r /etc/easy-rsa/keys /etc/openvpn/

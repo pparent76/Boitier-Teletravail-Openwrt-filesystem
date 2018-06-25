@@ -4,6 +4,10 @@ if [ ! -h "/usr/bin/torsocks" ]; then
 ln -s /usr/local/bin/torsocks /usr/bin/torsocks
 fi
 
+if [ ! -e "/etc/openvpn/keys/client.crt" ]; then
+/scripts_bb/make-keys.sh
+fi
+
 echo 990 > /proc/sys/vm/min_free_kbytes
 mode=$(uci get bridgebox.general.mode)
 
