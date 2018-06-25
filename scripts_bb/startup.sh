@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ ! -h "/usr/bin/torsocks" ]; then
+ln -s /usr/local/bin/torsocks /usr/bin/torsocks
+fi
+
 echo 990 > /proc/sys/vm/min_free_kbytes
 mode=$(uci get bridgebox.general.mode)
 
