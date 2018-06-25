@@ -59,13 +59,20 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                     <div style="height:15px"></div>
                     <center>
-                                              <a class="btn btn-app btn-info" href="/recup/change-serverclient.cgi">
+                                              <a style="display:~tpl_display_client_inline" class="btn btn-app btn-info" href="/recup/change-serverclient.cgi">
                 <i class="fa fa-server"></i> Passage en mode Serveur
                 </a>
+                
+                     <a  style="display:~tpl_display_server_inline" class="btn btn-app btn-info" href="/recup/change-serverclient.cgi">
+                <i class="fa fa-user"></i> Passage en mode client
+                </a>
+                
                 </center>
                 </div>
             <div class="tooltipp pull-right"><i class="fa fa-support" aria-hidden="true"></i> Aide
-  <span class="tooltiptextp">Ce bouton permet de passer en <b>mode serveur</b> afin d'étendre le réseau d'une entreprise et permettre aux boîtiers client détenus par les salariés de s'y connecter. Si vous êtes employé, et souhaitez simplement vous connecter au réseau d'une entreprise, ne cliquez pas dessus.</span>
+  <span class="tooltiptextp" style="display:~tpl_display_client_inline">Ce bouton permet de passer en <b>mode serveur</b> afin d'étendre le réseau d'une entreprise et permettre aux boîtiers client détenus par les salariés de s'y connecter. Si vous êtes employé, et souhaitez simplement vous connecter au réseau d'une entreprise, ne cliquez pas dessus.</span>
+  
+  <span class="tooltiptextp" style="display:~tpl_display_server_inline">Ce bouton permet de passer en <b>mode client</b> afin de se connecter à distance à un réseau d'entreprise. Si ce boitier est branché dans le réseau de l'entreprise dans le but de l'étendre, ne cliquez pas sur ce bouton.</span>  
 </div>
 <br><div style="height:10px"></div>
         
@@ -84,7 +91,7 @@
            
            
             <div class="col-lg-12 col-md-12 col-xs-12">
-            <div class="box  box-success">
+            <div class="box  box-success" style="display:~tpl_display_server_block" >
                 <div class="box-header">
                 <i class="fa fa-server"></i>
 
@@ -115,7 +122,35 @@
             
            </div> 
                   
-                  
+           <div class="row">
+           
+           
+            <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="box  box-success" style="display:~tpl_display_client_block">
+                <div class="box-header">
+                <i class="fa fa-server"></i>
+
+                <h3 class="box-title">Paramètres client</h3>
+                </div>
+                <form  action="/recup/avance-client.cgi" method="post" class="form-horizontal">                
+                               <div class="box-body chat" id="chat-box">
+
+                       
+                            <input type="checkbox" id="autostart" name="autostart" ~tpl_check_autostart> <label for="autostart"> Passage automatique en mode entreprise au démarrage lorsque la connexion internet est pleinement fonctionnelle.</br>
+                        </label> 
+            </div>   
+            
+            <div class="col-12"> <center><input  type="submit" value="Valider" class="btn btn-success"></center></div>
+             <div style="height:10px"></div>
+             <div>
+             </form>
+
+             </div>
+            
+
+            
+           </div> 
+                                    
                   
                   
            <div class="row">
@@ -147,6 +182,18 @@
                 
                 <div style="row">
                 <div class="col-sm-6"><input type="text" name="stun3" value="~tpl_stun3" class="form-control"></div><div class="col-sm-6"><input type="number" name="stun_port3" value="~tpl_stun_port3" class="form-control"></div></div>                   
+    
+               
+             </div>
+            <p> Renseignez ci-dessous le serveur mandataire pour les service cachés</p>
+                                        <div class="form-group">
+                
+                <div style="row">
+             
+                <div style="row">
+                <div class="col-sm-4"><b>Serveur mandataire service cachés</b></div><div class="col-sm-8"><input type="text" name="torproxy" value="~tpl_torproxy" class="form-control"></div></div>    
+                
+                  
     
                
              </div>

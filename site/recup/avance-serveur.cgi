@@ -60,10 +60,4 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-exec >&-
-exec 2>&-
-
-if [ "$ok" -eq "1" ];  then
-    (sleep 2; sudo /scripts_bb/wifi.sh >/dev/null 2>&1) &
-fi
 exit 0

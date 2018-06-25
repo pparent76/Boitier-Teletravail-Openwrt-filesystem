@@ -59,7 +59,7 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-cp /tmp/web-requested-mode /tmp/web-previous-mode
+cp /tmp/bb/client/mode /tmp/web-previous-mode
 sudo /scripts_bb/client/openvpn.sh >/dev/null 2>&1 &
 echo "entreprise">/tmp/web-requested-mode
 

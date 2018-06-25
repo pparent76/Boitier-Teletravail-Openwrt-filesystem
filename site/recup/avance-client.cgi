@@ -12,19 +12,13 @@ tpl_url_refresh="/cgi/avance.cgi"
 tpl_time_refresh="3"
 tpl_icon="fa-check"
 
-ok=1
+if [ -z "$autostart" ]; then
+        sudo /sbin/uci set bridgebox.advanced.clientautostart="0"
+else
+        sudo /sbin/uci set bridgebox.advanced.clientautostart="1"
+fi
 
-    sudo /sbin/uci  set bridgebox.advanced.stun1=$stun1
-    sudo /sbin/uci  set bridgebox.advanced.stun2=$stun2
-    sudo /sbin/uci  set bridgebox.advanced.stun3=$stun3   
-    
-    sudo /sbin/uci  set bridgebox.advanced.stunport1=$stun_port1
-    sudo /sbin/uci  set bridgebox.advanced.stunport2=$stun_port2
-    sudo /sbin/uci  set bridgebox.advanced.stunport3=$stun_port3  
-    
-    sudo /sbin/uci  set bridgebox.advanced.torproxy=$torproxy     
-    sudo /sbin/uci  commit
-
+sudo /sbin/uci commit
 
 #####################################################################
 #

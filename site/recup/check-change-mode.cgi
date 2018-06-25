@@ -40,7 +40,7 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
         tpl_icon="fa-times" 
         tpl_result="error"
         tpl_time_refresh="6"   
-        tpl_text="Erreur: n'a pas put passé en mode $requestedmode, retour au mode $currentmode"
+        tpl_text="<b>Erreur: n'a pas put passé en mode $requestedmode, retour au mode $currentmode</b>"
     else
         tpl_url_refresh="/cgi/home.cgi"
         tpl_title="Changement de mode de fonctionnement réussit"
@@ -55,7 +55,7 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
     fi
 fi
 
-if [ "$needtoreconnect" -eq "1" ]; then
+if [ "$needtoreconnect" -eq "1" ]&& ["$requestedmode" = "$currentmode" ]; then
 if [ "$isdone" -eq "1" ]; then
     tpl_text=$(echo "$tpl_text<br><br> <h4> <u>Attention:</u> Il est nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.</h4>")
 else
