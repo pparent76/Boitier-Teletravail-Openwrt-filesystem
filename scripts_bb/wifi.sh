@@ -1,5 +1,7 @@
 #!/bin/sh
 
+killall autostart-entreprise.sh
+
 #Deinit previous settings.
 killall hostapd
 killall wpa_supplicant
@@ -133,3 +135,5 @@ if [ "$enabled_ap" = "1" ]&& [ "$clientservermode" != "server" ]; then
     fi
     hostapd /etc/hostapd.conf >/var/log/hostapd 2>&1 &
 fi
+
+/scripts_bb/check_internet/check-internet.sh &
