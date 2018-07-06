@@ -1,5 +1,6 @@
 config entry 'general'
         option mode 'client'
+        option langue ''        
         
 config entry 'client'
         option server_id ''
@@ -29,7 +30,7 @@ config entry 'advanced'
         option server_port '443'
         option server_port_backup1 '993'
         option server_port_backup2 '500'
-        option server_port_backup3 '25000'
+        option server_port_backup3 '900'
         option clientautostart '1'
     
 
