@@ -2,11 +2,19 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
 #####################################################################
 #
 #               Calcul des variables  
 #
 #####################################################################
+
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_clientserver_mode=$(translate_inline "Serveur")
+else
+    tpl_clientserver_mode="Client"
+fi
 
 etatinternet=$(cat cat /tmp/bb/internet/internet)
 
@@ -41,7 +49,7 @@ if [ "$pingstate" != "KO" ]; then
 tpl_ping_state="OK ($pingstate)"
 tpl_ping_color="green"
 else
-tpl_tor_state="KO"
+tpl_ping_state="KO"
 tpl_ping_color="red"
 fi
 
@@ -79,6 +87,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")
@@ -92,6 +101,7 @@ echo $page;
 ########################################################
 
 page=$(cat /site/template/check-internet.html)
+page=$( translate_page_details "$page" )
 page=$( inject_var "$page" ~tpl_internet_text "$tpl_internet_text")
 page=$( inject_var "$page" ~tpl_internet_color "$tpl_internet_color")
 page=$( inject_var "$page" ~tpl_tor_state "$tpl_tor_state")

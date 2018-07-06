@@ -2,37 +2,43 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
 #####################################################################
 #
 #               Calcul des variables  
 #
 #####################################################################
-tpl_client_mode=$(cat /tmp/bb/client/mode)
+client_mode=$(cat /tmp/bb/client/mode)
 
-case "$tpl_client_mode" in
+case "$client_mode" in
         "offline")
             tpl_client_mode_icon="pause";
             tpl_display_offline="none"; 
             tpl_display_entreprise="inline-block";  
-            tpl_display_local="inline-block";              
+            tpl_display_local="inline-block";    
+            tpl_client_mode=$(translate_inline "Hors-ligne" )
             ;;
         "local")
             tpl_client_mode_icon="map-marker";
             tpl_display_offline="none";
             tpl_display_entreprise="inline-block";
-            tpl_display_local="none";             
+            tpl_display_local="none";   
+            tpl_client_mode="Local";         
             ;;        
         "entreprise")
             tpl_client_mode_icon="users";
             tpl_display_offline="inline-block";
             tpl_display_entreprise="none";  
-            tpl_display_local="inline-block";             
+            tpl_display_local="inline-block"; 
+            tpl_client_mode=$(translate_inline "Entreprise" )
             ;;                  
-esac            
+esac  
+
+$tpl_client_mode=$(translate_inline "tpl_client_mode" )
 
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -46,7 +52,7 @@ if [ "$etatinternet" = "OK" ]; then
 fi
 
 if [ "$etatinternet" = "WARNING" ]; then
-    tpl_internet_text="Partiel"
+    tpl_internet_text=$(translate_inline "Partiel")
     tpl_internet_color="orange"    
 fi
 
@@ -56,12 +62,12 @@ if [ "$etatinternet" = "KO" ]; then
     tpl_display_entreprise="none";      
 fi
 
-tpl_uptime=$(uptime | tr "," " " | cut -f4-6 -d" " | sed "s/day/jour/g");
+tpl_uptime=$(uptime | tr "," " " | cut -f4-6 -d" " | sed "s/day/$(translate_inline "jour")/g");
 echo $tpl_uptime | grep : > /dev/null;
 if [ $? = 1 ]; then
 	tpl_uptime=$(echo "$tpl_uptime");
 else
-	tpl_uptime=$(echo "$tpl_uptime heure(s)");
+	tpl_uptime=$(echo "$tpl_uptime $(translate_inline "heure(s)") ");
 fi
 
 tpl_box_id=$(sudo /usr/bin/get-id)
@@ -122,6 +128,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")
@@ -138,6 +145,7 @@ if [ "$clientservermode" = "server" ]; then
 else
     page=$(cat /site/template/home-client.html)
 fi
+page=$( translate_page_home "$page" )
 page=$( inject_var "$page" ~tpl_client_mode "$tpl_client_mode")
 page=$( inject_var "$page" ~tpl_client2_mode_icon "$tpl_client_mode_icon")
 page=$( inject_var "$page" ~tpl_internet_text "$tpl_internet_text")

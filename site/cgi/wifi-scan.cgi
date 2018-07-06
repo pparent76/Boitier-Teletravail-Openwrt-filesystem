@@ -2,6 +2,8 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 inject_var() {
 	echo $1 | sed -e "s#$2#$3#g"
 }
@@ -54,7 +56,7 @@ done < /tmp/wifi-scan
 #Variable Client/serveur
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -69,6 +71,7 @@ fi
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "active")
@@ -82,6 +85,7 @@ echo $page;
 ########################################################
 page=$(cat /site/template/wifi-scan.html)
 page=$( inject_var "$page" ~tpl_tab_rows "$tpl_tab_rows")
+page=$( translate_page_wifi "$page" )
 echo $page;
 
 #echo $tpl_tab_rows

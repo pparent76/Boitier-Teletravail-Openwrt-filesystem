@@ -2,6 +2,8 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 #####################################################################
 #
 #               Calcul des variables  
@@ -41,7 +43,7 @@ tpl_torproxy=$(uci get bridgebox.advanced.torproxy)
 
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -72,6 +74,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")
@@ -84,6 +87,8 @@ echo $page;
 #			page
 ########################################################
 page=$(cat /site/template/avance.html)
+
+page=$( translate_page_avance "$page" )
 
 page=$( inject_var "$page" ~tpl_port1 "$tpl_port1")
 page=$( inject_var "$page" ~tpl_port2 "$tpl_port2")

@@ -3,6 +3,8 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 inject_var() {
 	echo $1 | sed -e "s#$2#$3#g"
 }
@@ -16,7 +18,7 @@ function nstars {
 
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -59,6 +61,7 @@ tpl_history_rows=$( inject_var "$tpl_history_rows" ~tpl_history_row "")
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "active")
 page=$( inject_var "$page" ~tpl_active_wifi "")
@@ -71,6 +74,7 @@ echo $page;
 #			page
 ########################################################
 page=$(cat /site/template/code-client.html)
+page=$( translate_page_code "$page" )
 page=$( inject_var "$page" ~tpl_code "$tpl_code")
 page=$( inject_var "$page" ~tpl_hote "$tpl_hote")
 page=$( inject_var "$page" ~tpl_commentaire "$tpl_commentaire")

@@ -2,6 +2,8 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 #####################################################################
 #
 #               Calcul des variables  
@@ -12,7 +14,7 @@ clientservermode=$(uci get bridgebox.general.mode)
 tpl_ip_color="aqua"
 tpl_ip_wlan=$(ifconfig wlan0| grep "inet addr"  | awk -F" " '{print $2}' | sed -e 's/addr://g')
 if [ "$tpl_ip_wlan" = "" ]; then
-    tpl_ip_wlan="(Pas d'IP)";
+    tpl_ip_wlan=$(translate_inline "(Pas d'IP)");
     tpl_ip_color="grey"
 fi
 
@@ -59,34 +61,34 @@ enctype_sta=$(uci get bridgebox.wifi_sta.enctype)
 sudo /usr/sbin/wpa_cli status | grep wpa_state | grep COMPLETED >/dev/null 2>&1
 if [ "$?" -eq "0" ]; then
     tpl_wifi_client_connected_color="green"
-    tpl_wifi_client_connected_text="Connecté au réseau wifi"
+    tpl_wifi_client_connected_text=$(translate_inline "Connecté au réseau wifi")
 else
     tpl_wifi_client_connected_color="red"
-    tpl_wifi_client_connected_text="Déconnecté du réseau wifi"    
+    tpl_wifi_client_connected_text=$(translate_inline "Déconnecté du réseau wifi")    
 fi
 
 pidof hostapd  >/dev/null 2>&1
 if [ "$?" -eq "0" ]; then
     tpl_wifi_ap_state_color="green"
-    tpl_wifi_ap_state_text="En cours d'émission."    
+    tpl_wifi_ap_state_text=$(translate_inline "En cours d'émission.")   
 else
     tpl_wifi_ap_state_color="red"
-    tpl_wifi_ap_state_text="Pas d'émission wifi."     
+    tpl_wifi_ap_state_text=$(translate_inline "Pas d'émission wifi.")     
 fi
 
 sudo /scripts_bb/test_wlan0_connectivity.sh
 if [ "$?" -eq "0" ]; then
     tpl_wifi_client_internet_color="green"
-    tpl_wifi_client_internet_text="Connecté à Internet."    
+    tpl_wifi_client_internet_text=$(translate_inline "Connecté à Internet.")    
 else
     tpl_wifi_client_internet_color="red"
-    tpl_wifi_client_internet_text="Pas de connection à Internet."     
+    tpl_wifi_client_internet_text=$(translate_inline "Pas de connection à Internet.")     
 fi
 
 #Variable Client/sereveur
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -104,6 +106,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "active")
@@ -119,6 +122,8 @@ if [ "$clientservermode" = "server" ]; then
     page=$(cat /site/template/wifi-server.html)
 else
     page=$(cat /site/template/wifi.html)
+fi
+    page=$( translate_page_wifi "$page" )
     page=$( inject_var "$page" ~tpl_ip_wlan "$tpl_ip_wlan")
     page=$( inject_var "$page" ~tpl_client_ssid "$tpl_client_ssid")
     page=$( inject_var "$page" ~tpl_client_key "$tpl_client_key")
@@ -138,7 +143,6 @@ else
     page=$( inject_var "$page" ~tpl_wifi_client_internet_color "$tpl_wifi_client_internet_color")
     page=$( inject_var "$page" ~tpl_wifi_client_internet_text "$tpl_wifi_client_internet_text")
     page=$( inject_var "$page" ~tpl_ip_color "$tpl_ip_color")    
-fi
 
 
 
