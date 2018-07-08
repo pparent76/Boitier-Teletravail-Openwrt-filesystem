@@ -43,6 +43,10 @@ fi
 
 touch /tmp/wifi-interfaces-configured
 
+if [ "$clientservermode" = "server" ]; then
+return 1;
+fi
+
 ################################################
 #           Station (client) part
 ################################################
@@ -116,7 +120,7 @@ key_ap=$(uci get bridgebox.wifi_ap.key)
 enabled_ap=$(uci get bridgebox.wifi_ap.enabled)
 clientservermode=$(uci get bridgebox.general.mode)
 
-if [ "$enabled_ap" = "1" ]&& [ "$clientservermode" != "server" ]; then
+if [ "$enabled_ap" = "1" ]&& [ "$clientservermode" = "client" ]; then
     rm /etc/hostapd.conf  
     echo "country_code=FR">/etc/hostapd.conf
     echo "ieee80211n=1">>/etc/hostapd.conf

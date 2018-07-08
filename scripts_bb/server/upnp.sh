@@ -48,10 +48,8 @@ for port in $port1 $port2 $port3 $port4; do
     # Try to redirect port
     #############################################
     if [ "$ipeth0" != "" ]; then
-        #upnpc -d $port tcp -e "bridgebox" > /dev/null 2>&1
         sleep 1;
-        # 31536000
-        upnpc -a $ipeth0 1194 $port tcp -e "bridgebox" > /tmp/resupnp 2>&1    
+        upnpc -a $ipeth0 1194 $port tcp > /tmp/resupnp 2>&1    
         
         upnpc -l | grep "$ipeth0:1194" | grep "$port"
 

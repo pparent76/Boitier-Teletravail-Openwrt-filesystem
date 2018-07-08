@@ -26,3 +26,7 @@ fi
 if [ "$mode" = "client" ]; then
     /scripts_bb/client/startup-client.sh
 fi
+
+if [ "$mode" = "" ]; then
+    /scripts_bb/check_internet/check-internet.sh
+fi
