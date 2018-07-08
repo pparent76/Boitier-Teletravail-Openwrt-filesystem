@@ -30,6 +30,9 @@ http ALL=(ALL) NOPASSWD:  /scripts_bb/client/captive-portail.sh
 http ALL=(ALL) NOPASSWD:  /bin/sed
 http ALL=(ALL) NOPASSWD:  /usr/bin/get-id
 http ALL=(ALL) NOPASSWD:  /sbin/reboot
+http ALL=(ALL) NOPASSWD:  /scripts_bb/server/startup-server.sh
+http ALL=(ALL) NOPASSWD:  /scripts_bb/client/startup-client.sh
+
 
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      
