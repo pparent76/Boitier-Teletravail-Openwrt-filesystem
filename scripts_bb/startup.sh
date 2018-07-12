@@ -13,7 +13,9 @@ mode=$(uci get bridgebox.general.mode)
 
 /scripts_bb/setup-tor.sh
 /scripts_bb/wifi.sh
-sleep 5;
+sleep 1;
+/scripts_bb/check_internet/check-internet.sh &
+sleep 4;
 /etc/init.d/dnsmasq start
 /etc/init.d/dnsmasq enable
 
@@ -25,8 +27,4 @@ fi
 
 if [ "$mode" = "client" ]; then
     /scripts_bb/client/startup-client.sh
-fi
-
-if [ "$mode" = "" ]; then
-    /scripts_bb/check_internet/check-internet.sh
 fi

@@ -9,4 +9,4 @@ if [ "$clientserver" = "" ]||  [ "$langue" = "" ]; then
 else
     page="cgi/home.cgi"
 fi
-echo "<meta http-equiv=\"refresh\" content=\"0;url=http://$ip/$page \" />"   
+echo "<html><header><meta http-equiv=\"refresh\" content=\"0;url=http://$ip/$page \" /></header></html>"   

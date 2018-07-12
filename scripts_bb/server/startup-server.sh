@@ -28,7 +28,4 @@ sleep 5;
 #Handle port forwarding
 /scripts_bb/server/handle-port-forwarding.sh
 
-#get initial state of internet
-/scripts_bb/check_internet/check-internet.sh
-
 
