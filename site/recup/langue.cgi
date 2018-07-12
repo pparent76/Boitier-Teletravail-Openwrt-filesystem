@@ -7,14 +7,23 @@ echo ""
 . ./post.sh
 cgi_getvars BOTH ALL
 
-tpl_result="info"
-tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement")
-tpl_text=$( translate_inline_recup "Passage en mode entreprise.")
-tpl_url_refresh="/recup/check-change-mode.cgi"
+if [ "$langue" = "en" ]; then
+        sudo /sbin/uci set bridgebox.general.langue="en"
+else
+        sudo /sbin/uci set bridgebox.general.langue="fr"
+fi
+
+sudo /sbin/uci commit
+
+tpl_result="success"
+tpl_title=$( translate_inline_recup  "Mise à jour de la configuration")
+tpl_text=$( translate_inline_recup "La langue utilisée est maintenant le français!" )
+tpl_url_refresh="/cgi/avance.cgi"
 tpl_time_refresh="0"
 tpl_icon="fa-rotate-right fa-spin"
 
-#Variable Client/serveur    
+
+
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
     tpl_clientserver_mode=$(translate_inline "Serveur")
@@ -36,11 +45,11 @@ inject_var() {
 ########################################################
 page=$(cat /site/template/header.html)
 page=$( translate_header "$page" )
-page=$( inject_var "$page" ~tpl_active_acceuil "active")
+page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")
 page=$( inject_var "$page" ~tpl_active_portail "")
-page=$( inject_var "$page" ~tpl_active_avance "")
+page=$( inject_var "$page" ~tpl_active_avance "active")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
 echo $page;
 
@@ -62,8 +71,6 @@ echo $page;
 page=$(cat /site/template/footer.html)
 echo $page;
 
-cp /tmp/bb/client/mode /tmp/web-previous-mode
-sudo /scripts_bb/client/openvpn.sh >/dev/null 2>&1 &
-echo "entreprise">/tmp/web-requested-mode
 
 exit 0
+ 

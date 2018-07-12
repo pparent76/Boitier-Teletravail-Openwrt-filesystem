@@ -3,14 +3,23 @@ echo "Content-type: text/html"
 echo ""
 echo "<!--"
 
+. /site/traduc/traduc.sh
+
+
 tpl_result="success"
-tpl_title="Veuillez patienter"
-tpl_text="<b>Redémarrage du Boitier. (Environ 2 minutes)"
+tpl_title=$( translate_inline_recup "Veuillez patienter")
+tpl_text=$( translate_inline_recup "<b>Redémarrage du Boitier. (Environ 2 minutes)")
 tpl_url_refresh="/cgi/home.cgi"
 tpl_time_refresh="120"
 tpl_icon="fa-rotate-right fa-spin"
 
 
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_clientserver_mode=$(translate_inline "Serveur")
+else
+    tpl_clientserver_mode="Client"
+fi
 
 echo "-->"
 
@@ -22,6 +31,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")

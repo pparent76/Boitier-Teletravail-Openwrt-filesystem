@@ -2,12 +2,14 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 . ./post.sh
 cgi_getvars BOTH ALL
 
 tpl_result="info"
-tpl_title="Changement de mode de fonctionnement"
-tpl_text="Passage en mode réseau local."
+tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement")
+tpl_text=$( translate_inline_recup "Passage en mode réseau local.")
 tpl_url_refresh="/recup/check-change-mode.cgi"
 tpl_time_refresh="0"
 tpl_icon="fa-rotate-right fa-spin"
@@ -15,11 +17,10 @@ tpl_icon="fa-rotate-right fa-spin"
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
-
 #####################################################################
 #
 #               Generation du html   
@@ -33,6 +34,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")

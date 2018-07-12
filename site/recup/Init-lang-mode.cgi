@@ -8,8 +8,8 @@ echo ""
 cgi_getvars BOTH ALL
 
 tpl_result="success"
-tpl_title="Veuillez patienter: Mise à jour de la configuration"
-tpl_text="Bravo vous allez pouvoir utiliser le boîtier télétravail!"
+tpl_title=$( translate_inline_recup  "Veuillez patienter: Mise à jour de la configuration")
+tpl_text=$( translate_inline_recup "Bravo vous allez pouvoir utiliser le boîtier télétravail!")
 tpl_url_refresh="/cgi/home.cgi"
 tpl_time_refresh="5"
 tpl_icon="fa-rotate-right fa-spin"
@@ -23,7 +23,7 @@ fi
 clientserver=$(sudo /sbin/uci get bridgebox.general.mode)
 
 if [ "$clientserver" != "$mode" ]; then
-        tpl_text="Bravo vous allez pouvoir utiliser le boîtier télétravail après redémarrage!"
+        tpl_text=$( translate_inline_recup "Bravo vous allez pouvoir utiliser le boîtier télétravail après redémarrage!")
         tpl_url_refresh="/recup/redemarrer.cgi"
 fi
 

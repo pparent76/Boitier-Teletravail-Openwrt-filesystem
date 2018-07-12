@@ -2,12 +2,14 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
 . ./post.sh
 cgi_getvars BOTH ALL
 
 tpl_result="success"
-tpl_title="Mise à jour de la configuration"
-tpl_text="Les paramètres avancés du serveur ont été mis à jour!"
+tpl_title=$( translate_inline_recup  "Mise à jour de la configuration" )
+tpl_text=$( translate_inline_recup  "Les paramètres avancés du serveur ont été mis à jour!" )
 tpl_url_refresh="/cgi/avance.cgi"
 tpl_time_refresh="3"
 tpl_icon="fa-check"
@@ -19,6 +21,13 @@ else
 fi
 
 sudo /sbin/uci commit
+
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_clientserver_mode=$(translate_inline "Serveur")
+else
+    tpl_clientserver_mode="Client"
+fi
 
 #####################################################################
 #
@@ -33,6 +42,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")

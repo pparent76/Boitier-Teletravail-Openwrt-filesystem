@@ -2,16 +2,21 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
+
 . ./post.sh
 cgi_getvars BOTH ALL
 
-requestedmode=$(cat /tmp/web-requested-mode)
+requestedmode=$(cat /tmp/web-requested-mode) 
+requestedmodetxt=$( translate_inline_recup "$requestedmode")
 previousmode=$(cat /tmp/web-previous-mode)
 currentmode=$(cat /tmp/bb/client/mode)
 
 tpl_result="info"
-tpl_title="Changement de mode de fonctionnement"
-tpl_text="Passage en mode <b>$requestedmode</b>."
+tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement")
+tpl_text=$( translate_inline_recup "Passage en mode" ) 
+tpl_text="  <b>$tpl_text $requestedmodetxt</b>."
 tpl_url_refresh="/recup/check-change-mode.cgi"
 tpl_time_refresh="3"
 tpl_icon="fa-rotate-right fa-spin"
@@ -40,12 +45,12 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
         tpl_icon="fa-times" 
         tpl_result="error"
         tpl_time_refresh="6"   
-        tpl_text="<b>Erreur: n'a pas put passé en mode $requestedmode, retour au mode $currentmode</b>"
+        tpl_text="<b>$( translate_inline_recup "Erreur: n'a pas put passé en mode" ) $requestedmodetxt, $( translate_inline_recup "retour au mode" ) $currentmode</b>"
     else
         tpl_url_refresh="/cgi/home.cgi"
-        tpl_title="Changement de mode de fonctionnement réussit"
+        tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement réussit")
         tpl_icon="fa-check" 
-        tpl_text="Passage en mode <b>$requestedmode</b> réussit!"
+        tpl_text="$( translate_inline_recup "Passage en mode" ) <b>$requestedmodetxt</b> $( translate_inline_recup "réussit!")"
         tpl_result="success"   
         if [ "$needtoreconnect" -eq "1" ]; then
                     tpl_result="success"
@@ -67,11 +72,10 @@ fi
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
-
 #####################################################################
 #
 #               Generation du html   
@@ -85,6 +89,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")

@@ -60,8 +60,8 @@ langue=$(uci get bridgebox.general.langue);
 if [ "$langue" = "en" ]; then
      page=$( translate_patern "$page" "État client wifi" "Wifi client status") 
      page=$( translate_patern "$page" "État wifi émis" "Access point status")   
-     page=$( translate_patern "$page" "Paramètres client wifi" "Wifi client parameters")
-     page=$( translate_patern "$page" "Paramètres wifi émis" "Access point parameters") 
+     page=$( translate_patern "$page" "Paramètres client wifi" "Wifi client settings")
+     page=$( translate_patern "$page" "Paramètres wifi émis" "Access point settings") 
      page=$( translate_patern "$page" "Activer l'émission du réseau Wifi" "Enable wireless access point")      
      page=$( translate_patern "$page" "Aucun Chiffrement" "No encryption")    
      page=$( translate_patern "$page" "Clef de Chiffrement" "Encryption key") 
@@ -100,7 +100,7 @@ if [ "$langue" = "en" ]; then
      page=$( translate_patern "$page" "Afficher les codes" "Display codes")
      page=$( translate_patern "$page" "Cacher les codes" "Hide codes")     
      page=$( translate_patern "$page" "Chacun des code d'accès ci-dessous est propre à un employé et lui de se connecter au réseau" "Each of the access codes below is specific to an employee and allows him to connect to the network")     
-     page=$( translate_patern "$page" "<b>Veuillez entrer sous-dessous les paramètres de connexion au serveur.</b> (Le commentaire est libre et permet uniquement de savoir à quoi chaque code correspond dans l'historique)." "<b>Please enter your server connection parameters.</b> (The comment is free and allows to find back codes in the history).")       
+     page=$( translate_patern "$page" "<b>Veuillez entrer sous-dessous les paramètres de connexion au serveur.</b> (Le commentaire est libre et permet uniquement de savoir à quoi chaque code correspond dans l'historique)." "<b>Please enter your server access codes.</b> (The comment is free and allows to find back codes in the history).")       
 fi
 echo "$page"
 }
@@ -111,21 +111,22 @@ page=$(echo $1);
 langue=$(uci get bridgebox.general.langue);
 
 if [ "$langue" = "en" ]; then
-     page=$( translate_patern "$page" "Valider" "Submit")  
+     page=$( translate_patern "$page" "Valider" "Submit")
+     page=$( translate_patern "$page" "Langue" "Langage")       
      page=$( translate_patern "$page" "Identifiant du boîtier" "Box ID")   
      page=$( translate_patern "$page" "Changement de mode" "Change mode")  
      page=$( translate_patern "$page" "Aide" "Help")       
      page=$( translate_patern "$page" "Passage en mode Serveur" "Switch to server mode")
      page=$( translate_patern "$page" "Passage en mode client" "Switch to client mode")     
-     page=$( translate_patern "$page" "Paramètres generaux" "General parameters") 
-     page=$( translate_patern "$page" "Paramètres serveur" "Server parameters")      
+     page=$( translate_patern "$page" "Paramètres generaux" "General settings") 
+     page=$( translate_patern "$page" "Paramètres serveur" "Server settings")      
      page=$( translate_patern "$page" "Configurer ci-dessous la liste serveurs stun." "Configure the stun server list below.")     
      page=$( translate_patern "$page" "Serveur mandataire service cachés" "Hidden service proxy server")    
      page=$( translate_patern "$page" "Renseignez ci-dessous le serveur mandataire pour les services cachés" "Enter the proxy server for hidden services below.")         
      
      page=$( translate_patern "$page" "Serveur stun" "Stun servers")   
      page=$( translate_patern "$page" "Port stun" "Stun port")       
-     page=$( translate_patern "$page" "Paramètres client" "Client parameters")   
+     page=$( translate_patern "$page" "Paramètres client" "Client settings")   
      page=$( translate_patern "$page" "Passage automatique en mode entreprise au démarrage lorsque la connexion internet est pleinement fonctionnelle." "Automatically switch to company mode at startup when Internet access is fully available")        
      
      
@@ -188,4 +189,56 @@ fi
 if [ "$langue" = "fr" ]; then
 echo $1;
 fi
+}
+
+
+translate_inline_recup() {
+
+langue=$(uci get bridgebox.general.langue);
+
+if [ "$langue" = "en" ]; then
+    case $1 in
+        "Mise à jour de la configuration") echo "Updating configuration";;
+        "Les codes d'accès ont été modifiés") echo "Access codes were modified";;
+        "Le code doit contenir uniquement de lettres (majuscules ou minuscules) et Chiffres.<br> Il doit avoir un taille entre 8 et 127 caractères.") echo "The code must contain only letters (upper or lower case) and Numbers.<br> It must have a size between 8 and 127 characters.";;
+        "Les paramètres avancés du serveur ont été mis à jour!") echo "Advanced settings were updated";;
+        "Les paramètres avancés généraux ont été mis à jour!") echo "General advanced settings have been updated!";;
+        "Veuillez patienter") echo "Please wait!";;
+        "Passage en <b>mode") echo "Switching to <b>mode";;
+        "Changement de mode de fonctionnement") echo "Changing the operating mode";;
+        "Changement de mode de fonctionnement réussit") echo "Successful change of operating mode";;
+        "réussit!") echo "Successful!";;
+        "Erreur: n'a pas put passé en mode") echo "Error: Could not switch to " ;;
+        "retour au mode") echo "back to" ;;  
+        "Passage en mode") echo "Switching to " ;; 
+        "local") echo "local mode" ;;
+        "offline") echo "offline mode" ;;    
+        "entreprise") echo "company mode" ;;  
+        "Mauvais hote!") echo "Wrong host!" ;;
+        "Les codes d'accès envoyés sont les même qu'avant!") echo "The access codes are the same as before!" ;;
+        "Passage en mode entreprise.") echo "Switching to company mode." ;;
+        "Passage en mode réseau local.") echo "Switching to local mode." ;;
+        "Passage en mode hors-ligne.") echo "Switching to offline mode." ;;
+        "Veuillez patienter: Mise à jour de la configuration") echo  "Please wait: Updating configuration";;
+        "Bravo vous allez pouvoir utiliser le boîtier télétravail!") echo "Congratulations you will be able to use the Telework-box!";;
+        "Félicitations, vous pourrez utiliser la boîte de télétravail après le redémarrage !")  echo "Congratulations you will be able to use the Telework-box after rebooting the it!";;
+        "La langue utilisée est maintenant le français!") echo "The langage used is now english" ;;
+        "<b>Redémarrage du Boitier. (Environ 2 minutes)") echo "<b>Rebooting the box. (Approximately 2 minutes)";;
+        "Les paramètres du réseau wifi émis ont été mis à jour. <b>Le wifi va redémarrer!</b>") echo "Wifi network settings have been updated. <b>The wifi will restart!</b>";;
+        "Les paramètres du client wifi ont été mis à jour. <b>Le wifi va redémarrer!</b>") echo "Wifi network settings have been updated. <b>The wifi will restart!</b>";;
+        "Erreur ssid vide!") echo "Error: void ssid!";;
+        "Erreur ssid trop long!") echo "Error: ssid too long!";;  
+        "Clef WPA trop longue")  echo "WPA key too long!";;  
+        "Clef WPA trop courte")  echo "WPA key too short!";;   
+        "Mauvaise taille de clef WEP hexadecimale.") echo "Wrong WEP hexadecimal key size.";;
+        "Clef wep trop courte") echo "WEP key too short.";;    
+        "Clef wep trop longue") echo "WEP key too long.";;          
+    esac
+fi
+
+if [ "$langue" = "fr" ]; then
+echo $1;
+fi
+
+
 }

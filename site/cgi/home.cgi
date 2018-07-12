@@ -20,7 +20,7 @@ case "$client_mode" in
             ;;
         "local")
             tpl_client_mode_icon="map-marker";
-            tpl_display_offline="none";
+            tpl_display_offline="inline-block";
             tpl_display_entreprise="inline-block";
             tpl_display_local="none";   
             tpl_client_mode="Local";         

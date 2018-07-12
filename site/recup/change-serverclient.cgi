@@ -3,8 +3,10 @@ echo "Content-type: text/html"
 echo ""
 echo "<!--"
 
+. /site/traduc/traduc.sh
+
 tpl_result="success"
-tpl_title="Veuillez patienter"
+tpl_title=$( translate_inline_recup "Veuillez patienter")
 tpl_icon="fa-rotate-right fa-spin"
 tpl_url_refresh="/recup/redemarrer.cgi"
 tpl_time_refresh="3"
@@ -21,14 +23,14 @@ fi
 sudo /sbin/uci commit
 
 clientservermode=$(uci get bridgebox.general.mode)
-
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
-    tpl_clientserver_mode="client"
+    tpl_clientserver_mode="Client"
 fi
 
-tpl_text="Passage en <b>mode $tpl_clientserver_mode</b>"
+tpl_text=$( translate_inline_recup "Passage en <b>mode");
+tpl_text="$tpl_text $tpl_clientserver_mode</b>"
 
 echo "-->"
 
@@ -40,6 +42,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "active")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "")

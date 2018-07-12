@@ -24,6 +24,14 @@ tpl_display_client_block="block"
 tpl_display_server_block="none"
 fi
 
+langue=$(uci get bridgebox.general.langue);4
+if [ "$langue" = "en" ]; then
+tpl_selected_en="selected"
+tpl_selected_fr=""
+else
+tpl_selected_en=""
+tpl_selected_fr="selected"
+fi
 
 tpl_port1=$(uci get bridgebox.advanced.server_port)
 tpl_port2=$(uci get bridgebox.advanced.server_port_backup1)
@@ -112,6 +120,10 @@ page=$( inject_var "$page" ~tpl_display_client_inline "$tpl_display_client_inlin
 
 page=$( inject_var "$page" ~tpl_display_server_block "$tpl_display_server_block")
 page=$( inject_var "$page" ~tpl_display_client_block "$tpl_display_client_block")
+
+page=$( inject_var "$page" ~tpl_selected_fr "$tpl_selected_fr")
+page=$( inject_var "$page" ~tpl_selected_en "$tpl_selected_en")
+
 echo $page;
 
 ########################################################

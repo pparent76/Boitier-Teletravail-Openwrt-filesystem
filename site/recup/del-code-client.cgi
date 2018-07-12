@@ -2,12 +2,15 @@
 echo "Content-type: text/html"
 echo ""
 
+. /site/traduc/traduc.sh
+
+
 . ./post.sh
 cgi_getvars BOTH ALL
 
 tpl_result="success"
-tpl_title="Mise à jour de la configuration"
-tpl_text="Les codes d'accès ont été modifiés"
+tpl_title=$( translate_inline_recup "Mise à jour de la configuration")
+tpl_text=$( translate_inline_recup "Les codes d'accès ont été modifiés")
 tpl_url_refresh="/cgi/code.cgi"
 tpl_time_refresh="3"
 tpl_icon="fa-times"
@@ -17,7 +20,7 @@ sudo /bin/sed  -i "${numero}d"  /etc/client-code-history
 #Variable Client/serveur    
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
-    tpl_clientserver_mode="Serveur"
+    tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
 fi
@@ -35,6 +38,7 @@ inject_var() {
 #			Header
 ########################################################
 page=$(cat /site/template/header.html)
+page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
 page=$( inject_var "$page" ~tpl_active_code "")
 page=$( inject_var "$page" ~tpl_active_wifi "active")
