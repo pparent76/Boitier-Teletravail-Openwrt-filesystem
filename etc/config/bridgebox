@@ -15,9 +15,9 @@ config entry 'wifi_sta'
 	option key ''
 
 config entry 'wifi_ap'
-	option key 'defaultpassword'
-	option ssid 'BridgeBox'
-	option enabled '1'
+	option key 'Change-this-password'
+	option ssid 'Telework-Box'
+	option enabled '0'
 
 config entry 'advanced'
         option stun1 'stun1.l.google.com'
