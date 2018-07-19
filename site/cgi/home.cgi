@@ -9,6 +9,7 @@ echo ""
 #
 #####################################################################
 client_mode=$(cat /tmp/bb/client/mode)
+client_openvpn_mode=$(cat cat /tmp/bb/client/openvpn-mode)
 
 case "$client_mode" in
         "offline")
@@ -34,6 +35,8 @@ case "$client_mode" in
             ;;                  
 esac  
 
+
+
 $tpl_client_mode=$(translate_inline "tpl_client_mode" )
 
 clientservermode=$(uci get bridgebox.general.mode)
@@ -41,6 +44,12 @@ if [ "$clientservermode" = "server" ]; then
     tpl_clientserver_mode=$(translate_inline "Serveur")
 else
     tpl_clientserver_mode="Client"
+fi
+
+if [ "$client_mode" = "entreprise" ] && [ "$client_openvpn_mode" = "tor" ]; then
+    tpl_display_warning_client="block"
+else
+    tpl_display_warning_client="none"
 fi
 
 etatinternet=$(cat cat /tmp/bb/internet/internet)
@@ -165,6 +174,7 @@ page=$( inject_var "$page" ~tpl_display_warning_server "$tpl_display_warning_ser
 page=$( inject_var "$page" ~tpl_display_offline "$tpl_display_offline")
 page=$( inject_var "$page" ~tpl_display_entreprise "$tpl_display_entreprise")
 page=$( inject_var "$page" ~tpl_display_local "$tpl_display_local")
+page=$( inject_var "$page" ~tpl_display_warning_client "$tpl_display_warning_client")
 echo $page;
 
 ########################################################

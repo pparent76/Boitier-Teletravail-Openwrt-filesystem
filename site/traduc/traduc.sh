@@ -39,12 +39,15 @@ if [ "$langue" = "en" ]; then
      page=$( translate_patern "$page" "Mode réseau local" "Local mode")   
      page=$( translate_patern "$page" "Mode Entreprise" "Company mode")  
      page=$( translate_patern "$page" "Aide" "Help")     
+     page=$( translate_patern "$page" "Attention" "Warning")         
      
      page=$( translate_patern "$page" "<b>Le mode hors-ligne</b> redirige automatiquement le navigateur vers cette interface d'administration, et ne permet d'accéder à rien d'autre." "<b>In offline mode</b> you can only access this web interface and your web browser is automatically redirected to it." )
      
      page=$( translate_patern "$page" "<b>Le mode réseau local</b> permet d'accéder au réseau local sur lequel est branché le boîtier,ce qui est principalement utile lorsqu'un réseau public requière une identification via un portail captif pour accéder à Internet." "<b>In local mode</b> you access the local network in which the telework-box is plugged. This is mostly usefull when an authentification is required with a captive portail" ) 
      
-     page=$( translate_patern "$page" "<b>Le mode entreprise </b> permet de se connecter sur le réseau de l'entreprise distante, correspondant au code de connexion configuré." "<b>In Company mode</b> you access the remote network of your company, corresponding to the access code you configured." )        
+     page=$( translate_patern "$page" "<b>Le mode entreprise </b> permet de se connecter sur le réseau de l'entreprise distante, correspondant au code de connexion configuré." "<b>In Company mode</b> you access the remote network of your company, corresponding to the access code you configured." )  
+     
+     page=$( translate_patern "$page" "Vous êtes connecté au réseau de l'entreprise uniquement grâce au système de secourt. La connexion au réseau de l'entreprise risque d'être particulièrement lente. La connexion internet utilisée est peut-être trop filtrée, ou bien le serveur Telework-box dans votre entreprise est peut-être mal configuré." "You are only connected to the company network via the backup system. Connection to the company network may be particularly slow. The internet connection used may be too filtered, or the Telework-box server in your company may be poorly configured.")
 
 fi
 echo "$page"

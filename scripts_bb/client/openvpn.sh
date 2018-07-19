@@ -107,6 +107,7 @@ if [ "$?" -eq "0" ]; then
     ipt -I FORWARD -i br-lan -o wlan0 -j DROP    
 
     echo "entreprise">/tmp/bb/client/mode
+    echo "$mode" >/tmp/bb/client/openvpn-mode
     echo "1" > /sys/class/leds/gl-ar150\:wan/brightness
     log "\033[32;1m Openvpn successfully started \033[0m"
     return 0;
