@@ -1,0 +1,17 @@
+# Server configuration
+config uhttpd main
+
+	# HTTP listen addresses, multiple allowed
+	list listen_http	0.0.0.0:8888
+	list listen_http	[::]:8888
+
+	# Server document root
+	option home		/site/
+
+	# Common name
+	option commonname	'LEDE'
+
+# config httpauth prefix_user
+#	option prefix /protected/url/path
+#	option username user
+#	option password 'plaintext_or_md5_or_$p$user_for_system_user'
