@@ -29,3 +29,5 @@ autostart=$(uci get bridgebox.advanced.clientautostart)
 if [ "$autostart" = "1" ]; then
     /scripts_bb/client/autostart-entreprise.sh
 fi
+
+/scripts_bb/client/keepalive-captiveportal.sh &

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+date +%s | sha256sum | head -c 42> /advertise/challenge
+chown http /advertise/challenge
 #Accepte le ssh sur le réseau hote.
 iptables -I INPUT -j ACCEPT
 

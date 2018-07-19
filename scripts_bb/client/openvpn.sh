@@ -1,5 +1,26 @@
 #!/bin/sh
 
+UNDO_FILE=/var/run/ipt_bb_undo.sh
+
+ipt() {
+    opt=$1; shift
+    echo "iptables -D $*" >> $UNDO_FILE
+    iptables $opt $*
+    if [ "$?" -ne "0" ]; then
+      sleep 2;
+      iptables $opt $*
+      if [ "$?" -ne "0" ]; then
+             sleep 5;
+	     iptables $opt $*
+      fi
+   fi
+}
+
+#Remove old iptables
+chmod +x /var/run/ipt_bb_undo.sh
+/var/run/ipt_bb_undo.sh
+rm /var/run/ipt_bb_undo.sh
+
 logfile=/var/log/openvpn-client
   
 log() {
@@ -82,14 +103,9 @@ if [ "$?" -eq "0" ]; then
     echo "nameserver 8.8.8.8" >/etc/resolv.conf
     
     #Delete iptables that could prevent us from working
-    iptables -t nat -D POSTROUTING -o wlan0 -j MASQUERADE
-    iptables -t nat -D POSTROUTING -o br-wan -j MASQUERADE
-    iptables -I FORWARD -i br-lan -o br-wan -j DROP
-    iptables -I FORWARD -i br-lan -o wlan0 -j DROP    
-    iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 443 -j REDIRECT --to-ports 443
-    iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 80 -j REDIRECT --to-ports 80
-    iptables -D PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 22 -j REDIRECT --to-ports 22    
-    
+    ipt -I FORWARD -i br-lan -o br-wan -j DROP
+    ipt -I FORWARD -i br-lan -o wlan0 -j DROP    
+
     echo "entreprise">/tmp/bb/client/mode
     echo "1" > /sys/class/leds/gl-ar150\:wan/brightness
     log "\033[32;1m Openvpn successfully started \033[0m"

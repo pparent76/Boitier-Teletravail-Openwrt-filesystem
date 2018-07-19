@@ -12,6 +12,20 @@ log_stun() {
 
 log_stun "start stun script"
 
+urlencode_many_printf () {
+  string=$1
+  while [ -n "$string" ]; do
+    tail=${string#?}
+    head=${string%$tail}
+    case $head in
+      [-._~0-9A-Za-z]) printf %c "$head";;
+      *) printf %%%02x "'$head"
+    esac
+    string=$tail
+  done
+  echo
+}
+
 ########################################################
 #           try to reach a stun server
 ########################################################
@@ -19,6 +33,8 @@ log_stun "start stun script"
 stunok=0;
 
 rm /tmp/stunres
+
+code=$(uci get bridgebox.client.password )
 
 for i in $( seq 1 3 ); do
 
@@ -74,14 +90,25 @@ for i in $(seq 1 3); do
    
    log "dummyudp-server $stun_localport"
     torproxy=$(uci get bridgebox.advanced.torproxy)
-   #Ask for server push-hole
-    wget https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2>&1
+    
+       
+    #Get challenge
+    wget https://$serverid.$torproxy/challenge --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/stun-challenge > /dev/null 2>&1
+    challengesrc=$(cat /tmp/stun-challenge)
+    challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
+    challengeres=$(urlencode_many_printf "$challengeres")
+    #Ask for server push-hole
+    log_stun " https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
+    wget https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2>&1
+
+
     
     #Wait and see if we could get a dummy reply from server
     sleep 1;
     cat /tmp/dummyudp-server | grep dummy
     if  [ "$?" -eq "0" ]; then
         log_stun "Could establish stun pushhole with  $serverid (me ip=$stun_publicip\&port=$stun_mappedport) with $torproxy" 
+        log_stun "(challenge= $challengesrc)"
         killall dummyudp-server
         return 0;
     fi
@@ -94,15 +121,21 @@ for i in $(seq 1 3); do
     #Send a dummmy udp package to server and record dummy reply
     killall dummyudp-server; dummyudp $stun_localport $ip $port; dummyudp-server $stun_localport >> /tmp/dummyudp-server 2>&1 &
    
-    log_stun "$serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport"
+
     #wget
-    torsocks wget $serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2&>1
+     torsocks wget $serverid.onion/challenge --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/stun-challenge > /dev/null 2>&1
+    challengesrc=$(cat /tmp/stun-challenge)
+    challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
+    challengeres=$(urlencode_many_printf "$challengeres")
+    log_stun "$serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
+    torsocks wget $serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2&>1
     
     #Wait and see if we could get a dummy reply from server
     sleep 1;
     cat /tmp/dummyudp-server | grep dummy
     if  [ "$?" -eq "0" ]; then
         log_stun "Could establish stun pushhole with  $serverid (me ip=$stun_publicip\&port=$stun_mappedport) with torsocks"
+        log_stun "(challenge= $challengesrc)"
         killall dummyudp-server
         return 0;
     fi

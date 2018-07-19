@@ -1,5 +1,7 @@
 #!/bin/sh
 
+clientservermode=$(uci get bridgebox.general.mode)
+
 killall autostart-entreprise.sh
 
 #Deinit previous settings.
@@ -8,6 +10,7 @@ killall wpa_supplicant
 ip addr flush dev wlan0
 ifconfig wlan0 down
 ifconfig wlan1 down
+
 
 if [ ! -f "/tmp/wifi-interfaces-configured" ]; then
     iw dev wlan0 del
@@ -46,6 +49,7 @@ touch /tmp/wifi-interfaces-configured
 if [ "$clientservermode" = "server" ]; then
 return 1;
 fi
+
 
 ################################################
 #           Station (client) part
@@ -118,7 +122,7 @@ fi
 ssid_ap=$(uci get bridgebox.wifi_ap.ssid)
 key_ap=$(uci get bridgebox.wifi_ap.key)
 enabled_ap=$(uci get bridgebox.wifi_ap.enabled)
-clientservermode=$(uci get bridgebox.general.mode)
+
 
 if [ "$enabled_ap" = "1" ]&& [ "$clientservermode" = "client" ]; then
     rm /etc/hostapd.conf  
