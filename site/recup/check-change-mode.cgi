@@ -11,7 +11,7 @@ cgi_getvars BOTH ALL
 requestedmode=$(cat /tmp/web-requested-mode) 
 requestedmodetxt=$( translate_inline_recup "$requestedmode")
 previousmode=$(cat /tmp/web-previous-mode)
-currentmode=$(cat /tmp/bb/client/mode)
+
 
 tpl_result="info"
 tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement")
@@ -30,6 +30,9 @@ local=$?
 ps |  grep -v grep |grep get-offline.sh  > /dev/null 2>&1;
 offline=$?
 
+sleep 1;
+currentmode=$(cat /tmp/bb/client/mode);
+
 needtoreconnect=0;
 if [ "$requestedmode" = "entreprise" ]&& [ "$previousmode" != "entreprise" ]; then
     needtoreconnect=1;
@@ -40,7 +43,7 @@ fi
 
 isdone=0;
 if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; then
-    if [ "$requestedmode" != "$currentmode"  ]; then
+    if [ "$requestedmode" != "$currentmode" ]; then
         tpl_url_refresh="/cgi/home.cgi"
         tpl_icon="fa-times" 
         tpl_result="error"
@@ -60,11 +63,11 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
     fi
 fi
 
-if [ "$needtoreconnect" -eq "1" ]&& ["$requestedmode" = "$currentmode" ]; then
+if [ "$needtoreconnect" -eq "1" ]; then
 if [ "$isdone" -eq "1" ]; then
-    tpl_text=$(echo "$tpl_text<br><br> <h4> <u>Attention:</u> Il est nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.</h4>")
+    tpl_text=$(echo "$tpl_text<br><br> <h4> $( translate_inline_recup "<u>Attention:</u> Il est nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") </h4>")
 else
-    tpl_text=$(echo "$tpl_text<br><br> <h4> <u>Attention:</u> Il sera nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.</h4>")
+    tpl_text=$(echo "$tpl_text<br><br> <h4> $( translate_inline_recup "<u>Attention:</u> Il sera nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") </h4>")
 fi
 
 fi

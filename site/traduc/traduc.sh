@@ -232,7 +232,9 @@ if [ "$langue" = "en" ]; then
         "Clef WPA trop courte")  echo "WPA key too short!";;   
         "Mauvaise taille de clef WEP hexadecimale.") echo "Wrong WEP hexadecimal key size.";;
         "Clef wep trop courte") echo "WEP key too short.";;    
-        "Clef wep trop longue") echo "WEP key too long.";;          
+        "Clef wep trop longue") echo "WEP key too long.";;     
+        "<u>Attention:</u> Il est nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") echo "<u>Caution:</u> It is necessary to disconnect and reconnect your device to the Telework-box in order to retrieve the IP address corresponding to your network.";;
+        "<u>Attention:</u> Il sera nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") echo "<u>Caution:</u> It will be necessary to disconnect and reconnect your device to the Telework-box in order to retrieve the IP address corresponding to your network." ;;
     esac
 fi
 
