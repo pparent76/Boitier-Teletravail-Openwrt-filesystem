@@ -13,6 +13,8 @@ fi
 
 if [ ! -e "/etc/passwd-configured" ]; then
 echo -e "UcOuLdDoIt4Me\nUcOuLdDoIt4Me" | (passwd root)
+password=(openssl rand -base64 14 | sed "s/==//g")
+echo "$password#Default password">/etc/server-codes
 touch /etc/passwd-configured
 fi
 
