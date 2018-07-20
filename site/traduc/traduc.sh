@@ -224,6 +224,7 @@ if [ "$langue" = "en" ]; then
         "Passage en mode hors-ligne.") echo "Switching to offline mode." ;;
         "Veuillez patienter: Mise à jour de la configuration") echo  "Please wait: Updating configuration";;
         "Bravo vous allez pouvoir utiliser le boîtier télétravail!") echo "Congratulations you will be able to use the Telework-box!";;
+        "Bravo vous allez pouvoir utiliser le boîtier télétravail après redémarrage!")  echo "Congratulations you will be able to use the Telework-box after a reboot!";;
         "Félicitations, vous pourrez utiliser la boîte de télétravail après le redémarrage !")  echo "Congratulations you will be able to use the Telework-box after rebooting the it!";;
         "La langue utilisée est maintenant le français!") echo "The langage used is now english" ;;
         "<b>Redémarrage du Boitier. (Environ 2 minutes)") echo "<b>Rebooting the box. (Approximately 2 minutes)";;

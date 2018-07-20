@@ -12,10 +12,10 @@ if [ ! -e "/etc/openvpn/keys/client.crt" ]; then
 fi
 
 if [ ! -e "/etc/passwd-configured" ]; then
-echo -e "UcOuLdDoIt4Me\nUcOuLdDoIt4Me" | (passwd root)
-password=(openssl rand -base64 14 | sed "s/==//g")
-echo "$password#Default password">/etc/server-codes
-touch /etc/passwd-configured
+    echo -e "UcOuLdDoIt4Me\nUcOuLdDoIt4Me" | (passwd root)
+    password=$(openssl rand -base64 14 | sed "s/==//g")
+    echo "$password#Default password">/etc/server-codes
+    touch /etc/passwd-configured
 fi
 
 echo 990 > /proc/sys/vm/min_free_kbytes
