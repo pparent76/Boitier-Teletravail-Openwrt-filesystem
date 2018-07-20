@@ -6,7 +6,7 @@ chown http /advertise/challenge
 iptables -I INPUT -j ACCEPT
 
 #Lancement de dnsmasq en mode normal
-echo "">/etc/dnsmasq.conf
+echo "address=/#/2.2.2.2">/etc/dnsmasq.conf
 /etc/init.d/dnsmasq restart
 
 #Lancement de lighttpd pour l'advertisement
