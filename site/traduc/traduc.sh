@@ -248,7 +248,7 @@ if [ "$langue" = "en" ]; then
         "Mettre à jour") echo "Upgrade now";;
         "Mauvais firmware") echo "Wrong firmware";;
         "Le fichier envoyé n'est pas un fichier de firmware valable!") echo "The uploaded file is not a valid firmware file!";;
-        "<b>Mise à jour du firmware. (Environ 5 minutes)") echo "<b>Upgrading firmware. (Approximately 2 minutes)";;
+        "<b>Mise à jour du firmware. (Environ 5 minutes)") echo "<b>Upgrading firmware. (Approximately 5 minutes)";;
     esac
 fi
 
