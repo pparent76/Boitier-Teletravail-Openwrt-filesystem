@@ -138,7 +138,11 @@ if [ "$langue" = "en" ]; then
      
      page=$( translate_patern "$page" "Ce bouton permet de passer en <b>mode serveur</b> afin d'étendre le réseau d'une entreprise et permettre aux boîtiers client détenus par les salariés de s'y connecter. Si vous êtes employé, et souhaitez simplement vous connecter au réseau d'une entreprise, ne cliquez pas dessus." "This button allows you to switch to <b>server mode</b> in order to extend a company's network and allow employee's client boxes to connect to it. If you are an employee, and simply want to connect to a company's network, do not click on it.")            
      
-     page=$( translate_patern "$page" "Ce bouton permet de passer en <b>mode client</b> afin de se connecter à distance à un réseau d'entreprise. Si ce boitier est branché dans le réseau de l'entreprise dans le but de l'étendre, ne cliquez pas sur ce bouton." "This button allows you to switch to <b>client mode</b> in order to connect remotely to an enterprise network. If this box is connected to the company network in order to extend it, do not click on this button.")      
+     page=$( translate_patern "$page" "Ce bouton permet de passer en <b>mode client</b> afin de se connecter à distance à un réseau d'entreprise. Si ce boitier est branché dans le réseau de l'entreprise dans le but de l'étendre, ne cliquez pas sur ce bouton." "This button allows you to switch to <b>client mode</b> in order to connect remotely to an enterprise network. If this box is connected to the company network in order to extend it, do not click on this button.")   
+     
+     page=$( translate_patern "$page" "Mise à jour du Firmware" "Upgrade Firmware" )
+  
+     page=$( translate_patern "$page" "Fichier du Firmware:" "Firmware File:" )  
      
 fi
 echo "$page"
@@ -239,6 +243,12 @@ if [ "$langue" = "en" ]; then
         "Clef wep trop longue") echo "WEP key too long.";;     
         "<u>Attention:</u> Il est nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") echo "<u>Caution:</u> It is necessary to disconnect and reconnect your device to the Telework-box in order to retrieve the IP address corresponding to your network.";;
         "<u>Attention:</u> Il sera nécessaire de déconnecter et reconnecter votre appareil au boîtier afin de récupérer l’adresse IP correspondante à votre réseau.") echo "<u>Caution:</u> It will be necessary to disconnect and reconnect your device to the Telework-box in order to retrieve the IP address corresponding to your network." ;;
+        "Mise à jour du firmware") echo "Upgrading Firmware" ;;
+        "Firmware correct!") echo "Firmware ok!";;
+        "Mettre à jour") echo "Upgrade now";;
+        "Mauvais firmware") echo "Wrong firmware";;
+        "Le fichier envoyé n'est pas un fichier de firmware valable!") echo "The uploaded file is not a valid firmware file!";;
+        "<b>Mise à jour du firmware. (Environ 5 minutes)") echo "<b>Upgrading firmware. (Approximately 2 minutes)";;
     esac
 fi
 
