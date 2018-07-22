@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "$ACTION -- $DEVICENAME" > /tmp/testaa
+if [ "$ACTION" = "remove" ]&& [ "$DEVICENAME" = "tap0" ]; then
+     pidof get-offline.sh
+     if [ "$?" -eq "0" ]; then
+         exit 1;
+     fi
+    
+     pidof captive-portail.sh
+     if [ "$?" -eq "0" ]; then
+         exit 1;
+     fi
+     
+     mode=$(cat /tmp/bb/client/mode)
+     
+     if [ "$mode" = "entreprise" ]; then 
+         echo "Lost connection going back to offline" >> /var/log/survey-client
+         /scripts_bb/client/get-offline.sh &
+     fi  
+fi
