@@ -16,25 +16,27 @@ case "$client_mode" in
             tpl_client_mode_icon="pause";
             tpl_display_offline="none"; 
             tpl_display_entreprise="inline-block";  
-            tpl_display_local="inline-block";    
+            tpl_display_local="inline-block";
+            tpl_display_captive="none"
             tpl_client_mode=$(translate_inline "Hors-ligne" )
             ;;
         "local")
-            tpl_client_mode_icon="map-marker";
+            tpl_client_mode_icon="id-card";
             tpl_display_offline="inline-block";
             tpl_display_entreprise="inline-block";
             tpl_display_local="none";   
-            tpl_client_mode="Local";         
+            tpl_display_captive="inline-block"
+            tpl_client_mode=$(translate_inline "Portail captif" );         
             ;;        
         "entreprise")
             tpl_client_mode_icon="users";
             tpl_display_offline="inline-block";
             tpl_display_entreprise="none";  
             tpl_display_local="inline-block"; 
+            tpl_display_captive="none"            
             tpl_client_mode=$(translate_inline "Entreprise" )
             ;;                  
 esac  
-
 
 
 $tpl_client_mode=$(translate_inline "tpl_client_mode" )
@@ -57,7 +59,8 @@ etatinternet=$(cat cat /tmp/bb/internet/internet)
 if [ "$etatinternet" = "OK" ]; then
     tpl_internet_text="OK"
     tpl_internet_color="green"
-    tpl_display_local="none";      
+    tpl_display_local="none"; 
+    tpl_display_captive="none";
 fi
 
 if [ "$etatinternet" = "WARNING" ]; then
@@ -69,6 +72,12 @@ if [ "$etatinternet" = "KO" ]; then
     tpl_internet_text="KO"
     tpl_internet_color="red"    
     tpl_display_entreprise="none";      
+fi
+
+if [ "$tpl_display_entreprise" = "none" ]&&  [ "$tpl_display_local" = "none" ]&&  [ "$tpl_display_captive" = "none" ]; then
+    tpl_display_action="none";
+else
+    tpl_display_action="inline-block"
 fi
 
 tpl_uptime=$(uptime | tr "," " " | cut -f4-6 -d" " | sed "s/day/$(translate_inline "jour")/g");
@@ -175,6 +184,9 @@ page=$( inject_var "$page" ~tpl_display_offline "$tpl_display_offline")
 page=$( inject_var "$page" ~tpl_display_entreprise "$tpl_display_entreprise")
 page=$( inject_var "$page" ~tpl_display_local "$tpl_display_local")
 page=$( inject_var "$page" ~tpl_display_warning_client "$tpl_display_warning_client")
+page=$( inject_var "$page" ~tpl_display_action "$tpl_display_action")
+page=$( inject_var "$page" ~tpl_display_captive "$tpl_display_captive")
+
 echo $page;
 
 ########################################################

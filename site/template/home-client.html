@@ -50,25 +50,28 @@
         
         
             <div class="col-lg-6 col-md-6 col-xs-12">
-                       <div class="box  box-success">
+                       <div class="box  box-success" style="display:~tpl_display_action">
                 <div class="box-header">
                 <i class="fa fa-refresh"></i>
 
-                <h3 class="box-title">Changer mode client</h3>
+                <h3 class="box-title">Actions possibles</h3>
                 </div>
                 
-                <div class="box-body chat" id="chat-box">
-     
-                <p>Cliquez sur les boutons ci-dessous pour changer le mode </p>
+                <div class="box-body chat" id="chat-box" >
                 <center>
-                <a  style="display:~tpl_display_offline" class="btn btn-app btn-info" href="/recup/get-offline.cgi">
+<!--                <a  style="display:~tpl_display_offline" class="btn btn-app btn-info" href="/recup/get-offline.cgi">
                 <i class="fa fa-pause"></i> Mode hors-ligne
-                </a>
-                <a style="display:~tpl_display_local" class="btn btn-app btn-info" href="/recup/get-local.cgi">
-                <i class="fa fa-map-marker"></i> Mode réseau local
-                </a>                
+                </a>-->
+                <a style="display:~tpl_display_local" class="btn btn-app btn-info" target="_blank" href="/recup/get-local.cgi">
+                <i class="fa fa-id-card"></i> S'identifier auprès du portail captif
+                </a>     
+                
+                <a style="display:~tpl_display_captive" class="btn btn-app btn-info" target="_blank" href="http://iciwifi.top">
+                <i class="fa fa-id-card"></i> S'identifier auprès du portail captif
+                </a>   
+                
                 <a style="display:~tpl_display_entreprise" class="btn btn-app btn-info" href="/recup/get-entreprise.cgi">
-                <i class="fa fa-users"></i> Mode Entreprise
+                <i class="fa fa-users"></i> Se connecter au réseau d'entreprise
                 </a>  
                 </center>
                 </div>  

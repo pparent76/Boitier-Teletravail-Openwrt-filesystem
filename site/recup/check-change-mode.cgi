@@ -50,7 +50,11 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
         tpl_time_refresh="6"   
         tpl_text="<b>$( translate_inline_recup "Erreur: n'a pas put passé en mode" ) $requestedmodetxt, $( translate_inline_recup "retour au mode" ) $currentmode</b>"
     else
-        tpl_url_refresh="/cgi/home.cgi"
+        if [ "$requestedmode" = "local" ]; then
+            tpl_url_refresh="http://iciwifi.top/"
+        else
+            tpl_url_refresh="/cgi/home.cgi"        
+        fi
         tpl_title=$( translate_inline_recup "Changement de mode de fonctionnement réussit")
         tpl_icon="fa-check" 
         tpl_text="$( translate_inline_recup "Passage en mode" ) <b>$requestedmodetxt</b> $( translate_inline_recup "réussit!")"
