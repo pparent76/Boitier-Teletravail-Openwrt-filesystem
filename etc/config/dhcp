@@ -13,7 +13,9 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/etc/resolv.dnsmasq'
 	option localservice '1'
-
+    list dhcp_option '58,5s'
+    list dhcp_option '59,6s'
+    
 config dhcp 'lan'
 	option interface 'lan'
 	option start '100'
