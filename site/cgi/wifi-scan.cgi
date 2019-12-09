@@ -61,6 +61,15 @@ else
     tpl_clientserver_mode="Client"
 fi
 
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_display_appairage="inline-block"
+    tpl_display_wifi="none"
+else
+    tpl_display_appairage="none"
+    tpl_display_wifi="inline-block"
+fi
+
 #####################################################################
 #
 #               Generation du html   
@@ -70,6 +79,7 @@ fi
 ########################################################
 #			Header
 ########################################################
+
 page=$(cat /site/template/header.html)
 page=$( translate_header "$page" )
 page=$( inject_var "$page" ~tpl_active_acceuil "")
@@ -78,6 +88,8 @@ page=$( inject_var "$page" ~tpl_active_wifi "active")
 page=$( inject_var "$page" ~tpl_active_portail "")
 page=$( inject_var "$page" ~tpl_active_avance "")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
+page=$( inject_var "$page" ~tpl_display_appairage "$tpl_display_appairage")
+page=$( inject_var "$page" ~tpl_display_wifi "$tpl_display_wifi")
 echo $page;
 
 ########################################################

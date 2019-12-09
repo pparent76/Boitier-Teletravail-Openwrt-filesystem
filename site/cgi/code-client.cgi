@@ -56,6 +56,15 @@ tpl_history_rows=$( inject_var "$tpl_history_rows" ~tpl_history_row "")
 #
 #####################################################################
 
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_display_appairage="inline-block"
+    tpl_display_wifi="none"
+else
+    tpl_display_appairage="none"
+    tpl_display_wifi="inline-block"
+fi
+
 
 ########################################################
 #			Header
@@ -68,6 +77,8 @@ page=$( inject_var "$page" ~tpl_active_wifi "")
 page=$( inject_var "$page" ~tpl_active_portail "")
 page=$( inject_var "$page" ~tpl_active_avance "")
 page=$( inject_var "$page" ~tpl_clientserver_mode "$tpl_clientserver_mode")
+page=$( inject_var "$page" ~tpl_display_appairage "$tpl_display_appairage")
+page=$( inject_var "$page" ~tpl_display_wifi "$tpl_display_wifi")
 echo $page;
 
 ########################################################
