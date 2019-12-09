@@ -49,7 +49,7 @@ for port in $port1 $port2 $port3 $port4; do
     #############################################
     if [ "$ipeth0" != "" ]; then
         sleep 1;
-        upnpc -a $ipeth0 1194 $port tcp > /tmp/resupnp 2>&1    
+        upnpc -a $ipeth0 1194 $port udp > /tmp/resupnp 2>&1    
         
         upnpc -l | grep "$ipeth0:1194" | grep "$port"
 
