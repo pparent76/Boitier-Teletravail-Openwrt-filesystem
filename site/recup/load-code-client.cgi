@@ -42,6 +42,15 @@ inject_var() {
 	echo $1 | sed -e "s#$2#$3#g"
 }
 
+clientservermode=$(uci get bridgebox.general.mode)
+if [ "$clientservermode" = "server" ]; then
+    tpl_display_appairage="inline-block"
+    tpl_display_wifi="none"
+else
+    tpl_display_appairage="none"
+    tpl_display_wifi="inline-block"
+fi
+
 ########################################################
 #			Header
 ########################################################
@@ -65,6 +74,8 @@ page=$( inject_var "$page" ~tpl_text "$tpl_text")
 page=$( inject_var "$page" ~tpl_url_refresh "$tpl_url_refresh")
 page=$( inject_var "$page" ~tpl_time_refresh "$tpl_time_refresh")
 page=$( inject_var "$page" ~tpl_icon "$tpl_icon")
+page=$( inject_var "$page" ~tpl_display_appairage "$tpl_display_appairage")
+page=$( inject_var "$page" ~tpl_display_wifi "$tpl_display_wifi")
 echo $page;
 
 ########################################################
