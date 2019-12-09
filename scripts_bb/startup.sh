@@ -7,7 +7,7 @@ if [ ! -h "/usr/bin/torsocks" ]; then
 ln -s /usr/local/bin/torsocks /usr/bin/torsocks
 fi
 
-if [ ! -e "/etc/openvpn/keys/client.crt" ]; then
+if [ ! -e "/root/pubkey" ]; then
 /scripts_bb/make-keys.sh
 fi
 
