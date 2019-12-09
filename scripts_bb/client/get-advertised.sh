@@ -18,11 +18,7 @@ handle_advertised() {
    export ip=$(echo $var | awk '{print $2}'| sed -e "s/[!@#\$%^&~*()\"\\\'\(\)\;\/\`\:\<\>]//g" | tr "{" " " | tr "}" " ")    
    export localip=$(echo $var | awk '{print $4}' | sed -e "s/[!@#\$%^&~*()\"\\\'\(\)\;\/\`\:\<\>]//g"| tr "{" " " | tr "}" " " )       
    export mode=$(echo $var | awk '{print $1}' | sed -e "s/[!@#\$%^&~*()\"\\\'\(\)\;\/\`\:\<\>]//g"| tr "{" " " | tr "}" " " ) 
-   if [ "$mode" = "direct" ]; then
-    export proto="tcp"
-   else
     export proto="udp"
-   fi
 }
 
 log "Starting get advertise"

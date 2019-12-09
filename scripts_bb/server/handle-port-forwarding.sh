@@ -20,10 +20,10 @@ echo "$logcontent" > /var/log/handle-port-forwarding
 
 log "\033[44m!!!!!!START HANDLING PORT FORWARDING!!!!!!!\033[m"
 
-openvpncount=$(ps |  grep  openvpn | grep -v grep | wc -l)
-if [ "$openvpncount" -ne 2 ]; then
-    /scripts_bb/server/openvpn.sh
-fi
+# openvpncount=$(ps |  grep  openvpn | grep -v grep | wc -l)
+# if [ "$openvpncount" -ne 2 ]; then
+#     /scripts_bb/server/vpn.sh
+# fi
 
 #######################################################
 #           Begin port opening
