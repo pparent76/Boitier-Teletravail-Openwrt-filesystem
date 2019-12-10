@@ -93,7 +93,8 @@ tpl_box_id=$(sudo /usr/bin/get-id)
 serverok=1;
 torstate=$(cat /tmp/bb/internet/tor)
 porttype=$(cat /tmp/bb/server/port-type)
-openvpncount=$(ps |  grep  "openvpn /etc/openvpn/" | grep -v grep | wc -l)
+sudo /usr/bin/wg | grep 1194 >/dev/null 2>&1
+wg1024=$?
 
 if [ "$torstate" != "OK" ]; then
     serverok=0;
@@ -103,7 +104,7 @@ if [ "$porttype" != "direct" ]&& [ "$porttype" != "stun" ]; then
     serverok=0;
 fi
 
-if [ "$openvpncount" -ne 2 ]; then
+if [ "$wg1024" -ne "0" ]; then
     serverok=0;
 fi
 

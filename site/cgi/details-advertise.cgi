@@ -55,6 +55,13 @@ page=$( inject_var "$page" ~tpl_display_appairage "$tpl_display_appairage")
 page=$( inject_var "$page" ~tpl_display_wifi "$tpl_display_wifi")
 echo $page;
 
+
+sudo /usr/bin/wg | grep 1194 >/dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+    processcom="Wg OK"
+else
+    processcom="Wg NOK"
+fi
 #########################################################
 #           Page
 #########################################################
@@ -66,7 +73,7 @@ echo '	<body style="background-color: #ecf0f5;">
 params=$(cat /advertise/index.html | sed "s/BEGINADVERTISE//g" |  sed "s/ENDADVERTISE//g")
 translate_page_details "<b>Etat tor:</b> $torstate <br>" 
 translate_page_details"<b>Mode:</b> $(echo $params | awk '{print $1;}' ) <br>"
-translate_page_details "<b>Process:</b> $openvpncount/2 <br>"
+translate_page_details "<b>Process:</b> $processcom <br>"
 translate_page_details "<b>IP publique:</b> $(echo $params | awk '{print $2;}' ) <br>"
 translate_page_details "<b>Port publique:</b> $(echo $params | awk '{print $3;}' ) <br>"
 
