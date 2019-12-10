@@ -20,10 +20,11 @@ echo "$logcontent" > /var/log/handle-port-forwarding
 
 log "\033[44m!!!!!!START HANDLING PORT FORWARDING!!!!!!!\033[m"
 
-# openvpncount=$(ps |  grep  openvpn | grep -v grep | wc -l)
-# if [ "$openvpncount" -ne 2 ]; then
-#     /scripts_bb/server/vpn.sh
-# fi
+wg | grep 1194 >/dev/null 2>&1
+wgres=$?
+ if [ "$wgres" -ne 0 ]; then
+     /scripts_bb/server/vpn.sh
+ fi
 
 #######################################################
 #           Begin port opening
@@ -49,7 +50,8 @@ fi
 serverok=1;
 torstate=$(cat /tmp/bb/internet/tor)
 porttype=$(cat /tmp/bb/server/port-type)
-openvpncount=$(ps |  grep  "openvpn /etc/openvpn/" | grep -v grep | wc -l)
+wg | grep 1194 >/dev/null 2>&1
+wgres=$?
 
 if [ "$torstate" != "OK" ]; then
     serverok=0;
@@ -59,7 +61,7 @@ if [ "$porttype" != "direct" ]&& [ "$porttype" != "stun" ]; then
     serverok=0;
 fi
 
-if [ "$openvpncount" -ne 2 ]; then
+if [ "$wgres" -ne 0 ]; then
     serverok=0;
 fi
 

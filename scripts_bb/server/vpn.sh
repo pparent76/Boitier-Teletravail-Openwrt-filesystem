@@ -13,13 +13,14 @@ ip link del dev wg0 2>/dev/null || true
 ip link add dev wg0 type wireguard
 wg set wg0 listen-port 1194 private-key /root/privatekey
 ip address add 10.0.0.1/24 dev wg0
+ip link set wg0 mtu 15000
 ip link set up dev wg0
 
 
 ############################################################
 #          Configure the authorized wireguard clients
 ############################################################
-#wg set wg0 peer PEER_B_PUBLIC_KEY persistent-keepalive 25 allowed-ips 10.0.0.0/24 
+#wg set wg0 peer PEER_B_PUBLIC_KEY allowed-ips 10.0.0.0/24 
 
 ############################################################
 #           We add 7 gre interfaces for the 7 clients

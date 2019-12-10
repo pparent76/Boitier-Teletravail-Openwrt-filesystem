@@ -47,7 +47,7 @@ port3=$(uci get bridgebox.advanced.server_port_backup2)
 port4=$(uci get bridgebox.advanced.server_port_backup3)
 
 for port in $port1 $port2 $port3 $port4; do
-    /scripts_bb/server/test-openvpn.py -t --retrycount 2 --timeout 5 --tls-auth /etc/openvpn/keys/ta.key  --tls-auth-inverse  -p $port $publicip | grep "OK"
+    /scripts_bb/server/test-port.sh $port $publicip 1194 | grep "OK"
     if [ "$?" -eq "0" ]; then
             log "\033[42mPort $port redirected\033[m"
             echo "$publicip">/tmp/bb/server/ip    

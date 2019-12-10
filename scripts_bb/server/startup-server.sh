@@ -22,7 +22,7 @@ cp /etc/crontab-server /etc/crontabs/root
 
 sleep 2;
 
-#Start openvpn
+#Start vpn
 /scripts_bb/server/vpn.sh
 
 sleep 5;
