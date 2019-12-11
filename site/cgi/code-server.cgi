@@ -47,15 +47,16 @@ fi
 while IFS='' read -r line || [[ -n "$line" ]]; do
  if [ "$line" != "" ]; then 
     hostl=$(sudo /usr/bin/get-id)
-    codel=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ' | sed "s/ //g")  
+    macl=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ' | sed "s/ //g")    
+    clefl=$(echo "$line" | tr '#' '\n' | head -n 2 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")  
     codedecrypt=$codel;
     if [ "$displaycodes" != "1" ]; then
-        codel=$(nstars ${#codel})
+        clefl=$(nstars ${#clefl})
     fi
-    commentairel=$(echo "$line" | tr '#' '\n' | tail -n 1 | tr '\n' ' ')     
+    commentairel=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ')     
     tpl_history_row=$(cat /site/template/tab_line/code-server.html | tr '\n' ' ' )
-    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_host "$hostl") 
-    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_code "$codel") 
+    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_mac "$macl") 
+    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_clef "$clefl") 
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_decryptcode "$codedecrypt")    
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_commentaire "$commentairel")    
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_count_index "$j")     

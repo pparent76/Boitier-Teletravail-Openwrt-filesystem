@@ -31,25 +31,24 @@ function togglePassword() {
                 <p> Chacun des code d'accès ci-dessous est propre à un employé et lui de se connecter au réseau<p>
                 
                 <div class="row">
-                <div class="col-lg-2 col-md-4 col-xs-12"  style="display:~tpl_displaycode_visible" ><a href="/cgi/code.cgi?displaycodes=1" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Afficher les codes</a>  </div>
+                <div class="col-lg-2 col-md-4 col-xs-12"  style="display:~tpl_displaycode_visible" ><a href="/cgi/code.cgi?displaycodes=1" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Afficher les clefs</a>  </div>
                 
                <div class="col-lg-2 col-md-4 col-xs-12" style="display:~tpl_hidecode_visible">             
-                <a href="/cgi/code.cgi" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Cacher les codes</a></div>
+                <a href="/cgi/code.cgi" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Cacher les clefs</a></div>
                 <div>
                 <div class="box-body chat" id="chat-box">
                 <br><br>
                 <table  class="table table-condensed">
                   <tr>
-                    <th>Hôte</th>
-                    <th>Code</th>
+                    <th>MAC</th>
+                    <th>Clef publique</th>
                     <th>Commentaire</th>  
-                    <th></th>
-                    <th></th>                    
+                    <th></th>                   
                     </tr>
                   ~tpl_history_rows  
                 </table>
                 
-                <form method="POST" action="/recup/add-code-server.cgi">
+<!--                <form method="POST" action="/recup/add-code-server.cgi">
 									<div class="form-group">
 										<div class="input-group input-group-sm" style="margin-bottom: 2px; width:100%">
                                             <label for="code">Code:</label>
@@ -59,7 +58,7 @@ function togglePassword() {
 											<input type="text" name="commentaire" id="commentaire">
                                             <input value="Ajouter" name="action" class="btn btn-success" type="submit">
 										</div>
-									</div>
+									</div>-->
                 </form>
                 </div>
             </div>

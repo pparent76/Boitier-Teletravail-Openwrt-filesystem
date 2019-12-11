@@ -66,7 +66,7 @@ else
 fi
 
 
-tpl_box_id=$(sudo /usr/bin/get-id)
+tpl_box_id=$(cat /sys/class/net/eth0/address)
 
 
 #####################################################################
