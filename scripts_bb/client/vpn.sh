@@ -127,7 +127,7 @@ if [ "$?" -eq "0" ]; then
     
     echo "entreprise">/tmp/bb/client/mode
     echo "$mode" >/tmp/bb/client/vpn-mode
-    echo "1" > /sys/class/leds/gl-ar150\:wan/brightness
+    echo "1" > /sys/class/leds/gl-ar150\:green\:wan/brightness
     log "\033[32;1m VPN successfully started \033[0m"
     return 0;
 else

@@ -66,15 +66,15 @@ if [ "$wgres" -ne 0 ]; then
 fi
 
 if [ "$porttype" = "direct" ]; then
-    echo "1"> /sys/class/leds/gl-ar150\:lan/brightness
+    echo "1"> /sys/class/leds/gl-ar150\:green\:lan/brightness
 else
-    echo "0"> /sys/class/leds/gl-ar150\:lan/brightness
+    echo "0"> /sys/class/leds/gl-ar150\:green\:lan/brightness
 fi
 
 if [ "$serverok" -eq "1" ]; then
-    echo "1"> /sys/class/leds/gl-ar150\:wan/brightness
+    echo "1"> /sys/class/leds/gl-ar150\:green\:wan/brightness
 else
-    echo "0"> /sys/class/leds/gl-ar150\:wan/brightness
+    echo "0"> /sys/class/leds/gl-ar150\:green\:wan/brightness
 fi
 
 #######################################################
