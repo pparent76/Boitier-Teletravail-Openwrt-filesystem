@@ -24,10 +24,16 @@ ip link set up dev wg0
 while IFS='' read -r line || [[ -n "$line" ]]; do
  if [ "$line" != "" ]; then 
     clefl=$(echo "$line" | tr '#' '\n' | head -n 2 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")  
+    # TODO Restrict authorized IP
     wg set wg0 peer $clefl allowed-ips 10.0.0.0/24 
   fi
 done < /etc/server-codes
 
+############################################################
+#   For security reasons only allow gre to go throug wg0
+############################################################
+iptables -I OUPUT -d 10.0.0.0/24  -p 47  -j DROP
+iptables -I OUPUT -d 10.0.0.0/24  -p 47 -o wg0  -j ACCEPT
 
 ############################################################
 #           We add 7 gre interfaces for the 7 clients

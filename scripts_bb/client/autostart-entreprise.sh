@@ -3,7 +3,7 @@
 internet=$(cat /tmp/bb/internet/internet)
 
 if [ "$internet" = "OK" ]; then
-    /scripts_bb/client/openvpn.sh &
+    /scripts_bb/client/vpn.sh &
     return 1;
 fi
 
@@ -12,7 +12,7 @@ stun=$(cat /tmp/bb/internet/stun);
 udp=$(cat /tmp/bb/internet/udp-port);
 
 if [ "$ping" != "KO" ]&& [ "$stun" != "KO" ]&& [ "$udp" != "KO" ]; then
-    /scripts_bb/client/openvpn.sh &
+    /scripts_bb/client/vpn.sh &
 fi
 
 
@@ -24,12 +24,12 @@ if [ "$mode" = "entreprise" ]; then
     return 1;
 fi
 
-killall openvpn.sh
+killall vpn.sh
 /scripts_bb/check_internet/check-internet.sh
 internet=$(cat /tmp/bb/internet/internet)
 
 if [ "$internet" = "OK" ]; then
-    /scripts_bb/client/openvpn.sh &
+    /scripts_bb/client/vpn.sh &
     return 1;
 fi
 
@@ -38,7 +38,7 @@ stun=$(cat /tmp/bb/internet/stun);
 udp=$(cat /tmp/bb/internet/udp-port);
 
 if [ "$ping" != "KO" ]&& [ "$stun" != "KO" ]&& [ "$udp" != "KO" ]; then
-    /scripts_bb/client/openvpn.sh &
+    /scripts_bb/client/vpn.sh &
     return 1;
 fi
 
@@ -47,6 +47,6 @@ sleep 240;
 internet=$(cat /tmp/bb/internet/internet)
 
 if [ "$internet" = "OK" ]; then
-    /scripts_bb/client/openvpn.sh &
+    /scripts_bb/client/vpn.sh &
     return 1;
 fi

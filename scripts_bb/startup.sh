@@ -7,7 +7,7 @@ if [ ! -h "/usr/bin/torsocks" ]; then
 ln -s /usr/local/bin/torsocks /usr/bin/torsocks
 fi
 
-if [ ! -e "/root/pubkey" ]; then
+if [ ! -e "/root/publickey" ]; then
 /scripts_bb/make-keys.sh
 fi
 

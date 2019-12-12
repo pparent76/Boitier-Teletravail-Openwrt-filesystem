@@ -26,10 +26,10 @@ function togglePassword() {
                 <div class="box-header">
                 <i class="fa fa-unlock-alt"></i>
 
-                <h3 class="box-title">Codes d'accès.</h3>
+                <h3 class="box-title">Appareils appairés.</h3>
                 <br><br>
-                <p> Chacun des code d'accès ci-dessous est propre à un employé et lui de se connecter au réseau<p>
-                
+                <p> Chacun des boîtiers télétravail ci-dessous est appairé et autorisé à donner l'accès au réseau de l'entreprise<p>
+                <p> Vous pouvez retrouver les codes MAC ci-dessous, sur l'étiquette au dos des boîtiers correspondant.<br>Vous pouvez ajouter un commentaire pour identifier le propriétaire de chacun de ces boîtiers.<p>                
                 <div class="row">
                 <div class="col-lg-2 col-md-4 col-xs-12"  style="display:~tpl_displaycode_visible" ><a href="/cgi/code.cgi?displaycodes=1" type="button" class="btn btn-block btn-primary "><i class="fa  fa-eye" ></i> Afficher les clefs</a>  </div>
                 
@@ -41,8 +41,9 @@ function togglePassword() {
                 <table  class="table table-condensed">
                   <tr>
                     <th>MAC</th>
-                    <th>Clef publique</th>
                     <th>Commentaire</th>  
+                    <th>État</th> 
+                    <th>Clef publique</th>                    
                     <th></th>                   
                     </tr>
                   ~tpl_history_rows  

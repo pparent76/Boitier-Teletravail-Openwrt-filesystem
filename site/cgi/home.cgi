@@ -9,7 +9,7 @@ echo ""
 #
 #####################################################################
 client_mode=$(cat /tmp/bb/client/mode)
-client_openvpn_mode=$(cat cat /tmp/bb/client/openvpn-mode)
+client_vpn_mode=$(cat cat /tmp/bb/client/vpn-mode)
 
 case "$client_mode" in
         "offline")
@@ -48,7 +48,7 @@ else
     tpl_clientserver_mode="Client"
 fi
 
-if [ "$client_mode" = "entreprise" ] && [ "$client_openvpn_mode" = "tor" ]; then
+if [ "$client_mode" = "entreprise" ] && [ "$client_vpn_mode" = "tor" ]; then
     tpl_display_warning_client="block"
 else
     tpl_display_warning_client="none"

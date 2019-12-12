@@ -21,7 +21,7 @@ tpl_url_refresh="/recup/check-change-mode.cgi"
 tpl_time_refresh="3"
 tpl_icon="fa-rotate-right fa-spin"
 
-ps |  grep -v grep | grep openvpn.sh > /dev/null 2>&1 ;
+ps |  grep -v grep | grep vpn.sh > /dev/null 2>&1 ;
 entreprise=$?
 
 ps |  grep -v grep | grep captive-por  > /dev/null 2>&1 ;

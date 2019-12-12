@@ -4,9 +4,9 @@ config entry 'general'
         
 config entry 'client'
         option server_id ''
-        option password ''      
-        option comment 'Par defaut'           
-
+        option serverpubkey ''      
+        option vpnaddress '10.0.0.2'     
+        
 config entry 'wifi_sta'
 	option hidden '0'
 	option ssid ''
@@ -32,5 +32,8 @@ config entry 'advanced'
         option server_port_backup2 '88'
         option server_port_backup3 '59'
         option clientautostart '1'
+        option portaldetecturl 'http://detectportal.firefox.com/success.txt'
+        option ippingtest '8.8.8.8'        
+
     
 
