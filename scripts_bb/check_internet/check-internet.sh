@@ -32,13 +32,13 @@ udpres=$?
 if [ "$pingres" -eq "0" ]&& [ "$stunres" -eq "0" ]&& [ "$torres" -eq "0" ]&& [ "$udpres" -eq "0" ]; then
     echo "OK">/tmp/bb/internet/internet
     if [ "$clientservermode" = "client" ]; then
-        echo "1"> /sys/class/leds/gl-ar150\:lan/brightness
+        echo "1"> /sys/class/leds/gl-ar150\:green\:lan/brightness
     fi
     return 0;
 fi
 
 if [ "$clientservermode" = "client" ]; then
-        echo "0"> /sys/class/leds/gl-ar150\:lan/brightness
+        echo "0"> /sys/class/leds/gl-ar150\:green\:lan/brightness
 fi
     
 if [ "$pingres" -eq "0" ]|| [ "$stunres" -eq "0" ]|| [ "$torres" -eq "0" ]|| [ "$udpres" -eq "0" ]; then

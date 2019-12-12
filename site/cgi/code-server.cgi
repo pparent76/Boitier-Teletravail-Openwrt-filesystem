@@ -53,7 +53,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     if [ "$displaycodes" != "1" ]; then
         clefl=$(nstars ${#clefl})
     fi
-    commentairel=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ')     
+    commentairel=$(echo "$line" | tr '#' '\n' | head -n 4 | tail -n 1 | tr '\n' ' ')     
     tpl_history_row=$(cat /site/template/tab_line/code-server.html | tr '\n' ' ' )
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_mac "$macl") 
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_clef "$clefl") 
@@ -78,7 +78,7 @@ if [ "$clientservermode" = "server" ]; then
     tpl_display_wifi="none"
 else
     tpl_display_appairage="none"
-    tpl_display_appairage="block"
+    tpl_display_wifi="block"
 fi
 
 ########################################################

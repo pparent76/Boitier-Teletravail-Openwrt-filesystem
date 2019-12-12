@@ -26,7 +26,7 @@ if [ "$clientservermode" = "server" ]; then
     tpl_display_wifi="none"
 else
     tpl_display_appairage="none"
-    tpl_display_appairage="block"
+    tpl_display_wifi="block"
 fi
 
 

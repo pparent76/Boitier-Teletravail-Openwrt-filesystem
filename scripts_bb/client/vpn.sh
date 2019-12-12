@@ -32,13 +32,19 @@ log() {
 }
 
 #restart dnsmasq in NAK mode
-    ipt -I OUTPUT -p udp --dport 67 -j DROP  
-    ipt -I OUTPUT -p udp --dport 68 -j DROP    
-    ipt -I OUTPUT -p udp --dport 68 -m string --algo kmp --hex-string '|350106|' -j ACCEPT   
-    
-    uci set dhcp.lan.start=10
-    uci set dhcp.lan.limit=20
-    /etc/init.d/dnsmasq restart
+
+
+#     ipt -I OUTPUT -p udp --dport 67 -j DROP  
+#     ipt -I OUTPUT -p udp --dport 68 -j DROP    
+#     ipt -I OUTPUT -p udp --dport 68 -m string --algo kmp --hex-string '|350106|' -j ACCEPT   
+#     ipt -I INPUT -p udp --dport 67 -j DROP  
+#     ipt -I INPUT -p udp --dport 68 -j DROP
+#     ipt -I INPUT -p udp --dport 67 -s 192.168.8.0/24 -j ACCEPT  
+#     ipt -I INPUT -p udp --dport 68 -s 192.168.8.0/24 -j ACCEPT  
+#     
+#     uci set dhcp.lan.start=10
+#     uci set dhcp.lan.limit=20
+#     /etc/init.d/dnsmasq restart
 
 ip link del dev wg0 2>/dev/null || true
 ip link del dev tap0 2>/dev/null || true
@@ -119,6 +125,10 @@ if [ "$?" -eq "0" ]; then
     brctl addif br-lan tap0
     ifconfig tap0 up
     
+    /etc/init.d/dnsmasq stop
+#     ifconfig br-lan:1 192.168.1.54
+#    dnsmasq --dhcp-relay=192.168.1.54,192.168.1.254,br-lan
+
     echo "nameserver 8.8.8.8" >/etc/resolv.conf
     
     #Delete iptables that could prevent us from working
