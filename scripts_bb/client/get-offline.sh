@@ -35,4 +35,4 @@ uci set dhcp.lan.limit=200
 /etc/init.d/dnsmasq restart
 echo  "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "offline">/tmp/bb/client/mode
-echo "0" > /sys/class/leds/gl-ar150\:wan/brightness
+echo "0" > /sys/class/leds/gl-ar150\:green\:wan/brightness
