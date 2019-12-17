@@ -73,12 +73,22 @@ if [ "$etatinternet" = "KO" ]; then
     tpl_internet_color="red"    
     tpl_display_entreprise="none";      
 fi
+ipeth0=$(ifconfig eth0 | grep 'inet addr:' | cut -d: -f2| cut -d' ' -f1| tr -d '\n')
+ipwlan0=$(ifconfig wlan0 | grep 'inet addr:' | cut -d: -f2| cut -d' ' -f1| tr -d '\n')
+
+if [ "$ipeth0" = "" ]&& [ "$ipwlan0" = "" ]; then
+    tpl_display_local="none"
+    tpl_display_captive="none"
+fi
 
 if [ "$tpl_display_entreprise" = "none" ]&&  [ "$tpl_display_local" = "none" ]&&  [ "$tpl_display_captive" = "none" ]; then
     tpl_display_action="none";
 else
     tpl_display_action="inline-block"
 fi
+
+
+
 
 tpl_uptime=$(uptime | tr "," " " | cut -f4-6 -d" " | sed "s/day/$(translate_inline "jour")/g");
 echo $tpl_uptime | grep : > /dev/null;

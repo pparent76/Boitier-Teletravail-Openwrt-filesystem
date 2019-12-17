@@ -48,6 +48,12 @@ tpl_stun_port3=$(uci get bridgebox.advanced.stunport3)
 
 tpl_torproxy=$(uci get bridgebox.advanced.torproxy)
 
+tpl_captiveurl=$(uci get bridgebox.advanced.portaldetecturl)
+
+tpl_ping1=$(uci get bridgebox.advanced.ippingtest1)
+tpl_ping2=$(uci get bridgebox.advanced.ippingtest2)
+tpl_ping3=$(uci get bridgebox.advanced.ippingtest3)
+
 
 clientservermode=$(uci get bridgebox.general.mode)
 if [ "$clientservermode" = "server" ]; then
@@ -134,6 +140,12 @@ page=$( inject_var "$page" ~tpl_display_client_block "$tpl_display_client_block"
 
 page=$( inject_var "$page" ~tpl_selected_fr "$tpl_selected_fr")
 page=$( inject_var "$page" ~tpl_selected_en "$tpl_selected_en")
+
+page=$( inject_var "$page" ~tpl_captiveurl "$tpl_captiveurl")
+
+page=$( inject_var "$page" ~tpl_ping1 "$tpl_ping1")
+page=$( inject_var "$page" ~tpl_ping2 "$tpl_ping2")
+page=$( inject_var "$page" ~tpl_ping3 "$tpl_ping3")
 
 echo $page;
 

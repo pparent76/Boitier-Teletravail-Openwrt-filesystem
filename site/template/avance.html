@@ -209,11 +209,11 @@
                 <div class="box-header">
                 <i class="fa fa-server"></i>
 
-                <h3 class="box-title">Paramètres generaux</h3>
+                <h3 class="box-title">Serveurs tiers</h3>
                 </div>
                 <form  action="/recup/avance-general.cgi" method="post" class="form-horizontal">                
                 <div class="box-body chat" id="chat-box">
-                <p>Configurer ci-dessous la liste serveurs stun.</p>
+                <p>Configurer ci-dessous la liste serveurs tiers.</p>
 
                             <div class="form-group">
                 
@@ -231,19 +231,25 @@
     
                
              </div>
-            <p> Renseignez ci-dessous le serveur mandataire pour les services cachés</p>
                                         <div class="form-group">
                 
-                <div style="row">
+           
              
                 <div style="row">
+                <div class="col-sm-4"><b>Url de detection de portail captifs</b></div><div class="col-sm-8"><input type="text" name="captiveurl" value="~tpl_captiveurl" class="form-control"></div>
+                </div>  
+                <br> <br>
+                 <div style="row">
+                <div class="col-sm-3"><b>IP test ping</b></div><div class="col-sm-3"><input type="text" name="ping1" value="~tpl_ping1" class="form-control"></div><div class="col-sm-3"><input type="text" name="ping2" value="~tpl_ping2" class="form-control"></div><div class="col-sm-3"><input type="text" name="ping3" value="~tpl_ping3" class="form-control"></div>
+                </div>
+                <br> <br>
+                 <div style="row">
                 <div class="col-sm-4"><b>Serveur mandataire service cachés</b></div><div class="col-sm-8"><input type="text" name="torproxy" value="~tpl_torproxy" class="form-control"></div></div>    
                 
                   
     
                
              </div>
-            </div>
             <div class="col-12"> <center><input  type="submit" value="Valider" class="btn btn-success"></center></div>
              <div style="height:10px"></div>
              </form>
