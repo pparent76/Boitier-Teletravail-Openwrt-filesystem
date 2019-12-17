@@ -33,8 +33,8 @@ done < /etc/server-codes
 ############################################################
 #   For security reasons only allow gre to go throug wg0
 ############################################################
-iptables -I OUPUT -d 10.0.0.0/24  -p 47  -j DROP
-iptables -I OUPUT -d 10.0.0.0/24  -p 47 -o wg0  -j ACCEPT
+iptables -I OUTPUT -d 10.0.0.0/24  -p 47  -j DROP
+iptables -I OUTPUT -d 10.0.0.0/24  -p 47 -o wg0  -j ACCEPT
 
 ############################################################
 #           We add 7 gre interfaces for the 7 clients

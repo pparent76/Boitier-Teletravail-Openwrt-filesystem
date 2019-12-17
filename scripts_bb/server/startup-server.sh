@@ -1,7 +1,9 @@
 #!/bin/sh
 
-date +%s | sha256sum | head -c 42> /advertise/challenge
-chown http /advertise/challenge
+rmmod gpio_button_hotplug
+
+
+
 #Accepte le ssh sur le réseau hote.
 iptables -I INPUT -j ACCEPT
 
@@ -11,6 +13,17 @@ echo "address=/#/2.2.2.2">/etc/dnsmasq.conf
 
 #Lancement de lighttpd pour l'advertisement
 lighttpd -f /etc/lighttpd/advertise.conf 
+
+#Lancement de lighttpd pour l'appairage
+iptables -I INPUT -p tcp --dport 55943 -j DROP
+iptables -I INPUT -i br-lan -p tcp --dport 55943 -j ACCEPT
+lighttpd -f /etc/lighttpd/appaire.conf
+
+date +%s | sha256sum | head -c 42 > /advertise/challenge
+chmod 777 /advertise/challenge
+
+date +%s | sha256sum | head -c 42 > /appaire/challenge
+chmod 777 /appaire/challenge
 
 #Manipulation de répertoires de droits.
 mkdir -p /tmp/bb/server/

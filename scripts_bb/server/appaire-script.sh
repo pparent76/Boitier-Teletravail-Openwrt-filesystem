@@ -14,7 +14,7 @@ mustblink=0;
 
 rmmod gpio_button_hotplug >/dev/null 2>&1
 sleep 1;
-echo  "8" >  /sys/class/gpio/export >/dev/null 2>&1
+echo  "8" >  /sys/class/gpio/export  2>&1
 value=$(cat  /sys/class/gpio/gpio8/value) >/dev/null 2>&1
 
 if [ "$value" = "1" ]; then
