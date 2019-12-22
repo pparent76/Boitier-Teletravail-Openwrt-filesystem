@@ -1,0 +1,21 @@
+#!/bin/sh
+
+ping -W1 -c1 $1 >/dev/null 2>&1  &
+pid=$!;
+
+#On tente d'abord après 70ms
+sleep 0.07
+if ! (ps 2>/dev/null | grep " $pid " | grep -v grep >/dev/null) ; then
+	wait $pid
+	return $?
+fi
+
+#On tente ensuite après une seconde et 70ms
+sleep 1;
+if !  (ps 2>/dev/null | grep " $pid " | grep -v grep >/dev/null) ; then
+	wait $pid
+	return $?
+else
+	kill -9 $pid
+	return 1;
+fi  

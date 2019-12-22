@@ -30,8 +30,8 @@ ipt -I PREROUTING -t nat -i br-lan -p tcp --dst 0.0.0.0/0 --dport 80 -j REDIRECT
 
 
 echo "address=/#/2.2.2.2">/etc/dnsmasq.conf
-uci set dhcp.lan.start=100
-uci set dhcp.lan.limit=200
+# uci set dhcp.lan.start=100
+# uci set dhcp.lan.limit=200
 /etc/init.d/dnsmasq restart
 echo  "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "offline">/tmp/bb/client/mode

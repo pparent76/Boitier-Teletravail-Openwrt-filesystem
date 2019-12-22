@@ -37,6 +37,7 @@ http ALL=(ALL) NOPASSWD:  /sbin/sysupgrade
 http ALL=(ALL) NOPASSWD:  /usr/bin/wg
 http ALL=(ALL) NOPASSWD:  /scripts_bb/server/appaire-script.sh
 http ALL=(ALL) NOPASSWD:  /usr/bin/get-pubkey
+http ALL=(ALL) NOPASSWD:  /usr/bin/test-ping
 
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      

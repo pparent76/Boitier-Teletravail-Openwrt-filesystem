@@ -2,6 +2,7 @@
 
 rmmod gpio_button_hotplug
 
+ifconfig br-lan 192.168.8.2
 
 
 #Accepte le ssh sur le réseau hote.
@@ -43,4 +44,6 @@ sleep 5;
 #Handle port forwarding
 /scripts_bb/server/handle-port-forwarding.sh
 
+sleep 10;
+/etc/init.d/dnsmasq restart
 

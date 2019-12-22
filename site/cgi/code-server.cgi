@@ -49,17 +49,28 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     hostl=$(sudo /usr/bin/get-id)
     macl=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ' | sed "s/ //g")    
     clefl=$(echo "$line" | tr '#' '\n' | head -n 2 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")  
+    ipl=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")      
     codedecrypt=$codel;
     if [ "$displaycodes" != "1" ]; then
         clefl=$(nstars ${#clefl})
     fi
+    
+
+    
     commentairel=$(echo "$line" | tr '#' '\n' | head -n 4 | tail -n 1 | tr '\n' ' ')     
     tpl_history_row=$(cat /site/template/tab_line/code-server.html | tr '\n' ' ' )
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_mac "$macl") 
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_clef "$clefl") 
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_decryptcode "$codedecrypt")    
     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_commentaire "$commentairel")    
-    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_count_index "$j")     
+    tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_count_index "$j") 
+    if sudo /usr/bin/test-ping $ipl ; then
+     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_color_state "success") 
+     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_text_state "Connecté") 
+    else
+     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_color_state "danger") 
+     tpl_history_row=$( inject_var "$tpl_history_row" ~tpl_text_state "Déconnecté")      
+    fi
     tpl_history_rows=$( inject_var "$tpl_history_rows" ~tpl_history_row "~tpl_history_row $tpl_history_row") 
     j=$(( j+1 ))
   fi

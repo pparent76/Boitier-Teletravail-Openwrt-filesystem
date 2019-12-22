@@ -81,11 +81,17 @@ if [ "$ipeth0" = "" ]&& [ "$ipwlan0" = "" ]; then
     tpl_display_captive="none"
 fi
 
-if [ "$tpl_display_entreprise" = "none" ]&&  [ "$tpl_display_local" = "none" ]&&  [ "$tpl_display_captive" = "none" ]; then
-    tpl_display_action="none";
+aserverid=$(uci get bridgebox.client.server_id )
+aserverpubkey=$(uci get bridgebox.client.serverpubkey )
+avpnaddress=$(uci get bridgebox.client.vpnaddress )
+if [ "$aserverid" = "" ]|| [ "$aserverpubkey" = "" ]|| [ "$avpnaddress" = "" ]; then
+    tpl_display_warning_appaire="block"
+    tpl_display_entreprise="none"
 else
-    tpl_display_action="inline-block"
+    tpl_display_warning_appaire="none"
 fi
+
+
 
 
 
@@ -126,6 +132,8 @@ else
  tpl_server_color="green" 
 fi
 
+
+
 tpl_port1=$(uci get bridgebox.advanced.server_port)
 tpl_port2=$(uci get bridgebox.advanced.server_port_backup1)
 tpl_port3=$(uci get bridgebox.advanced.server_port_backup2)
@@ -142,6 +150,12 @@ else
     tpl_display_warning_server="none"
 fi
 
+
+if [ "$tpl_display_entreprise" = "none" ]&&  [ "$tpl_display_local" = "none" ]&&  [ "$tpl_display_captive" = "none" ]; then
+    tpl_display_action="none";
+else
+    tpl_display_action="inline-block"
+fi
 
 
 #####################################################################
@@ -208,6 +222,7 @@ page=$( inject_var "$page" ~tpl_display_local "$tpl_display_local")
 page=$( inject_var "$page" ~tpl_display_warning_client "$tpl_display_warning_client")
 page=$( inject_var "$page" ~tpl_display_action "$tpl_display_action")
 page=$( inject_var "$page" ~tpl_display_captive "$tpl_display_captive")
+page=$( inject_var "$page" ~tpl_display_warning_appaire "$tpl_display_warning_appaire")
 
 echo $page;
 
