@@ -29,7 +29,7 @@ for i in $(seq 1 2); do
 
     torproxy=$(uci get bridgebox.advanced.torproxy)
     
-    wget $serverid.$torproxy --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/advertised-res  > /dev/null 2&>1
+    wget --retry-connrefused --waitretry=1 -t 2 $serverid.$torproxy --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/advertised-res  > /dev/null 2&>1
     cat /tmp/advertised-res | grep BEGINADVERTISE | grep ENDADVERTISE
     if  [ "$?" -eq "0" ]; then
         log "Could get advertise info with $torproxy for $serverid"    
@@ -37,7 +37,7 @@ for i in $(seq 1 2); do
         return 0;
     fi
 
-    torsocks wget $serverid.onion --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/advertised-res  > /dev/null 2&>1 
+    torsocks wget --retry-connrefused --waitretry=1 -t 2 $serverid.onion --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/advertised-res  > /dev/null 2&>1 
     cat /tmp/advertised-res | grep BEGINADVERTISE | grep ENDADVERTISE
     if  [ "$?" -eq "0" ]; then
         log "Could get advertise info with torsocks for $serverid"

@@ -32,7 +32,7 @@ code="f0129173a9bf4a889cdd62c30e7c86395b0931f91e";
 curl -m 2  --interface br-lan -o /tmp/curl-appaire  http://192.168.8.2:55943/OK
 ok=$(cat /tmp/curl-appaire)
 if [ "$ok" != "OK" ]; then
-    echo "server is not OK!";
+#     echo "server is not OK!";
     exit 1;
 fi
 

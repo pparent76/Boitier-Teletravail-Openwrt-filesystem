@@ -37,7 +37,7 @@ fi
 
 
 if [ "$publicip" = "" ]; then
-    wget  https://api.ipify.org/?format=txt -O /tmp/publicip  >/dev/null 2>&1
+    wget --retry-connrefused --waitretry=1 -t 2 https://api.ipify.org/?format=txt -O /tmp/publicip  >/dev/null 2>&1
     publicip=$(cat /tmp/publicip | sed -e "s/[!@#\$%^&~*()\"\\\'\(\)\;\/\`\:\<\>]//g" | tr "{" " " | tr "}" " ")
 fi
 

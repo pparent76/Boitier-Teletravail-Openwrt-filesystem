@@ -22,15 +22,11 @@ iptables -I INPUT -p tcp --dport 22 -i br-wan -j DROP
 
 iptables -I INPUT -p udp --dport 68 -m string --algo kmp --hex-string '|04000000053b0400000006|' -j LOG --log-prefix "APPAIRE-NOW"
 
-#########################################
-#Lancement des scripts d'appairage
-#########################################
-aserverid=$(uci get bridgebox.client.server_id )
-aserverpubkey=$(uci get bridgebox.client.serverpubkey )
-avpnaddress=$(uci get bridgebox.client.vpnaddress )
-if [ "$aserverid" = "" ]|| [ "$aserverpubkey" = "" ]|| [ "$avpnaddress" = "" ]; then
-    /scripts_bb/client/appaire-deamon.sh &
-fi
+###############################################
+#Lancement des scripts d'appairage/desapairage
+###############################################
+/scripts_bb/client/appaire-deamon.sh &
+
 
 
 
