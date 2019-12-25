@@ -38,6 +38,7 @@ http ALL=(ALL) NOPASSWD:  /usr/bin/wg
 http ALL=(ALL) NOPASSWD:  /scripts_bb/server/appaire-script.sh
 http ALL=(ALL) NOPASSWD:  /usr/bin/get-pubkey
 http ALL=(ALL) NOPASSWD:  /usr/bin/test-ping
+http ALL=(ALL) NOPASSWD:  /scripts_bb/server/vpn.sh
 
 # See sudoers(5) for more information on "#include" directives:                      
                                                                                      

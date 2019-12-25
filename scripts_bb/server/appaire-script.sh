@@ -26,6 +26,7 @@ cat /etc/server-codes | grep "$1" >/dev/null 2>&1
             echo "$1#$2#$ip#sansnom" >> /etc/server-codes
             echo $ip
             mustblink=1;
+            sed -i "/$2/d" /etc/desappaire
             /scripts_bb/server/vpn.sh 2> /dev/null > /dev/null &
         fi
      fi   
