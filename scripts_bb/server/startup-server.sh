@@ -28,6 +28,7 @@ chmod 777 /appaire/challenge
 
 #Manipulation de répertoires de droits.
 mkdir -p /tmp/bb/server/
+usermod http -u 7894
 chown http /etc/server-codes
 chown http /etc/desappaire
 

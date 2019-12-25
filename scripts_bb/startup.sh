@@ -1,5 +1,6 @@
 #!/bin/sh
 
+usermod http -u 7894
 /etc/init.d/uhttpd stop
 /etc/init.d/uhttpd disable
 
