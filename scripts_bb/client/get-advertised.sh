@@ -23,6 +23,7 @@ handle_advertised() {
 
 log "Starting get advertise"
 
+rm /tmp/advertised-res 
 serverid=$(uci get bridgebox.client.server_id )
 
 for i in $(seq 1 2); do

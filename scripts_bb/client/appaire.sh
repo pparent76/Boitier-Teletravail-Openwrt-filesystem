@@ -68,6 +68,7 @@ fi
 serverid=$(echo "$res" | awk '{print $2}')
 serverpubkey=$(echo "$res" | awk '{print $3}')
 ip=$(echo "$res" | awk '{print $4}')
+stuncode=$(echo "$res" | awk '{print $5}')
 
 #Modification des valeurs internes en fonction 
 if [ "$ip" = "" ]|| [ "$serverpubkey" = "" ]|| [ "$serverid" = "" ]; then
@@ -78,6 +79,7 @@ else
         uci set bridgebox.client.server_id=$serverid
         uci set bridgebox.client.serverpubkey=$serverpubkey
         uci set bridgebox.client.vpnaddress=$ip
+        uci set bridgebox.client.stuncode=$stuncode        
         uci commit
         /scripts_bb/tools/blink-leds.sh       
 fi

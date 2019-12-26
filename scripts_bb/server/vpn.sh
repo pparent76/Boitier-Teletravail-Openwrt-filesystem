@@ -25,7 +25,6 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
  if [ "$line" != "" ]; then 
     clefl=$(echo "$line" | tr '#' '\n' | head -n 2 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")  
     ipl=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")     
-    # TODO Restrict authorized IP
     wg set wg0 peer $clefl allowed-ips $ipl/32 
   fi
 done < /etc/server-codes

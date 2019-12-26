@@ -22,9 +22,10 @@ cat /etc/server-codes | grep "$1" >/dev/null 2>&1
         if [ "$i" -gt "8" ]; then
             ip="";
         fi
+        stunpass=$(date +%s | sha256sum | head -c 42)
         if [ "$ip" != "" ]; then
-            echo "$1#$2#$ip#sansnom" >> /etc/server-codes
-            echo $ip
+            echo "$1#$2#$ip#$stunpass#sansnom" >> /etc/server-codes
+            echo "$ip $stunpass"
             mustblink=1;
             sed -i "/$2/d" /etc/desappaire
             /scripts_bb/server/vpn.sh 2> /dev/null > /dev/null &

@@ -20,9 +20,10 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     hostl=$(sudo /usr/bin/get-id)
     macl=$(echo "$line" | tr '#' '\n' | head -n 1 | tr '\n' ' ' | sed "s/ //g")    
     clefl=$(echo "$line" | tr '#' '\n' | head -n 2 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")  
-    ipl=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")   
+    ipl=$(echo "$line" | tr '#' '\n' | head -n 3 | tail -n 1 | tr '\n' ' ' | sed "s/ //g") 
+    stuncodel=$(echo "$line" | tr '#' '\n' | head -n 4 | tail -n 1 | tr '\n' ' ' | sed "s/ //g")    
     eval "name=\$name$i"
-    echo "$macl#$clefl#$ipl#$name">>/tmp/server-codes
+    echo "$macl#$clefl#$ipl#$stuncodel#$name">>/tmp/server-codes
     i=$(( i+1 ));
   fi
 done < /etc/server-codes

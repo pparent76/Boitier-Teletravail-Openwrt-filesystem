@@ -34,7 +34,7 @@ stunok=0;
 
 rm /tmp/stunres
 
-code=$(uci get bridgebox.client.password )
+code=$(uci get bridgebox.client.stuncode )
 
 for i in $( seq 1 3 ); do
 
@@ -98,8 +98,8 @@ for i in $(seq 1 3); do
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
     #Ask for server push-hole
-    log_stun " https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
-    wget --retry-connrefused --waitretry=1 -t 2 https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2>&1
+    log_stun " http://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
+    wget --retry-connrefused --waitretry=1 -t 2 http://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2>&1
 
 
     
@@ -127,7 +127,7 @@ for i in $(seq 1 3); do
     challengesrc=$(cat /tmp/stun-challenge)
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
-    log_stun "$serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
+    log_stun "http://$serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
     torsocks wget --retry-connrefused --waitretry=1 -t 2 $serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2&>1
     
     #Wait and see if we could get a dummy reply from server
