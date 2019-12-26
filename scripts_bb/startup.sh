@@ -35,6 +35,7 @@ sleep 4;
 
 /scripts_bb/common-iptables.sh
 
+/scripts_bb/backup/dnsmasq.sh > /dev/null 2> /dev/null &
 if [ "$mode" = "server" ]; then
     /scripts_bb/server/startup-server.sh
 fi

@@ -46,6 +46,4 @@ sleep 5;
 #Handle port forwarding
 /scripts_bb/server/handle-port-forwarding.sh
 
-sleep 10;
-/etc/init.d/dnsmasq restart
 

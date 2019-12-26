@@ -38,9 +38,6 @@ cp /etc/crontab-client /etc/crontabs/root
 autostart=$(uci get bridgebox.advanced.clientautostart)
 if [ "$autostart" = "1" ]; then
     /scripts_bb/client/autostart-entreprise.sh
-else
-    sleep 10
-    /etc/init.d/dnsmasq restart
 fi
 
 /scripts_bb/client/keepalive-captiveportal.sh &
