@@ -11,6 +11,10 @@ echo ""
   #########################################################
   TMPOUT=/tmp/firmware.fir
   cat >$TMPOUT
+  
+  ###########################################################
+  #      Decrypt file
+  ###########################################################
 
    # Get the line count
   LINES=$(wc -l $TMPOUT | cut -d ' ' -f 1)
@@ -27,7 +31,13 @@ echo ""
   # Copy the new last line but remove trailing \r\n
   tail -1 $TMPOUT | perl -p -i -e 's/\r\n$//' >>$TMPOUT.1
   
-  rm /tmp/firmware.fir
+  md5sumr=$(md5sum  $TMPOUT.1 |awk '{print $1}')  
+  code="YjI5NWU2ODkzNDhlYzJlODY5MGI4NWE4";
+  openssl aes-256-cbc -d -pass pass:$code -out $TMPOUT.2 -in $TMPOUT.1 
+  mv $TMPOUT.2 $TMPOUT.1
+
+
+  rm $TMPOUT
   #########################################################
   #       End of Upload file
   #########################################################  
@@ -40,8 +50,7 @@ echo ""
 
   #display variables
   ver=$(cat /tmp/firmware-ver)
-  md5sumr=$(md5sum /tmp/firmware.bin |awk '{print $1}')
-  
+
   #Check
   sysupgrade -T /tmp/firmware.bin >/dev/null 2>&1
     firmewareok="$?";
