@@ -24,7 +24,21 @@ ok=1
     sudo /sbin/uci  set bridgebox.advanced.stunport2=$stun_port2
     sudo /sbin/uci  set bridgebox.advanced.stunport3=$stun_port3  
     
-    sudo /sbin/uci  set bridgebox.advanced.torproxy=$torproxy     
+    sudo /sbin/uci  set bridgebox.advanced.torproxy=$torproxy    
+    sudo /sbin/uci  set bridgebox.advanced.torproxy_automaj_git=$automajtorgit
+ 
+    sudo /sbin/uci  set bridgebox.advanced.ippingtest1=$ping1 
+    sudo /sbin/uci  set bridgebox.advanced.ippingtest2=$ping2 
+    sudo /sbin/uci  set bridgebox.advanced.ippingtest3=$ping3
+    
+    sudo /sbin/uci  set bridgebox.advanced.portaldetecturl=$captiveurl    
+    
+    if [ -z "$automajtoractivated" ]; then
+        sudo /sbin/uci set bridgebox.advanced.torproxy_automaj_activated="0"
+    else
+        sudo /sbin/uci set bridgebox.advanced.torproxy_automaj_activated="1"
+    fi
+
     sudo /sbin/uci  commit
 
 
