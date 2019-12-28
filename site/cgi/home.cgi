@@ -91,7 +91,7 @@ else
     tpl_display_warning_appaire="none"
 fi
 
-
+tpl_url_captive=$(uci set bridgebox.advanced.portaldetecturl)
 
 
 
@@ -223,7 +223,7 @@ page=$( inject_var "$page" ~tpl_display_warning_client "$tpl_display_warning_cli
 page=$( inject_var "$page" ~tpl_display_action "$tpl_display_action")
 page=$( inject_var "$page" ~tpl_display_captive "$tpl_display_captive")
 page=$( inject_var "$page" ~tpl_display_warning_appaire "$tpl_display_warning_appaire")
-
+page=$( inject_var "$page" ~tpl_url_captive "$tpl_url_captive")
 echo $page;
 
 ########################################################

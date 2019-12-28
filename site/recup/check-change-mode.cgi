@@ -41,6 +41,7 @@ if [ "$requestedmode" != "entreprise" ]&& [ "$previousmode" = "entreprise" ]; th
     needtoreconnect=1;
 fi
 
+captiveurl=$(uci set bridgebox.advanced.portaldetecturl)
 isdone=0;
 if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; then
     if [ "$requestedmode" != "$currentmode" ]; then
@@ -51,7 +52,7 @@ if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; 
         tpl_text="<b>$( translate_inline_recup "Erreur: n'a pas put passé en mode" ) $requestedmodetxt, $( translate_inline_recup "retour au mode" ) $currentmode</b>"
     else
         if [ "$requestedmode" = "local" ]; then
-            tpl_url_refresh="http://iciwifi.top/"
+            tpl_url_refresh="$captiveurl"
         else
             tpl_url_refresh="/cgi/home.cgi"        
         fi
