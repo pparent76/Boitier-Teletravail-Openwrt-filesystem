@@ -69,7 +69,10 @@ page=$(cat /site/template/footer.html)
 echo $page;
 
 
+sudo /bin/tar -zcvf /tmp/test.tar.gz  /etc/server-codes /etc/config/bridgebox /etc/desappaire /root/publickey /root/privatekey /tor/ >/dev/null 2>&1
+if [ -f /tmp/test.tar.gz ]; then
+(sleep 3 ;sudo /sbin/sysupgrade -f /tmp/test.tar.gz /tmp/firmware-ok.bin )  >/dev/null 2>&1 & 
+fi
 
-(sleep 3 ;sudo /sbin/sysupgrade -n /tmp/firmware-ok.bin )  >/dev/null 2>&1 & 
 exec >&-
 exec 2>&-

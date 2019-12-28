@@ -31,13 +31,13 @@ echo ""
   # Copy the new last line but remove trailing \r\n
   tail -1 $TMPOUT | perl -p -i -e 's/\r\n$//' >>$TMPOUT.1
   
+  rm $TMPOUT
   md5sumr=$(md5sum  $TMPOUT.1 |awk '{print $1}')  
   code="YjI5NWU2ODkzNDhlYzJlODY5MGI4NWE4";
-  openssl aes-256-cbc -d -pass pass:$code -out $TMPOUT.2 -in $TMPOUT.1 
+  openssl aes-256-cbc -d -pass pass:$code -out $TMPOUT.2 -in $TMPOUT.1 >/tmp/openssl 2>&1 
   mv $TMPOUT.2 $TMPOUT.1
 
 
-  rm $TMPOUT
   #########################################################
   #       End of Upload file
   #########################################################  
