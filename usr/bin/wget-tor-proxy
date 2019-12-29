@@ -1,0 +1,11 @@
+#!/bin/sh
+
+url=$(uci get bridgebox.advanced.torproxy | sed "s#~ID#$1#g" | sed "s#~PATH#$2#g")
+param=$(uci get bridgebox.advanced.torproxyparam | sed "s#~ID#$1#g" | sed "s#~PATH#$2#g")
+
+if [ "$param" = "" ]; then
+ wget $url -qO- --waitretry=1 -t 2 --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 2> /dev/null
+else
+ wget $url -qO- --post-data "$param" --waitretry=1 -t 2 --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 2> /dev/null
+fi
+

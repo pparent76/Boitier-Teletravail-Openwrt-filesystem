@@ -93,13 +93,14 @@ for i in $(seq 1 3); do
     
        
     #Get challenge
-    wget --retry-connrefused --waitretry=1 -t 2 https://$serverid.$torproxy/challenge --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/stun-challenge > /dev/null 2>&1
+    wget-tor-proxy $serverid challenge > /tmp/stun-challenge
     challengesrc=$(cat /tmp/stun-challenge)
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
+    
     #Ask for server push-hole
-    log_stun " https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
-    wget --retry-connrefused --waitretry=1 -t 2 https://$serverid.$torproxy/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2>&1
+    log_stun " wget-tor-proxy $serverid stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
+    wget-tor-proxy $serverid stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres
 
 
     

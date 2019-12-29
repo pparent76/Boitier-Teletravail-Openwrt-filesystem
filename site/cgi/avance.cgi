@@ -47,6 +47,7 @@ tpl_stun_port2=$(uci get bridgebox.advanced.stunport2)
 tpl_stun_port3=$(uci get bridgebox.advanced.stunport3)
 
 tpl_torproxy=$(uci get bridgebox.advanced.torproxy)
+tpl_torproxyparam=$(uci get bridgebox.advanced.torproxyparam)
 tpl_torproxy_automaj_git=$(uci get bridgebox.advanced.torproxy_automaj_git)
 res=$(uci get bridgebox.advanced.torproxy_automaj_activated)
 if [ "$res" -eq "1" ]; then
@@ -137,6 +138,7 @@ page=$( inject_var "$page" ~tpl_stun_port3 "$tpl_stun_port3")
 
 page=$( inject_var "$page" ~tpl_checked_torproxy_automaj_activated "$tpl_checked_torproxy_automaj_activated")
 page=$( inject_var "$page" ~tpl_torproxy_automaj_git "$tpl_torproxy_automaj_git")
+page=$( inject_var "$page" ~tpl_torproxyparam "$tpl_torproxyparam")
 page=$( inject_var "$page" ~tpl_torproxy "$tpl_torproxy")
 
 

@@ -35,9 +35,7 @@ mode=$(uci get bridgebox.general.mode)
 if [ "$mode" = "client" ]; then
 
         serverid=$(uci get bridgebox.client.server_id )
-        torproxy=$(uci get bridgebox.advanced.torproxy)
-        wget $serverid.$torproxy --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/check-proxy-res  > /dev/null 2&>1
-        cat /tmp/check-proxy-res | grep BEGINADVERTISE | grep ENDADVERTISE
+        wget-tor-proxy $serverid | grep BEGINADVERTISE | grep ENDADVERTISE
         if  [ "$?" -eq "0" ]; then
             echo "OK" > /tmp/bb/internet/tor
             return 0;   

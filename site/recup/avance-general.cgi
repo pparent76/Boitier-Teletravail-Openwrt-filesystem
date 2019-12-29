@@ -23,7 +23,8 @@ ok=1
     sudo /sbin/uci  set bridgebox.advanced.stunport1=$stun_port1
     sudo /sbin/uci  set bridgebox.advanced.stunport2=$stun_port2
     sudo /sbin/uci  set bridgebox.advanced.stunport3=$stun_port3  
-    
+
+    sudo /sbin/uci  set bridgebox.advanced.torproxyparam=$torproxyparam
     sudo /sbin/uci  set bridgebox.advanced.torproxy=$torproxy    
     sudo /sbin/uci  set bridgebox.advanced.torproxy_automaj_git=$automajtorgit
  
