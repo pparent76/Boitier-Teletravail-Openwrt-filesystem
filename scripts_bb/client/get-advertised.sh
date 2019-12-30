@@ -30,7 +30,7 @@ for i in $(seq 1 2); do
 
     torproxy=$(uci get bridgebox.advanced.torproxy)
     
-    wget-tor-proxy $serverid > /tmp/advertised-res
+    wget-tor-proxy $serverid | grep BEGINADVERTISE | grep ENDADVERTISE  > /tmp/advertised-res
     cat /tmp/advertised-res | grep BEGINADVERTISE | grep ENDADVERTISE
     if  [ "$?" -eq "0" ]; then
         log "Could get advertise info with $torproxy for $serverid"    

@@ -12,6 +12,23 @@ log_stun() {
 
 log_stun "start stun script"
 
+urlencode() {
+    # urlencode <string>
+    old_lc_collate=$LC_COLLATE
+    LC_COLLATE=C
+
+    local length="${#1}"
+    for  i in $( seq 0 $length ); do
+        local c="${1:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+
+    LC_COLLATE=$old_lc_collate
+}
+
 urlencode_many_printf () {
   string=$1
   while [ -n "$string" ]; do
@@ -93,14 +110,15 @@ for i in $(seq 1 3); do
     
        
     #Get challenge
-    wget-tor-proxy $serverid challenge > /tmp/stun-challenge
+    wget-tor-proxy $serverid challenge | tail -n 1 > /tmp/stun-challenge
     challengesrc=$(cat /tmp/stun-challenge)
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
     
+    url=$(printf "stun.sh?ip=$stun_publicip";urlencode_many_printf "&port=$stun_mappedport&challenge=$challengeres")
     #Ask for server push-hole
-    log_stun " wget-tor-proxy $serverid stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
-    wget-tor-proxy $serverid stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres
+    log_stun " wget-tor-proxy $serverid $url"
+    wget-tor-proxy $serverid $url > /tmp/stun-try-res
 
 
     
