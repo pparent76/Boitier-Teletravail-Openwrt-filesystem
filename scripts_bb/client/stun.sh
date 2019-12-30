@@ -115,7 +115,7 @@ for i in $(seq 1 3); do
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
     
-    url=$(printf "stun.sh?ip=$stun_publicip";urlencode_many_printf "&port=$stun_mappedport&challenge=$challengeres")
+    url="stun.sh?ip=$stun_publicip&port=$stun_mappedport&challenge=$challengeres"
     #Ask for server push-hole
     log_stun " wget-tor-proxy $serverid $url"
     wget-tor-proxy $serverid $url > /tmp/stun-try-res

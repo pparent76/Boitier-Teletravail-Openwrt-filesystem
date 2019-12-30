@@ -1,7 +1,23 @@
 #!/bin/sh
 
-url=$(uci get bridgebox.advanced.torproxy | sed "s#~ID#$1#g" | sed "s#~PATH#$2#g")
-param=$(uci get bridgebox.advanced.torproxyparam | sed "s#~ID#$1#g" | sed "s#~PATH#$2#g")
+urlencode_many_printf () {
+  string=$1
+  while [ -n "$string" ]; do
+    tail=${string#?}
+    head=${string%$tail}
+    case $head in
+      [-._~0-9A-Za-z]) printf %c "$head";;
+      *) printf %%%02x "'$head"
+    esac
+    string=$tail
+  done
+  echo
+}
+
+encoded2=$(urlencode_many_printf "$2")
+a2=$(echo "$2" | tr  "&" "@" )
+url=$(uci get bridgebox.advanced.torproxy | sed "s#~ID#$1#g" | sed "s#~PATH#$a2#g" | tr  "@"  "&" )
+param=$(uci get bridgebox.advanced.torproxyparam | sed "s#~ID#$1#g" | sed "s#~PATH#$encoded2#g")
 
 if [ "$param" = "" ]; then
  wget $url -qO- --waitretry=1 -t 2 --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 2> /dev/null
