@@ -27,8 +27,10 @@ iptables -I INPUT -p udp --dport 68 -m string --algo kmp --hex-string '|04000000
 ###############################################
 /scripts_bb/client/appaire-deamon.sh &
 
-
-
+automajactive=$(uci get bridgebox.advanced.torproxy_automaj_activated)
+if [ "$automajactive" -eq "1" ]; then
+/scripts_bb/client/autoupdate-tor-proxy.sh &
+fi
 
 #cron
 cp /etc/crontab-client /etc/crontabs/root

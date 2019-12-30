@@ -28,24 +28,31 @@ echo "We have internet try to update tor proxy" >> /var/log/update-proxy
 ###############################################################################
 #                    Check if current proxy works (if yes exits)
 ###############################################################################
-if wget-tor-proxy $serverid OK  | grep OK ; then
-    echo "Current proxy works, exiting" >> /var/log/update-proxy
-fi
-
+for i in 1 2 ; do
+    if wget-tor-proxy $serverid OK  | grep OK ; then
+        echo "Current proxy works, exiting" >> /var/log/update-proxy
+        exit 0;
+    fi
+done
 ##############################################################################
 #                       Clone repo
 ##############################################################################
 url=$(uci get bridgebox.advanced.torproxy_automaj_git)
 cd /tmp/
-git clone $url list
-cd list
+curl $url > list
 
 while read line; do
-    echo "trying $line">> /var/log/update-proxy
-    wget $serverid.$line/OK --waitretry=1 -t 2 --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/update-proxy-res  > /dev/null 2&>1  
-    if cat /tmp/update-proxy-res | grep OK ; then
-        echo "$line works, exiting" >> /var/log/update-proxy
-            # TODO change value of proxy
-        exit 0;
-    fi
+    first=$(echo "$line" | awk '{print $1}' )
+    second=$(echo "$line" | awk '{print $2}' )  
+    uci set bridgebox.advanced.torproxy=$first
+    uci set bridgebox.advanced.torproxyparam=$second
+    echo "trying $first $second"
+    for i in 1 2 ; do
+        if wget-tor-proxy $serverid OK | grep OK ; then
+            echo "$line works keeping it" >> /var/log/update-proxy
+            uci commit
+            exit 0;
+        fi
+    done
 done<list
+
