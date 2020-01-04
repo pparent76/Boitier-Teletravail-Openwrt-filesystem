@@ -10,36 +10,8 @@ log() {
   fi
 }
 
-option=""
-log "Trying STUN"
-
-if [ "$(cat /tmp/bb/server/port-type)" = "stun" ]; then
-    localport=$(cat /tmp/bb/server/stun-local-port)
-    option="--localport $localport"
-else    
-    log "Stop keep alive"
-    killall stun-keepalive.sh
-fi
-
-for i in $( seq 1 3 ); do
-
-    stunserver=$(uci get bridgebox.advanced.stun$i)
-    stunport=$(uci get bridgebox.advanced.stunport$i)
-    
-    stunclient $stunserver $stunport > /tmp/stunres 2>/dev/null
-
-    cat /tmp/stunres | grep "success"
-    
-    if [ "$?" -eq "0" ]; then
-        break
-    fi
-done
-
-sleep 2;
-
-cat /tmp/stunres | grep "success"
-
-if [ "$?" -eq "0" ]; then
+handlesuccess() {
+    sleep 2;
     localport=$(cat /tmp/stunres | grep Local | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  )
     mappedport=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  )  
     publicip=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $1}'  )  
@@ -56,7 +28,46 @@ if [ "$?" -eq "0" ]; then
         log "Starting keep alive"
         /scripts_bb/server/stun-keepalive.sh $localport &
     fi
-    
-    return 0;
+}
+
+option=""
+log "Trying STUN"
+
+if [ "$(cat /tmp/bb/server/port-type)" = "stun" ]; then
+    localport=$(cat /tmp/bb/server/stun-local-port)
+    option="--localport $localport"
+else    
+    log "Stop keep alive"
+    killall stun-keepalive.sh
 fi
 
+for j in $( seq 1 5 ); do
+
+    if [ "$j" -eq "1" ]; then
+        port=$(uci get bridgebox.advanced.server_port)
+    else
+        port=$(uci get bridgebox.advanced.server_port_backup$j)
+    fi
+    if [ "$j" -eq "5" ]; then
+        option=""
+    else
+        option="--localport $port"
+    fi
+
+    for i in $( seq 1 3 ); do
+    
+        stunserver=$(uci get bridgebox.advanced.stun$i)
+        stunport=$(uci get bridgebox.advanced.stunport$i)
+        stunclient $option $stunserver $stunport > /tmp/stunres 2>/dev/null
+    
+        cat /tmp/stunres | grep "success"
+        
+        if [ "$?" -eq "0" ]; then
+             mappedport=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  ) 
+             if [ "$mappedport" -lt "1024" ]|| [ "$j" -eq "5" ]; then
+                handlesuccess;
+                return 0;
+             fi
+        fi
+    done
+done
