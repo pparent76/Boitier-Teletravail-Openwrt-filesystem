@@ -58,7 +58,13 @@ for j in $( seq 1 5 ); do
     
         stunserver=$(uci get bridgebox.advanced.stun$i)
         stunport=$(uci get bridgebox.advanced.stunport$i)
+        
         stunclient $option $stunserver $stunport > /tmp/stunres 2>/dev/null
+        
+        cat /tmp/stunres | grep "success"
+        if [ "$?" -ne "0" ]; then
+            stunclient $option $stunserver $stunport > /tmp/stunres 2>/dev/null
+        fi
     
         cat /tmp/stunres | grep "success"
         
