@@ -14,8 +14,14 @@ handlesuccess() {
     sleep 2;
     localport=$(cat /tmp/stunres | grep Local | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  )
     mappedport=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  )  
-    publicip=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $1}'  )  
+    publicip=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $1}'  )     
     iptables -t nat -A PREROUTING -i br-wan -p udp --dport $localport -j REDIRECT --to-port 1194
+    
+    if cat /tmp/bb/server/port-type | grep stun; then
+        lport=$(cat /tmp/bb/server/stun-local-port )
+        iptables -t nat -D PREROUTING -i br-wan -p udp --dport $lport -j REDIRECT --to-port 1194 
+    fi
+    
     log "\033[42mStun redirection Made on port $mappedport\033[m"
     echo "$publicip">/tmp/bb/server/ip    
     echo "$mappedport">/tmp/bb/server/port
@@ -63,6 +69,7 @@ for j in $( seq 1 5 ); do
         
         cat /tmp/stunres | grep "success"
         if [ "$?" -ne "0" ]; then
+            sleep 1;
             stunclient $option $stunserver $stunport > /tmp/stunres 2>/dev/null
         fi
     
