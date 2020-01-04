@@ -41,6 +41,9 @@ url=$(uci get bridgebox.advanced.torproxy_automaj_git)
 cd /tmp/
 curl $url > list
 
+inittorproxy=$(uci get bridgebox.advanced.torproxy)
+inittorproxyparam=$(uci get bridgebox.advanced.torproxyparam)
+    
 while read line; do
     first=$(echo "$line" | awk '{print $1}' )
     second=$(echo "$line" | awk '{print $2}' )  
@@ -56,3 +59,5 @@ while read line; do
     done
 done<list
 
+uci set bridgebox.advanced.torproxy=$inittorproxy
+uci set bridgebox.advanced.torproxyparam=$inittorproxyparam
