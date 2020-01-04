@@ -34,6 +34,7 @@ DataDirectory /var/lib/tor/
 ############### This section is just for location-hidden services ###
 
 HiddenServiceDir /tor/omb_hidden_service/
+HiddenServiceVersion 2
 HiddenServicePort 80 127.0.0.1:6565
 HiddenServicePort 1194 127.0.0.1:1194
 
