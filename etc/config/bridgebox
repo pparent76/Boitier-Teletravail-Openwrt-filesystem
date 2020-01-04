@@ -21,7 +21,7 @@ config entry 'wifi_ap'
 
 config entry 'advanced'
         option stun1 'stun.1und1.de'
-        option stun2 'stun.sipgate.net'
+        option stun2 'stun.infra.net'
         option stun3 'stun.omb.one'        
         option stunport1 '3478'
         option stunport2 '3478'

@@ -138,16 +138,16 @@ for i in $(seq 1 3); do
    #                                Try with torsocks
    ##################################################################################################
     #Send a dummmy udp package to server and record dummy reply
-    killall dummyudp-server; dummyudp $stun_localport $ip $port; dummyudp-server $stun_localport >> /tmp/dummyudp-server 2>&1 &
+    killall dummyudp-server; dummyudp $stun_localport $ip $port; dummyudp-server 1194 >> /tmp/dummyudp-server 2>&1 &
    
 
     #wget
-     torsocks wget --retry-connrefused --waitretry=1 -t 2 $serverid.onion/challenge --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/stun-challenge > /dev/null 2>&1
+     torsocks wget --retry-connrefused --waitretry=1 -t 1 $serverid.onion/challenge --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/stun-challenge > /dev/null 2>&1
     challengesrc=$(cat /tmp/stun-challenge)
     challengeres=$(echo "$challengesrc" | openssl enc -aes-256-cbc -a -pass pass:$code)
     challengeres=$(urlencode_many_printf "$challengeres")
     log_stun "http://$serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres"
-    torsocks wget --retry-connrefused --waitretry=1 -t 2 $serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=30 --dns-timeout=30 --connect-timeout=30 --read-timeout=30 -O /tmp/advertised-stun-res > /dev/null 2&>1
+    torsocks wget --retry-connrefused --waitretry=1 -t 1 $serverid.onion/stun.sh?ip=$stun_publicip\&port=$stun_mappedport\&challenge=$challengeres --timeout=20 --dns-timeout=20 --connect-timeout=20 --read-timeout=20 -O /tmp/advertised-stun-res > /dev/null 2&>1
     
     #Wait and see if we could get a dummy reply from server
     sleep 1;

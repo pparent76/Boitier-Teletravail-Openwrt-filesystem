@@ -29,23 +29,13 @@ handlesuccess() {
     echo "1">/tmp/bb/server/port-configured
     echo "stun">/tmp/bb/server/port-type 
     
-    pidof stun-keepalive.sh
-    if [ "$?" -ne "0" ]; then
-        log "Starting keep alive"
-        /scripts_bb/server/stun-keepalive.sh $localport &
-    fi
+
 }
 
 option=""
 log "Trying STUN"
 
-if [ "$(cat /tmp/bb/server/port-type)" = "stun" ]; then
-    localport=$(cat /tmp/bb/server/stun-local-port)
-    option="--localport $localport"
-else    
-    log "Stop keep alive"
-    killall stun-keepalive.sh
-fi
+
 
 for j in $( seq 1 5 ); do
 

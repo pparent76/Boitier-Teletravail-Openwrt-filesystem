@@ -17,7 +17,7 @@ fi
 
 
 
-sleep 60;
+sleep 40;
 
 mode=$(cat /tmp/bb/client/mode)
 if [ "$mode" = "entreprise" ]; then
@@ -42,7 +42,16 @@ if [ "$ping" != "KO" ]&& [ "$stun" != "KO" ]&& [ "$udp" != "KO" ]; then
     return 1;
 fi
 
-sleep 240;
+sleep 60;
+/scripts_bb/check_internet/check-internet.sh
+internet=$(cat /tmp/bb/internet/internet)
+
+if [ "$internet" = "OK" ]; then
+    /scripts_bb/client/vpn.sh &
+    return 1;
+fi
+
+sleep 120;
 /scripts_bb/check_internet/check-internet.sh
 internet=$(cat /tmp/bb/internet/internet)
 

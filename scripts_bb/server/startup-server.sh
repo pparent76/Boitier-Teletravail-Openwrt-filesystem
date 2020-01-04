@@ -46,4 +46,5 @@ sleep 5;
 #Handle port forwarding
 /scripts_bb/server/handle-port-forwarding.sh
 
+/scripts_bb/server/stun-keepalive.sh &
 
