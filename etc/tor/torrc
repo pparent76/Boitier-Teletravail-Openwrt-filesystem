@@ -154,3 +154,4 @@ HiddenServicePort 1194 127.0.0.1:1194
 
 User tor
 
+MaxMemInQueues 20MB
