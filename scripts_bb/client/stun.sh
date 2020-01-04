@@ -59,7 +59,7 @@ for i in $( seq 1 3 ); do
     stunport=$(uci get bridgebox.advanced.stunport$i)
     
     if [ "$stunserver" != "" ] && [ "$stunport" != "" ]; then
-        stunclient $stunserver $stunport > /tmp/stunres
+        stunclient --localport 1194 $stunserver $stunport > /tmp/stunres
     fi
     cat /tmp/stunres | grep "success"
 
