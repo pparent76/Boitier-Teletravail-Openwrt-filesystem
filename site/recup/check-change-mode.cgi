@@ -41,7 +41,7 @@ if [ "$requestedmode" != "entreprise" ]&& [ "$previousmode" = "entreprise" ]; th
     needtoreconnect=1;
 fi
 
-captiveurl=$(uci set bridgebox.advanced.portaldetecturl)
+captiveurl=$(uci get bridgebox.advanced.portaldetecturl)
 isdone=0;
 if [ "$entreprise" -ne "0" ]&& [ "$local" -ne "0" ] && [ "$offline" -ne "0" ] ; then
     if [ "$requestedmode" != "$currentmode" ]; then
