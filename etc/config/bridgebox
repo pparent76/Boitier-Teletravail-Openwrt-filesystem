@@ -20,7 +20,7 @@ config entry 'wifi_ap'
 	option enabled '0'
 
 config entry 'advanced'
-        option stun1 'stun.1und1.de'
+        option stun1 'stun.freecall.com'
         option stun2 'stun.infra.net'
         option stun3 'stun.omb.one'        
         option stunport1 '3478'
