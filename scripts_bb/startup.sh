@@ -1,8 +1,9 @@
 #!/bin/sh
 
-usermod http -u 7894
+
 /etc/init.d/uhttpd stop
 /etc/init.d/uhttpd disable
+
 
 echo "0"> /sys/class/leds/gl-ar150\:green\:lan/brightness
 echo "0"> /sys/class/leds/gl-ar150\:green\:wan/brightness

@@ -27,7 +27,8 @@ cat /etc/server-codes | grep "$1" >/dev/null 2>&1
             echo "$1#$2#$ip#$stunpass#sansnom" >> /etc/server-codes
             echo "$ip $stunpass"
             mustblink=1;
-            sed -i "/$2/d" /etc/desappaire
+            grep -v "$test" /etc/desappaire > /etc/desappaire2
+            mv /etc/desappaire2 /etc/desappaire
             /scripts_bb/server/vpn.sh 2> /dev/null > /dev/null &
         fi
      fi   

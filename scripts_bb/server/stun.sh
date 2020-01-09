@@ -67,7 +67,7 @@ for j in $( seq 1 5 ); do
         
         if [ "$?" -eq "0" ]; then
              mappedport=$(cat /tmp/stunres | grep Mapped | awk '{print $3}' | sed "s/:/ /g" | awk '{print $2}'  ) 
-             if [ "$mappedport" -lt "1024" ]|| [ "$j" -eq "5" ]; then
+             if [ "$mappedport" -le "1024" ]|| [ "$j" -eq "5" ]; then
                 handlesuccess;
                 return 0;
              fi
